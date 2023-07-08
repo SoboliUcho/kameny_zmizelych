@@ -1,0 +1,3 @@
+{"id":"dum01", "lide":["člověk","člověk2"]}
+{"id":"dum02", "lide":["člověk","člověk2"]}
+{"id":"dum03", "lide":["člověk","člověk2"]}

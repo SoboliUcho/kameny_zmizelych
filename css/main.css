@@ -1,0 +1,76 @@
+* {
+    font-family: "Raleway", sans-serif;
+}
+
+body {
+    margin: 0px;
+}
+
+.lista {
+    background-color: #2F1107;
+    color: #EFE6E0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+}
+
+.infobox {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
+.info {
+    margin: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: #EFE6E0;
+}
+
+#nazev {
+    font-size: 2.3em;
+}
+
+.mapka {
+    display: flex;
+    max-width: 100%;
+    height: auto;
+    /* cursor: grab; */
+    overflow: auto;
+
+    /* https://htmldom.dev/drag-to-scroll/ */
+    /* https://stackoverflow.com/questions/635706/how-to-scroll-to-an-element-inside-a-div */
+
+}
+
+#mapa {
+    /* display: block;
+   max-width: 100%;
+    width: auto; */
+    /* https://www.petercollingridge.co.uk/tutorials/svg/interactive/mouseover-effects/ */
+}
+
+.dum {
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    background: #abba0d55;
+    top: 500px;
+    left: 480px;
+}
+
+.tabulka {
+    display: flex;
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    background: #0d6cba;
+    top: 500px;
+    left: 480px;
+    font-size: 17px;
+}

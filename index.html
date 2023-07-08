@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <link rel="icon" href="https://www.muzeum-boskovicka.cz/sites/default/files/favicons/favicon-16x16.png"> -->
+  <link rel="icon" href="icona.jpg">
+
+  <link rel="stylesheet" href="css/main.css">
+  <script src="js/logintable.js"></script>
+  <title>Kameny zmizelých</title>
+  <!-- <meta http-equiv="refresh" content="15"> -->
+</head>
+
+<body>
+  <div class="lista">
+    <a href="https://www.muzeum-boskovicka.cz/"><img
+        src="https://www.muzeum-boskovicka.cz/themes/custom/b5subtheme/logo.svg" alt="Muzeum boskovicka"></a>
+    <h1 id="nazev">KAMENY ZMIZELÝCH</h1>
+    <div class="infobox">
+      <a href="o_projektu.html" class="info">
+        <div class="info">O projektu</div>
+      </a>
+      <!-- <a href="" class="info"><div class="info">Autoři?</div></a> -->
+    </div>
+  </div>
+
+  <div class="mapka">
+    <object data="mapy/mapa_insk_stara_proste.svg" type="image/svg+xml" id="mapa"></object>
+  </div>
+
+  <script type="text/javascript">
+    var domy = document.getElementsByClassName("dum");
+    console.log(domy)
+    for (var i = 0; i < domy.length; i++) {
+
+      // console.log(domy[i]);
+      // console.log(domy[i].getAttribute("data-value"));
+
+      var read_dum = domy[i]
+      domy[i].addEventListener("click", function () { kartaopen(read_dum); });
+    }
+
+    // dum.addEventListener("click", function(){kartaopen(domy)})
+
+    function kartaopen(dum) {
+      // console.log(dum)
+      var iddomu = dum.getAttribute("id");
+      document.getElementById("tabulka").style.display = "block";
+      // console.log(iddomu)
+      downald_data(iddomu)
+    }
+
+    function downald_data(id) {
+      console.log(id);
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          // console.log(this.responseText);
+          // console.log(this);
+          print_data(this.responseText);
+        }
+      }
+      id = "dum="+id
+      xhttp.open("POST", "_data.php", true);
+      xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      xhttp.send(id);
+    }
+
+    function print_data(data) {
+      console.log(data)
+      data = JSON.parse(data)
+      console.log(data)
+      document.getElementById("tabulka").innerHTML=data;
+    }
+
+  </script>
+
+  <div class="tabulka" style="display: none;" id="tabulka">
+    <script>
+    // vypis_hodnot(dum=iddomu) 
+    </script>
+  </div>
+
+</body>
+
+</html>
