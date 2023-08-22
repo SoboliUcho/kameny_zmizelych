@@ -10,14 +10,10 @@
 
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/mapacz.css">
-
   <script src="js/logintable.js"></script>
+  <title>Kameny zmizelých</title>
   <script type="text/javascript" src="https://api.mapy.cz/loader.js"></script>
   <script type="text/javascript">Loader.load()</script>
-  <script src="js\mapa.js"></script>
-
-  <title>Kameny zmizelých</title>
-
   <!-- <meta http-equiv="refresh" content="15"> -->
 </head>
 
@@ -35,17 +31,16 @@
   </div>
 
   <div id="mapa"></div>
-  <script type="text/javascript">
-    var x = 16.6597287;
-    var y = 49.4868687;
-    var zoom = 18;
-    var mapa = make_map(x,y,zoom)
-    mapa_botom_space(20, mapa)
-  </script>
+  <script src="js\mapa.js"></script>
+  <div class="mapka">
+    <object data="mapy/mapa_insk_stara_proste.svg" type="image/svg+xml" id="mapa"></object>
+  </div>
+
+  <script src="js\funkce.js"></script>
 
   <div class="tabulka" style="display: none;" id="tabulka">
     <script>
-      vypis_hodnot(dum = iddomu) 
+    vypis_hodnot(dum=iddomu) 
     </script>
   </div>
 
