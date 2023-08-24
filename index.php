@@ -1,3 +1,6 @@
+<?php
+require('_function_database.php')
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,7 +45,9 @@
     var mapa = make_map(x,y,zoom)
     mapa_botom_space(20, mapa)
   </script>
-
+<?php
+get_all_house();
+?>
   <div class="tabulka" style="display: none;" id="tabulka">
     <script>
       vypis_hodnot(dum = iddomu) 
