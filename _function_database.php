@@ -8,7 +8,7 @@ function conenect_to_database_kameny()
 
     // Vytvoření připojení
     $conn = new mysqli($servername, $username, $password, $dbname);
-
+    $conn->set_charset("utf8mb4");
     // Kontrola spojení
     if ($conn->connect_error) {
         // die("Spojení s databází selhalo: " . $conn->connect_error);
@@ -26,7 +26,8 @@ function conenect_to_database($dbname)
 
     // Vytvoření připojení
     $conn = new mysqli($servername, $username, $password, $dbname);
-
+    // $conn->set_charset("utf8mb4");
+    echo(mysqli_character_set_name($conn));
     // Kontrola spojení
     if ($conn->connect_error) {
         // die("Spojení s databází selhalo: " . $conn->connect_error);
@@ -53,11 +54,14 @@ function get_all_house($conn)
             // Zde můžete pracovat s jednotlivými sloupci řádku
             // echo $row;
             array_push($domy, $row);
+            // echo($row["ulice"]);
+            // echo($row);
         }
     } else {
         return false;
     }
-    $domypole= json_encode($domy);
+    $domypole= json_encode($domy, JSON_UNESCAPED_UNICODE);
+    // echo($domypole);
     return $domypole;
 }
 ?>

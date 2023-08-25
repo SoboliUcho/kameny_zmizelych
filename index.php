@@ -1,8 +1,10 @@
 <?php
-require('_function_database.php')
+require('_function_database.php');
+// header('Content-Type: text/html; charset=utf-8');
+$conn = conenect_to_database_kameny();
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cz">
 
 <head>
   <meta charset="UTF-8">
@@ -14,7 +16,7 @@ require('_function_database.php')
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/mapacz.css">
 
-  <script src="js/logintable.js"></script>
+  <!-- <script src="js/logintable.js"></script> -->
   <script type="text/javascript" src="https://api.mapy.cz/loader.js"></script>
   <script type="text/javascript">Loader.load()</script>
   <script src="js\mapa.js"></script>
@@ -42,17 +44,19 @@ require('_function_database.php')
     var x = 16.6597287;
     var y = 49.4868687;
     var zoom = 18;
-    var mapa = make_map(x,y,zoom)
+    var mapa = make_map(x, y, zoom)
     mapa_botom_space(20, mapa)
+    var domy = <?php echo get_all_house($conn) ?>;
+    make_markers(domy, mapa);
+    mapa.getSignals().addListener(this, "marker-click", function(e){marker_clik(e);})
+
   </script>
-<?php
-get_all_house();
-?>
-  <div class="tabulka" style="display: none;" id="tabulka">
+
+  <!-- <div class="tabulka" style="display: none;" id="tabulka">
     <script>
       vypis_hodnot(dum = iddomu) 
     </script>
-  </div>
+  </div> -->
 
 </body>
 
