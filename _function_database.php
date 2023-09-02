@@ -64,4 +64,7 @@ function get_all_house($conn)
     // echo($domypole);
     return $domypole;
 }
+
+
+
 ?>

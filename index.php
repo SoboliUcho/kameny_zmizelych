@@ -20,6 +20,7 @@ $conn = conenect_to_database_kameny();
   <script type="text/javascript" src="https://api.mapy.cz/loader.js"></script>
   <script type="text/javascript">Loader.load()</script>
   <script src="js\mapa.js"></script>
+  <script src="js\tabulka.js"></script>
 
   <title>Kameny zmizelých</title>
 
@@ -46,97 +47,99 @@ $conn = conenect_to_database_kameny();
     var zoom = 18;
     var mapa = make_map(x, y, zoom)
     mapa_botom_space(20, mapa)
-    var domy = <?php echo get_all_house($conn) ?>;
+    var domy = <?php echo get_all_house($conn); disconenect_to_database($conn);?>;
     make_markers(domy, mapa);
-    mapa.getSignals().addListener(this, "marker-click", function (e) { marker_clik(e); })
+    mapa.getSignals().addListener(this, "marker-click", function (e) { tabulka_request(e,"lide"); })
 
   </script>
 
-  <div class="tabulka" style="display: none;" id="tabulka">
-    <div class="lide"></div>
-    <div class="radek_tabulky">
-      <div class="popisek">Jméno</div>
-      <div class="data" id="jmeno"></div>
-    </div>
-    <div class="radek_tabulky">
-      <div class="popisek">Přijmení</div>
-      <div class="data" id="prijmeni"></div>
-    </div>
-    <div class="radek_tabulky">
-      <div class="popisek">Datum narození</div>
-      <div class="data" id="datum_narozeni"></div>
-    </div>
-    <div class="radek_tabulky">
-      <div class="popisek">Místo narození</div>
-      <div class="data" id="misto_narozeni"></div>
-    </div>
-    <div class="radek_tabulky">
-      <div class="popisek">Rodinný stav</div>
-      <div class="data" id="rodinny_stav"></div>
-    </div>
-    <div class="radek_tabulky">
-      <div class="popisek">Náboženské vyznání</div>
-      <div class="data" id="nabozenske_vyznani"></div>
-    </div>
-    <div class="radek_tabulky">
-      <div class="popisek">Státní příslušnost</div>
-      <div class="data" id="statni_prislusnost"></div>
-    </div>
-    <div class="radek_tabulky">
-      <div class="popisek">Nové bydliště</div>
-      <div class="data" id="nove_bydliste"></div>
-    </div>
-    <div class="radek_tabulky">
-      <div class="popisek">Okres</div>
-      <div class="data" id="okres"></div>
-    </div>
-    <div class="radek_tabulky">
-      <div class="popisek">Ulice</div>
-      <div class="data" id="ulice"></div>
-    </div>
-    <div class="radek_tabulky">
-      <div class="popisek">Číslo</div>
-      <div class="data" id="cislo"></div>
-    </div>
-    <div class="radek_tabulky">
-      <div class="popisek">Den příchodu</div>
-      <div class="data" id="den_prichodu"></div>
-    </div>
-    <div class="radek_tabulky">
-      <div class="popisek">Otec</div>
-      <div class="data" id="otec"></div>
-    </div>
-    <div class="radek_tabulky">
-      <div class="popisek">Matka</div>
-      <div class="data" id="matka"></div>
-    </div>
-    <div class="radek_tabulky">
-      <div class="popisek">Majitel motorového vozidla</div>
-      <div class="data" id="majitel_mot_vozidla"></div>
-    </div>
-    <div class="radek_tabulky">
-      <div class="popisek">Činný v protiletedlové obraně</div>
-      <div class="data" id="cinny_v_protiletadlove_obrane"></div>
-    </div>
-    <div class="radek_tabulky">
-      <div class="popisek">Datum přesídlení</div>
-      <div class="data" id="datum_presidleni"></div>
-    </div>
-    <div class="radek_tabulky">
-      <div class="popisek">Přesídlil (kam)</div>
-      <div class="data" id="presidlil"></div>
-    </div>
-    <div class="radek_tabulky">
-      <div class="popisek">Odhlášen dne</div>
-      <div class="data" id="datum_odhaseni"></div>
-    </div>
-    <div class="radek_tabulky">
-      <div class="popisek"></div>
-      <div class="data" id="karta"></div>
-    </div>
-    <div class="radek_tabulky">
-      <div class="popisek"></div>
-      <div class="data" id="informace"></div>
+  <!-- <div class="tabulka" style="display: none;" id="tabulka"> -->
+    <div id="lide"></div>
+    <div id="data">
+      <div class="radek_tabulky">
+        <div class="popisek">Jméno</div>
+        <div class="data" id="jmeno"></div>
+      </div>
+      <div class="radek_tabulky">
+        <div class="popisek">Přijmení</div>
+        <div class="data" id="prijmeni"></div>
+      </div>
+      <div class="radek_tabulky">
+        <div class="popisek">Datum narození</div>
+        <div class="data" id="datum_narozeni"></div>
+      </div>
+      <div class="radek_tabulky">
+        <div class="popisek">Místo narození</div>
+        <div class="data" id="misto_narozeni"></div>
+      </div>
+      <div class="radek_tabulky">
+        <div class="popisek">Rodinný stav</div>
+        <div class="data" id="rodinny_stav"></div>
+      </div>
+      <div class="radek_tabulky">
+        <div class="popisek">Náboženské vyznání</div>
+        <div class="data" id="nabozenske_vyznani"></div>
+      </div>
+      <div class="radek_tabulky">
+        <div class="popisek">Státní příslušnost</div>
+        <div class="data" id="statni_prislusnost"></div>
+      </div>
+      <div class="radek_tabulky">
+        <div class="popisek">Nové bydliště</div>
+        <div class="data" id="nove_bydliste"></div>
+      </div>
+      <div class="radek_tabulky">
+        <div class="popisek">Okres</div>
+        <div class="data" id="okres"></div>
+      </div>
+      <div class="radek_tabulky">
+        <div class="popisek">Ulice</div>
+        <div class="data" id="ulice"></div>
+      </div>
+      <div class="radek_tabulky">
+        <div class="popisek">Číslo</div>
+        <div class="data" id="cislo"></div>
+      </div>
+      <div class="radek_tabulky">
+        <div class="popisek">Den příchodu</div>
+        <div class="data" id="den_prichodu"></div>
+      </div>
+      <div class="radek_tabulky">
+        <div class="popisek">Otec</div>
+        <div class="data" id="otec"></div>
+      </div>
+      <div class="radek_tabulky">
+        <div class="popisek">Matka</div>
+        <div class="data" id="matka"></div>
+      </div>
+      <div class="radek_tabulky">
+        <div class="popisek">Majitel motorového vozidla</div>
+        <div class="data" id="majitel_mot_vozidla"></div>
+      </div>
+      <div class="radek_tabulky">
+        <div class="popisek">Činný v protiletedlové obraně</div>
+        <div class="data" id="cinny_v_protiletadlove_obrane"></div>
+      </div>
+      <div class="radek_tabulky">
+        <div class="popisek">Datum přesídlení</div>
+        <div class="data" id="datum_presidleni"></div>
+      </div>
+      <div class="radek_tabulky">
+        <div class="popisek">Přesídlil (kam)</div>
+        <div class="data" id="presidlil"></div>
+      </div>
+      <div class="radek_tabulky">
+        <div class="popisek">Odhlášen dne</div>
+        <div class="data" id="datum_odhaseni"></div>
+      </div>
+      <div class="radek_tabulky">
+        <div class="popisek"></div>
+        <div class="data" id="karta"></div>
+      </div>
+      <div class="radek_tabulky">
+        <div class="popisek"></div>
+        <div class="data" id="informace"></div>
+      </div>
     </div>
   </div>
 
