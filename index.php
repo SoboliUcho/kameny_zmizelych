@@ -50,7 +50,7 @@ $conn = conenect_to_database_kameny();
     var domy = <?php echo get_all_house($conn); disconenect_to_database($conn);?>;
     make_markers(domy, mapa);
     mapa.getSignals().addListener(this, "marker-click", function (e) { tabulka_request(e.target.getId(),"lide") })  
-
+    
   </script>
 
   <!-- <div class="tabulka" style="display: none;" id="tabulka"> -->
