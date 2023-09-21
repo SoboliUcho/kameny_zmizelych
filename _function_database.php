@@ -59,6 +59,15 @@ function get_all_house($conn)
     return $domypole;
 }
 
+function get_all_persone($conn){
+    $sql = "SELECT id, jmeno, prijmeni, datum_narozeni FROM lide ORDER BY `lide`.`prijmeni` ASC, `lide`.`jmeno` ASC ";
+    $result = $conn->query($sql);
+    return $result;
+}
 
-
+function get_persone($conn, $id){
+    $sql = "SELECT id, jmeno, prijmeni FROM lide WHERE id = $id";
+    $result = $conn->query($sql);
+    return $result;
+}
 ?>

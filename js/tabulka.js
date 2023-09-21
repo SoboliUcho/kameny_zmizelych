@@ -24,6 +24,9 @@ function tabulka_request(id, type) {
     else if (type == "matka") {
         var cFunction = matka;
     }
+    else if (type == "edit") {
+        var cFunction = editpersone;
+    }
 
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
@@ -40,6 +43,14 @@ function tabulka_request(id, type) {
 }
 
 function lide(data) {
+    var tabulka = document.getElementById("tabulka");
+    tabulka.style.display = "flex"
+    document.addEventListener('click', function handleClickOutsideBox(event) {
+
+        if (!tabulka.contains(event.target)) {
+            tabulka.style.display = 'none';
+        }
+    });
     data = JSON.parse(data);
     console.log(data);
     if (data["error"] !== undefined) {
@@ -62,7 +73,7 @@ function clovek(data) {
     data = JSON.parse(data);
     console.log(data)
 
-    if  (document.getElementById(data["id"]) == null){
+    if (document.getElementById(data["id"]) == null) {
         text = "<div class = 'clovek active' id =" + data["id"] + ">" + data["jmeno"] + " " + data["prijmeni"] + "</div>"
         var lide = document.getElementById('lide');
         lide.innerHTML += text;
@@ -208,3 +219,18 @@ function nazvy_jazyk() {
     ];
     return (cz);
 }
+
+function editpersone(data) {
+    data = JSON.parse(data);
+    for (var key in data) {
+        var hodnota = data[key];
+        var pole = document.getElementById(key);
+        // console.log(hodnota);
+        // console.log(key);
+        if (pole) {
+            pole.value = hodnota;
+        }
+    }
+    console.log(data)
+}
+

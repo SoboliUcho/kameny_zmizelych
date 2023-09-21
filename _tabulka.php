@@ -10,6 +10,9 @@ if ($type == "lide") {
 } elseif($type == "clovek"){
     echo (persone($id, $conn));
 }
+elseif($type == "edit"){
+    echo(persone($id,$conn));
+}
 else{
     disconenect_to_database($conn);
 }
