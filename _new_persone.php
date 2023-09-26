@@ -34,7 +34,9 @@ $informace = !empty($_POST["informace"]) ? "'".$_POST["informace"]."'" : "NULL";
 
 
 
-
+// echo $otec;
+// echo $otec_id;
+// echo $matka_id;
 if ($otec == "NULL" && $otec_id != "NULL"){
     $lide=get_persone($conn, $otec_id);
     foreach ($lide as $clovek);
@@ -45,8 +47,7 @@ if ($matka == "NULL" && $matka_id != "NULL"){
     foreach ($lide as $clovek);
         $matka = "'".$clovek["jmeno"]." ".$clovek["prijmeni"]."'";
 }
-// echo ($otec);
-// echo $matka_id;
+
 // echo $informace;
 
 
@@ -75,18 +76,19 @@ if (isset($_POST["id"])) {
     datum_odhaseni = $datum_odhaseni,
     karta = $karta,
     informace = $informace
-    WHERE id = '$id'";
+    WHERE id = $id";
     // echo $sql;
 
 } else {
-    $sql = "INSERT INTO `lide`(`jmeno`, `prijmeni`, `datum_narozeni`, `misto_narozeni`, `rodinny_stav`, `nabozenske_vyznani`, `statni_prislusnost`, `okres`, `dum_id`, `den_prichodu`, `otec_id`, `otec-j`, `matka_id`, `matka-j`, `majitel_mot_vozidla`, `cinny_v_protiletadlove_obrane`, `datum_presidleni`, `presidlil`, `datum_odhaseni`, `karta`, `informace`) VALUES ($jmeno, $prijmeni, $datum_narozeni, $misto_narozeni, $rodinny_stav, $nabozenske_vyznani, $statni_prislusnost, $okres, $domy, $den_prichodu,  $otec_id, $otec, $matka_id, $matka, $majitel_mot_vozidla, $cinny_v_protiletadlove_obrane, $datum_presidleni, $presidlil, $datum_odhaseni, $karta, $informace)";
+    $sql = "INSERT INTO lide(jmeno, prijmeni, datum_narozeni, misto_narozeni, rodinny_stav, nabozenske_vyznani, statni_prislusnost, okres, dum_id, den_prichodu, otec_id, `otec-j`, matka_id, `matka-j`, majitel_mot_vozidla, cinny_v_protiletadlove_obrane, datum_presidleni, presidlil, datum_odhaseni, karta, informace) VALUES ($jmeno, $prijmeni, $datum_narozeni, $misto_narozeni, $rodinny_stav, $nabozenske_vyznani, $statni_prislusnost, $okres, $domy, $den_prichodu,  $otec_id, $otec, $matka_id, $matka, $majitel_mot_vozidla, $cinny_v_protiletadlove_obrane, $datum_presidleni, $presidlil, $datum_odhaseni, $karta, $informace)";
 }
 if (mysqli_query($conn, $sql)) {
     $response = "Data byla úspěšně uložena.";
 } else {
     $response = "Chyba při ukládání dat: " . mysqli_error($conn);
-    echo $response;
 }
+// echo $response;
+// echo $sql;
 disconenect_to_database($conn);
 header("Location: editor.php?response=$response");
 ?>

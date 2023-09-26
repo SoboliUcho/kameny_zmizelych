@@ -29,7 +29,9 @@ function make_marker_layer(mapa) {
 function make_marker(marker_data){
     var coords = SMap.Coords.fromWGS84(marker_data.gps_x, marker_data.gps_y);
     
-    var obrazek = "https://api.mapy.cz/img/api/marker/drop-red.png";
+    // var obrazek = "images/drop-red.png";
+    var obrazek = "images/jude3.png";
+
     var adresa = marker_data.ulice + " " + marker_data.cislo_domu;
     // console.log (adresa);
     var options = {

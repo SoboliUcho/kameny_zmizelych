@@ -47,8 +47,9 @@ function lide(data) {
     tabulka.style.display = "flex"
     document.addEventListener('click', function handleClickOutsideBox(event) {
 
-        if (!tabulka.contains(event.target)) {
+        if (!tabulka.contains(event.target)&&!event.target.classList.contains('radek_tabulky')) {
             tabulka.style.display = 'none';
+            close();
         }
     });
     data = JSON.parse(data);

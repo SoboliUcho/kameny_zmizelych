@@ -32,7 +32,7 @@ $conn = conenect_to_database_kameny();
 <body>
 <?php include('lista.php'); ?>
 
-  <div id="mapa" style="display: none;"></div>
+  <div id="mapa" ></div>
   <script type="text/javascript">
     var x = 16.6597287;
     var y = 49.4868687;
@@ -42,7 +42,7 @@ $conn = conenect_to_database_kameny();
     var domy = <?php echo get_all_house($conn); disconenect_to_database($conn);?>;
     make_markers(domy, mapa);
     mapa.getSignals().addListener(this, "marker-click", function (e) { tabulka_request(e.target.getId(),"lide") })  
-    tabulka_request("1","lide")
+    // tabulka_request("1","lide")
   </script>
   </div>
   <div class="tabulka" style="display: none;" id="tabulka">

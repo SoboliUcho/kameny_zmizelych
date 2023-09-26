@@ -1,3 +1,4 @@
-#mapa {
-    display: none;
+#mapa *{
+    /* display: none; */
+    cursor: default;
 }

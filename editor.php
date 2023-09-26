@@ -19,10 +19,10 @@ if (isset($_GET["response"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="icon" href="icona.jpg">
+    <link rel="icon" href="images/icona.jpg">
 
     <link rel="stylesheet" href="css/lista.css">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/editor.css">
 
     <script type="text/javascript" src="https://api.mapy.cz/loader.js"></script>
     <script type="text/javascript">Loader.load()</script>
@@ -35,7 +35,7 @@ if (isset($_GET["response"])) {
 
 <body>
     <?php include('lista.php'); ?>
-
+    <div class="obsah">
     <div class="prepinace">
         <div id="nosoba" class="prepinac">nová osoba</div>
         <div id="edit" class="prepinac">editace osoby</div>
@@ -54,8 +54,8 @@ if (isset($_GET["response"])) {
         <form class="form" id="eosoba">
             <div></div>
             <label for="lide">Lidé</label>
-            <select name="lide" id="lide">
-                <option>Vyber člověka</option>
+            <select name="lide" id="lide" required>
+                <option value="">Vyber člověka</option>
                 <?php
                 $lide = get_all_persone($conn);
                 foreach ($lide as $clovek) {
@@ -117,7 +117,7 @@ if (isset($_GET["response"])) {
             <div>
                 <label for="dum_id">Domy</label>
                 <select name="domy" id="dum_id">
-                    <option>Vyber adresu</option>
+                    <option value="">Vyber adresu</option>
                     <?php
                     $domy = get_all_house($conn);
                     // echo $domy;
@@ -144,7 +144,7 @@ if (isset($_GET["response"])) {
             <div>
                 <label for="otec_id">Otec z databáze</label>
                 <select name="otec_id" id="otec_id">
-                    <option>Vyber člověka</option>
+                    <option value="NULL">Vyber člověka</option>
                     <?php
                     foreach ($lide as $clovek) {
                         $id = $clovek["id"];
@@ -164,7 +164,7 @@ if (isset($_GET["response"])) {
             <div>
                 <label for="matka_id">Matka z databáze</label>
                 <select name="matka_id" id="matka_id">
-                    <option>Vyber člověka</option>
+                    <option value="NULL">Vyber člověka</option>
                     <?php
                     foreach ($lide as $clovek) {
                         $id = $clovek["id"];
@@ -185,13 +185,13 @@ if (isset($_GET["response"])) {
                     <option value="1">Ano</option>
                 </select>
             </div>
-            <div>
+            <!-- <div>
                 <label for="cinny_v_protiletadlove_obrane">Činný v protiletadlové obraně:</label>
                 <select name="cinny_v_protiletadlove_obrane" id="cinny_v_protiletadlove_obrane">
                     <option value="0">Ne</option>
                     <option value="1">Ano</option>
                 </select>
-            </div>
+            </div> -->
             <div>
                 <label for="datum_presidleni">Datum přesídlení:</label>
                 <input type="text" id="datum_presidleni" name="datum_presidleni">
@@ -221,10 +221,11 @@ if (isset($_GET["response"])) {
     <div id="ndum_form">
         <form class="form" id="nform">
             <div>
-                <label for="adresa">Nový dům <input type="text" id="adresa" /></label>
+                <label for="adresa">Nový dům </label>
+                <input type="text" id="adresa" required>
             </div>
             <div>
-                <input type="submit" value="Hledat" />
+                <input type="submit" value="Hledat" >
             </div>
         </form>
         <script type="text/javascript">
@@ -236,15 +237,15 @@ if (isset($_GET["response"])) {
 
             <div>
                 <label for="nulice">ulice:</label>
-                <input type="text" id="nulice" name="nulice" value="" readonly>
+                <input type="text" id="nulice" name="nulice" value="" readonly required>
             </div>
             <div>
                 <label for="ncislo_domu">čislo domu:</label>
-                <input type="text" id="ncislo_domu" name="ncislo_domu" value="" readonly>
+                <input type="text" id="ncislo_domu" name="ncislo_domu" value="" readonly required>
             </div>
             <div>
                 <label for="nmesto">Město:</label>
-                <input type="text" id="nmesto" name="nmesto" value="" readonly>
+                <input type="text" id="nmesto" name="nmesto" value="" readonly required>
             </div>
             <div>
                 <label for="gps_x">gps x</label>
@@ -262,6 +263,7 @@ if (isset($_GET["response"])) {
     <script>
         hideall();
     </script>
+    </div>
 </body>
 
 </html>
