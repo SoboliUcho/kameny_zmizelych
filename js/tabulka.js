@@ -1,9 +1,9 @@
 function tabulka_request(id, type) {
-    if (type == "lide") {
-        var cFunction = lide;
+    if (type == "people") {
+        var cFunction = people_in_house;
     }
-    else if (type == "clovek") {
-        // console.log(id)
+    else if (type == "persone") {
+        console.log(id)
         var loading = document.getElementById('data');
         loadinig(loading);
         var curent_active = document.getElementsByClassName("active")
@@ -15,19 +15,20 @@ function tabulka_request(id, type) {
             current_element.classList.add("active");
         }
 
-        var cFunction = clovek;
-
+        var cFunction = persone;
     }
-    else if (type == "otec") {
-        var cFunction = otec;
+    else if (type == "father") {
+        var cFunction = father;
     }
-    else if (type == "matka") {
-        var cFunction = matka;
+    else if (type == "mother") {
+        var cFunction = mother;
     }
     else if (type == "edit") {
         var cFunction = editpersone;
     }
-
+    else {
+        var cFunction = nothing;
+    }
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
@@ -35,23 +36,51 @@ function tabulka_request(id, type) {
             cFunction(xhr.responseText);
         }
     };
+    // console.log(id,type)
     var data = new FormData();
     data.append('id', id);
     data.append("type", type);
+    // console.log(data);
     xhr.open("POST", "_tabulka.php", true);
     xhr.send(data);
 }
 
-function lide(data) {
+function lide_clik(event) {
+    var lide_tabulka = document.getElementsByClassName("clovek");
+    // console.log(lide_tabulka)
+    for (var i = 0; i < lide_tabulka.length; i++) {
+        if (lide_tabulka[i].contains(event.target)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function informace_clik(event){
+    var informace_tabulka = document.getElementById("radek_informace");
+    if (informace_tabulka != null && informace_tabulka.contains(event.target)){
+        return false
+    }
+    return true
+
+}
+
+function people_in_house(data) {
     var tabulka = document.getElementById("tabulka");
     tabulka.style.display = "flex"
     document.addEventListener('click', function handleClickOutsideBox(event) {
-
-        if (!tabulka.contains(event.target)&&!event.target.classList.contains('radek_tabulky')) {
+        console.log("clik")
+        var lide_tabulka = document.getElementById("lide");
+        var data_tabulka = document.getElementById("data");
+        // console.log(event.target)
+        // console.log(lide_clik(event))
+        if (lide_clik(event) && !data_tabulka.contains(event.target) && informace_clik(event)) {
             tabulka.style.display = 'none';
+            console.log("hide")
             close();
         }
     });
+    console.log(data);
     data = JSON.parse(data);
     console.log(data);
     if (data["error"] !== undefined) {
@@ -60,15 +89,19 @@ function lide(data) {
     var lide = document.getElementById('lide');
     var lidetext = "";
     for (var i = 0; i < data.length; i++) {
-        var clovek = "<div class = 'clovek' id =" + data[i].id + ">" + data[i].jmeno + " " + data[i].prijmeni + "</div>"
+        var clovek = div_lide(data[i]);
         lidetext += clovek;
     }
     lide.innerHTML = lidetext;
-    tabulka_request(data[0].id, "clovek");
-
+    tabulka_request(data[0].id, "persone");
 }
 
-function clovek(data) {
+function div_lide(data) {
+    var clovek = "<div class = 'clovek' id =" + data.id + ">" + data.jmeno + " " + data.prijmeni + "</div>"
+    return clovek;
+}
+
+function persone(data) {
 
     var clovek = document.getElementById('data');
     data = JSON.parse(data);
@@ -104,10 +137,9 @@ function clovek(data) {
         "presidlil",
         "datum_odhaseni",
         "karta",
-        "informace"
     ]
 
-    var nazvy = nazvy_jazyk();
+    var nazvy = language_set("cz");
 
     var popisek = "";
 
@@ -135,7 +167,7 @@ function clovek(data) {
         else {
             id = keys[i];
         }
-        var subtext = '<div class="radek_tabulky">\n<div class="popisek' + popisek + '">' + nazvy[i] + '</div>\n <div class="data" id="' + id + '">';
+        var subtext = '<div class="radek_tabulky">\n<div class="popisek' + popisek + '">' + nazvy[i] + ': </div>\n <div class="data_r" id="' + id + '">';
 
         if (keys[i] == "majitel_mot_vozidla" || keys[i] == "cinny_v_protiletadlove_obrane") {
             if (data[i] = 1) {
@@ -154,25 +186,31 @@ function clovek(data) {
 
     clovek.innerHTML = text;
 
+    if (data["informace"] != null) {
+        var subtext = '<div id="radek_informace">\n<div class="popisek_informace"> Informace: </div>\n <div class="data_r" id="informacet">' + data["informace"] + '</div>\n</div>\n';
+        document.getElementById("informace").innerHTML = subtext;
+    }
+
     var divlidi = document.getElementsByClassName("clovek");
     for (var i = 0; i < divlidi.length; i++) {
         divlidi[i].addEventListener("click", change_persone);
     }
     if (data["otec_id"] != null) {
-        otec(data)
+        father(data)
     }
     if (data["matka_id"] != null) {
-        matka(data)
+        mother(data)
     }
 }
 
-function otec(data) {
+function father(data) {
     var otec = document.getElementById(data["otec_id"])
     otec.addEventListener("click", function (event) {
         change_persone(event);
     });
 }
-function matka(data) {
+
+function mother(data) {
     var matka = document.getElementById(data["matka_id"])
     matka.addEventListener("click", change_persone);
 }
@@ -181,18 +219,19 @@ function close() {
     tabulka_request(null, "close");
 }
 
-
 function change_persone(event) {
     var id_div = event.target.id;
     console.log(id_div);
-    tabulka_request(id_div, "clovek");
+    tabulka_request(id_div, "persone");
 }
 
 function loadinig(misto) {
-    misto.innerHTML = "loading"
+    var informace = document.getElementById("informace");
+    informace.innerHTML = "";
+    misto.innerHTML = "loading";
 }
 
-function nazvy_jazyk() {
+function language_set(langue) {
     var cz = [
         "Id",
         "Jméno",
@@ -235,3 +274,6 @@ function editpersone(data) {
     console.log(data)
 }
 
+function nothing() {
+
+}

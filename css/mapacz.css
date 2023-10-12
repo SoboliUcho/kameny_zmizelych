@@ -2,3 +2,8 @@
     /* display: none; */
     cursor: default;
 }
+#mapa{
+    /* flex: 1; */
+    /* order:2; */
+    /* z-index: -1; */
+}

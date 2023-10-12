@@ -10,13 +10,14 @@ $conn = conenect_to_database_kameny();
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
   <!-- <link rel="icon" href="https://www.muzeum-boskovicka.cz/sites/default/files/favicons/favicon-16x16.png"> -->
   <link rel="icon" href="images/icona.jpg">
 
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/mapacz.css">
   <link rel="stylesheet" href="css/lista.css">
+  <link rel="stylesheet" href="css/tabulka.css">
 
   <!-- <script src="js/logintable.js"></script> -->
   <script type="text/javascript" src="https://api.mapy.cz/loader.js"></script>
@@ -25,37 +26,45 @@ $conn = conenect_to_database_kameny();
   <script src="js\tabulka.js"></script>
 
   <title>Kameny zmizelých</title>
-
-  <!-- <meta http-equiv="refresh" content="15"> -->
+  <!--  -->
+  <!--  -->
+  <!-- <meta http-equiv="refresh" content="10"> -->
+  <!--  -->
+  <!--  -->
 </head>
 
 <body>
-<?php include('lista.php'); ?>
+  <?php include('lista.php'); ?>
+  <div id="nelista">
+    <div id="mapa"></div>
+    <script type="text/javascript">
+      var x = 16.6597287;
+      var y = 49.4868687;
+      var zoom = 18;
+      var mapa = make_map(x, y, zoom)
+      mapa_botom_space(10, mapa)
+      var domy = <?php echo get_all_house($conn);
+      disconenect_to_database($conn); ?>;
+      make_markers(domy, mapa);
+      mapa.getSignals().addListener(this, "marker-click", function (e) { tabulka_request(e.target.getId(), "people") })
+      // tabulka_request("1","lide")
+    </script>
 
-  <div id="mapa" ></div>
-  <script type="text/javascript">
-    var x = 16.6597287;
-    var y = 49.4868687;
-    var zoom = 18;
-    var mapa = make_map(x, y, zoom)
-    mapa_botom_space(20, mapa)
-    var domy = <?php echo get_all_house($conn); disconenect_to_database($conn);?>;
-    make_markers(domy, mapa);
-    mapa.getSignals().addListener(this, "marker-click", function (e) { tabulka_request(e.target.getId(),"lide") })  
-    // tabulka_request("1","lide")
-  </script>
-  </div>
-  <div class="tabulka" style="display: none;" id="tabulka">
-    <div id="lide"></div>
-    <div id="data">
-      <!-- <div class="radek_tabulky">
+    <div class="tabulka" style="display: none;" id="tabulka">
+      <div id="sedo">
+        <div id="lide"></div>
+        <div id="data">
+          <!-- <div class="radek_tabulky">
         <div class="popisek">Jméno</div>
         <div class="data" id="jmeno"></div>
       </div> -->
+        </div>
+        <div id="informace"></div>
+        <div id="ix"></div>
+      </div>
     </div>
-    <div id="ix"></div>
   </div>
-
+  
 </body>
 
 </html>

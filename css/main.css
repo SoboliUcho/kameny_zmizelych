@@ -1,52 +1,22 @@
 * {
     font-family: "Raleway", sans-serif;
+
 }
 
 body {
     margin: 0px;
-}
-
-.tabulka {
     display: flex;
     flex-direction: column;
-    margin: 10px;
-    /* background-color: #FFDD79; */
-
+    /* background-image: url("../images/depositphotos_635479520-stock-photo-background-texture-old-brick-wall.jpg");
+background-size: cover;
+background-repeat:no-repeat; */
+    /* display: flex;
+    align-content: center; */
 }
-
-#lide {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-
-}
-
-.clovek {
-    padding: 10px;
-    margin-right: 2px;
-    background-color: #FFCC38;
-    border-radius: 0;
-    border-radius: 10px 10px 0 0 ;
-    cursor: pointer;
-}
-
-.active {
-    background-color: #FFDD79;
-}
-
-#data {
-    padding: 10px;
-    background-color: #FFDD79;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-}
-.radek_tabulky{
-    padding: 10px;
-}
-
-#ix{
-    background: transparent url("../images/ix.svg") center/1em auto no-repeat;
-    width: 1em;
-    height: 1em;
+#progres {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index:2;
+    width: 30%;
 }

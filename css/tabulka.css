@@ -1,0 +1,142 @@
+:root{
+    --bs-brown-pilot: #2F1107;
+    --bs-brown-dark: #4F3732;
+    --bs-brown-light: #EFE6E0;
+    --bs-brown-mid: #BDA394;
+    --bs-red: #FF0E1C;
+    --bs-primary: #2F1107;
+    --bs-secondary: #4F3732;
+    --bs-success: #2F1107;
+    --bs-info: #EFE6E0;
+    --bs-warning: #BDA394;
+    --bs-danger: #FF0E1C;
+    --bs-light: #EFE6E0;
+    --bs-dark: #4F3732;
+    --bs-white: #FFFFFF;
+    --bs-font-sans-serif: 'Raleway',sans-serif;
+    --bs-gradient: linear-gradient(180deg,rgba(255,255,255,0.15),rgba(255,255,255,0));
+}
+
+#nelista{
+    position: relative;
+}
+#sedo{
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    justify-content: center;
+    width: 100%;
+
+}
+
+.tabulka {
+    /* flex: 1; */
+    display: flex;
+    z-index: 3;
+    position: absolute;
+    height: 100%;  
+    width: 100%;
+    left:0;
+    top:0;
+    align-items:center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#lide {
+    display: flex;
+    flex-direction: column;
+    /* flex-wrap: nowrap; */
+
+}
+
+.clovek {
+    padding: 10px;
+    background-color: var(--bs-primary);
+    color: var(--bs-white);
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    transition: color 0.15s ease-in-out,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out;
+}
+
+.clovek:hover{
+    background-color: var(--bs-red);
+}
+
+.active {
+    background-color: var(--bs-brown-mid);
+    cursor: default;
+    color: black;
+}
+.active:hover{
+    background-color: var(--bs-brown-mid);
+}
+
+#data {
+    padding: 10px;
+    background-color: var(--bs-brown-mid);
+    align-items: stretch;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 40%;
+    height: fit-content;
+}
+
+.radek_tabulky {
+    background-color: var(--bs-brown-mid);
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+    align-items: center;
+    line-height: 1.5;
+    margin: 0px;
+
+}
+
+.radek_tabulky:nth-child(even) {
+    /* background-color: white; */
+    filter: brightness(0.9);
+}
+
+.popisek {
+    flex: 1;
+    font-weight: bold;
+    display: flex;
+    width: 100px;
+    flex-direction: column;
+    text-align: left;
+    padding-left: 10px;
+
+}
+
+.data_r {
+    flex: 1;
+}
+
+#ix {
+    background: transparent url("../images/ix.svg") center/1em auto no-repeat;
+    width: 1em;
+    height: 1em;
+}
+
+#informace {
+    max-width: 40%;
+    margin-left: 10px;
+
+}
+
+.radek_informace {
+    background-color:var(--bs-brown-mid);
+}
+
+#informacet {
+    padding: 10px;
+}
+
+.popisek_informace {
+    font-weight: bold;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-right: 10px;
+}

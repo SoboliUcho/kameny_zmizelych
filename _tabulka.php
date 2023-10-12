@@ -4,10 +4,11 @@ $conn = conenect_to_database_kameny();
 $id = $_POST['id'];
 $type = $_POST["type"];
 // $id = 1;
-// $type = "lide";
-if ($type == "lide") {
+// $type = "people";
+
+if ($type == "people") {
     echo (people($id, $conn));
-} elseif($type == "clovek"){
+} elseif($type == "persone"){
     echo (persone($id, $conn));
 }
 elseif($type == "edit"){

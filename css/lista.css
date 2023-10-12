@@ -1,11 +1,3 @@
-* {
-    font-family: "Raleway", sans-serif;
-}
-
-body {
-    margin: 0px;
-}
-
 .lista {
     background-color: #2F1107;
     color: #EFE6E0;
@@ -14,9 +6,7 @@ body {
     justify-content: space-around;
     padding-top: 20px;
     padding-bottom: 20px;
-
 }
-
 
 .infobox {
     display: flex;
