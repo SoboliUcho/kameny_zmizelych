@@ -81,4 +81,10 @@ function get_persone($conn, $id){
     $result = $conn->query($sql);
     return $result;
 }
+
+function get_all_report($conn){
+    $sql = "SELECT * FROM `report`";
+    $result = $conn->query($sql);
+    return $result;
+}
 ?>

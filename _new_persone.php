@@ -25,7 +25,6 @@ if (isset($_POST["matka_id"])) {
 } else {
     $matka_id = "NULL";
 }
-$cinny_v_protiletadlove_obrane = !empty($_POST["cinny_v_protiletadlove_obrane"]) ? "'".$_POST["cinny_v_protiletadlove_obrane"]."'" : "NULL";
 $datum_presidleni = !empty($_POST["datum_presidleni"]) ? "'".$_POST["datum_presidleni"]."'" : "NULL";
 $presidlil = !empty($_POST["presidlil"]) ? "'".$_POST["presidlil"]."'" : "NULL";
 $datum_odhaseni = !empty($_POST["datum_odhaseni"]) ? "'".$_POST["datum_odhaseni"]."'" : "NULL";
@@ -61,7 +60,6 @@ if (isset($_POST["id"])) {
     matka_id = $matka_id,
     `matka-j` = $matka,
     majitel_mot_vozidla = $majitel_mot_vozidla,
-    cinny_v_protiletadlove_obrane = $cinny_v_protiletadlove_obrane,
     datum_presidleni = $datum_presidleni,
     presidlil = $presidlil,
     datum_odhaseni = $datum_odhaseni,
@@ -70,7 +68,7 @@ if (isset($_POST["id"])) {
     WHERE id = $id";
 
 } else {
-    $sql = "INSERT INTO lide(jmeno, prijmeni, datum_narozeni, misto_narozeni, rodinny_stav, nabozenske_vyznani, statni_prislusnost, okres, dum_id, den_prichodu, otec_id, `otec-j`, matka_id, `matka-j`, majitel_mot_vozidla, cinny_v_protiletadlove_obrane, datum_presidleni, presidlil, datum_odhaseni, karta, informace) VALUES ($jmeno, $prijmeni, $datum_narozeni, $misto_narozeni, $rodinny_stav, $nabozenske_vyznani, $statni_prislusnost, $okres, $domy, $den_prichodu,  $otec_id, $otec, $matka_id, $matka, $majitel_mot_vozidla, $cinny_v_protiletadlove_obrane, $datum_presidleni, $presidlil, $datum_odhaseni, $karta, $informace)";
+    $sql = "INSERT INTO lide(jmeno, prijmeni, datum_narozeni, misto_narozeni, rodinny_stav, nabozenske_vyznani, statni_prislusnost, okres, dum_id, den_prichodu, otec_id, `otec-j`, matka_id, `matka-j`, majitel_mot_vozidla, datum_presidleni, presidlil, datum_odhaseni, karta, informace) VALUES ($jmeno, $prijmeni, $datum_narozeni, $misto_narozeni, $rodinny_stav, $nabozenske_vyznani, $statni_prislusnost, $okres, $domy, $den_prichodu,  $otec_id, $otec, $matka_id, $matka, $majitel_mot_vozidla, $datum_presidleni, $presidlil, $datum_odhaseni, $karta, $informace)";
 }
 if (mysqli_query($conn, $sql)) {
     $response = "Data byla úspěšně uložena.";
