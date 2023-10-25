@@ -3,6 +3,8 @@ function tabulka_request(id, type) {
         var cFunction = people_in_house;
     }
     else if (type == "persone") {
+        var mapa = document.getElementById("mapa");
+        mapa.classList.add("gray");
         console.log(id)
         var loading = document.getElementById('data');
         loadinig(loading);
@@ -56,18 +58,38 @@ function lide_clik(event) {
     return true;
 }
 
-function informace_clik(event){
+function informace_clik(event) {
     var informace_tabulka = document.getElementById("radek_informace");
-    if (informace_tabulka != null && informace_tabulka.contains(event.target)){
+    if (informace_tabulka != null && informace_tabulka.contains(event.target)) {
         return false
     }
     return true
 
 }
 
+function tabulka_hide(){
+    var tabulka = document.getElementById("tabulka");
+    if (tabulka.classList.contains("hidden")) {
+        tabulka.classList.remove("hidden");
+        setTimeout(function () {
+            tabulka.classList.remove('visuallyhidden');
+          }, 20);
+        
+      } else {
+        tabulka.classList.add("visuallyhidden");
+        setTimeout(() => {
+            tabulka.classList.add ("hidden");
+          }, 500);
+      }
+}
+
 function people_in_house(data) {
     var tabulka = document.getElementById("tabulka");
-    tabulka.style.display = "flex"
+    tabulka.classList.remove("hidden");
+    setTimeout(function () {
+        tabulka.classList.remove('visuallyhidden');
+      }, 20);
+
     document.addEventListener('click', function handleClickOutsideBox(event) {
         console.log("clik")
         var lide_tabulka = document.getElementById("lide");
@@ -75,7 +97,13 @@ function people_in_house(data) {
         // console.log(event.target)
         // console.log(lide_clik(event))
         if (lide_clik(event) && !data_tabulka.contains(event.target) && informace_clik(event)) {
-            tabulka.style.display = 'none';
+            var mapa = document.getElementById("mapa");
+            mapa.classList.remove("gray");
+
+            tabulka.classList.add("visuallyhidden");
+            setTimeout(() => {
+                tabulka.classList.add ("hidden");
+              }, 500);
             console.log("hide")
             close();
         }
@@ -228,7 +256,7 @@ function change_persone(event) {
 function loadinig(misto) {
     var informace = document.getElementById("informace");
     informace.innerHTML = "";
-    misto.innerHTML = "loading";
+    misto.innerHTML = "<div class='lds-spinner'><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>";
 }
 
 function language_set(langue) {

@@ -3,7 +3,9 @@
     cursor: default;
 }
 #mapa{
-    /* flex: 1; */
-    /* order:2; */
-    /* z-index: -1; */
+    transition: filter 0.5s;
+}
+
+.gray {
+    filter: grayscale(100%); 
 }

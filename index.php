@@ -18,12 +18,14 @@ $conn = conenect_to_database_kameny();
   <link rel="stylesheet" href="css/mapacz.css">
   <link rel="stylesheet" href="css/lista.css">
   <link rel="stylesheet" href="css/tabulka.css">
+  <link rel="stylesheet" href="css/loader.css">
 
   <!-- <script src="js/logintable.js"></script> -->
   <script type="text/javascript" src="https://api.mapy.cz/loader.js"></script>
   <script type="text/javascript">Loader.load()</script>
   <script src="js\mapa.js"></script>
   <script src="js\tabulka.js"></script>
+
 
   <title>Kameny zmizelých</title>
   <!--  -->
@@ -50,7 +52,7 @@ $conn = conenect_to_database_kameny();
       // tabulka_request("1","lide")
     </script>
 
-    <div class="tabulka" style="display: none;" id="tabulka">
+    <div class="tabulka hidden visuallyhidden" id="tabulka">
       <div id="sedo">
         <div id="lide"></div>
         <div id="data">
