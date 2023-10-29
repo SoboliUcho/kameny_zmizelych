@@ -22,12 +22,14 @@
 }
 
 #sedo {
+    box-sizing: border-box;
     display: flex;
     flex-direction: row;
     padding: 10px;
     justify-content: center;
     width: 100%;
-
+    height: 100%;
+    margin-top: 10px;
 }
 
 .tabulka {
@@ -39,10 +41,14 @@
     width: 100%;
     left: 0;
     top: 0;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.5);
+    /* align-items: center; */
+    /* background-color: rgba(0, 0, 0, 0.5); */
     opacity: 1;
     transition: 0.5s;
+    padding: 10px;
+    padding-top: 2em;
+    padding-bottom: 2em;
+    box-sizing: border-box;
 }
 
 .hidden {
@@ -61,6 +67,9 @@
 #lide {
     display: flex;
     flex-direction: column;
+    width: 30%;
+    padding-left: 2vw;
+    box-sizing: border-box;
     /* flex-wrap: nowrap; */
 
 }
@@ -91,13 +100,17 @@
 }
 
 #data {
+    box-sizing: border-box;
     padding: 10px;
     background-color: var(--bs-brown-mid);
     align-items: stretch;
     flex-direction: column;
     flex-wrap: wrap;
+    height: 100%;
     width: 40%;
-    height: fit-content;
+    overflow: auto;
+    border-top: 10px solid var(--bs-brown-mid);
+    border-bottom: 10px solid var(--bs-brown-mid);
 }
 
 .radek_tabulky {
@@ -108,12 +121,16 @@
     align-items: center;
     line-height: 1.5;
     margin: 0px;
+    padding: 10px;
+}
 
+.radek_tabulky:first-of-type {
+    padding-top: 0px;
 }
 
 .radek_tabulky:nth-child(even) {
     /* background-color: white; */
-    filter: brightness(0.9);
+    filter: brightness(0.92);
 }
 
 .popisek {
@@ -135,16 +152,20 @@
     background: transparent url("../images/ix.svg") center/1em auto no-repeat;
     width: 1em;
     height: 1em;
+    transform: translate(0%, -100%);
 }
 
 #informace {
-    max-width: 40%;
+    width: 30%;
+    max-height: 100%;
     margin-left: 10px;
 
 }
 
 #radek_informace {
     background-color: var(--bs-brown-mid);
+    overflow: auto;
+    max-height: 100%;
 }
 
 #informacet {
@@ -156,4 +177,24 @@
     padding-left: 10px;
     padding-top: 10px;
     padding-right: 10px;
+}
+
+/* .simplebar-srollbar::before{
+    background-color: var(--bs-brown-pilot);
+} */
+
+::-webkit-scrollbar {
+    width: 0.5em;
+}
+
+div::-webkit-scrollbar-thumb {
+    background-color: var(--bs-brown-pilot);
+}
+
+div::-webkit-scrollbar-button {
+    display: none;
+}
+div {
+    scrollbar-color:var(--bs-brown-pilot) var(--bs-brown-mid);
+    scrollbar-width: thin;
 }

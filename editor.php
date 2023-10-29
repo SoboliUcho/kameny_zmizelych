@@ -79,7 +79,7 @@ if (isset($_GET["response"])) {
         </div>
 
         <div id="nosoba_form">
-            <form action="_new_persone.php" method="post" class="form" id="nosoba_f">
+            <form action="_new_persone.php" method="post" class="form" id="nosoba_f" enctype="multipart/form-data">
                 <div id="id_form" style="display: none;">
                 </div>
                 <div>
@@ -206,7 +206,7 @@ if (isset($_GET["response"])) {
                 </div>
                 <div>
                     <label for="karta">Karta:</label>
-                    <input type="text" id="karta" name="karta">
+                    <input type="file" id="karta" name="karta[]" multiple="multiple" >
                 </div>
                 <div>
                     <label for="informace">Informace:</label>

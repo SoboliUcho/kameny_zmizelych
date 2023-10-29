@@ -1,11 +1,29 @@
+:root {
+    --bs-brown-pilot: #2F1107;
+    --bs-brown-dark: #4F3732;
+    --bs-brown-light: #EFE6E0;
+    --bs-brown-mid: #BDA394;
+    --bs-red: #FF0E1C;
+    --bs-primary: #2F1107;
+    --bs-secondary: #4F3732;
+    --bs-success: #2F1107;
+    --bs-info: #EFE6E0;
+    --bs-warning: #BDA394;
+    --bs-danger: #FF0E1C;
+    --bs-light: #EFE6E0;
+    --bs-dark: #4F3732;
+    --bs-white: #FFFFFF;
+    --bs-font-sans-serif: 'Raleway', sans-serif;
+    --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+}
 .lista {
-    background-color: #2F1107;
+    background-color: var(--bs-brown-pilot);
     color: #EFE6E0;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: center;
 }
 
 .infobox {
@@ -23,17 +41,67 @@ a {
     color: #EFE6E0;
 }
 
-#nazev {
-    font-size: 2.3em;
+#logo {
+    transition: 0.5s;
 }
+#logo_velke {
+    display: block;
+    /* visibility: visible; */
+}
+#logo_male{
+    display: none;
+    /* visibility: hidden; */
+}
+
+#nazev {
+    box-sizing: border-box;
+    flex-grow: 1;
+    font-size: 2.3em;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
 #progres {
     position: fixed;
     bottom: 0;
     right: 0;
-    z-index:2;
+    z-index: 2;
     width: 30%;
 }
-.infobox{
+
+.infobox {
     display: flex;
     flex-direction: column;
+}
+
+@media screen and (max-width: 600px) {
+    #logo {
+        width: 85px;
+        /* overflow: hidden; */
+    }
+
+    #logo_velke {
+        display: none;
+        /* visibility: hidden; */
+    }
+    #logo_male{
+        display: block;
+        /* visibility: visible; */
+    }
+
+}
+
+@media screen and (max-width: 910px) {
+    #nazev {
+        /* flex-grow: 0; */
+        font-size: 2.3em;
+        position: relative;
+        left: 0%;
+        transform: translate(0%, 0%);
+        margin-left: 20px;
+        text-align: center;
+        /* flex-shrink: 3; */
+        /* overflow: hidden; */
+    }
 }

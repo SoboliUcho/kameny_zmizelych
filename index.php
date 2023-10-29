@@ -26,6 +26,8 @@ $conn = conenect_to_database_kameny();
   <script src="js\mapa.js"></script>
   <script src="js\tabulka.js"></script>
 
+  <!-- <link rel="stylesheet" href="https://unpkg.com/simplebar@latest/dist/simplebar.css" />
+  <script src="https://unpkg.com/simplebar@latest/dist/simplebar.min.js"></script> -->
 
   <title>Kameny zmizelých</title>
   <!--  -->
@@ -44,7 +46,7 @@ $conn = conenect_to_database_kameny();
       var y = 49.4868687;
       var zoom = 18;
       var mapa = make_map(x, y, zoom)
-      mapa_botom_space(10, mapa)
+      mapa_botom_space(1, mapa)
       var domy = <?php echo get_all_house($conn);
       disconenect_to_database($conn); ?>;
       make_markers(domy, mapa);
@@ -53,20 +55,19 @@ $conn = conenect_to_database_kameny();
     </script>
 
     <div class="tabulka hidden visuallyhidden" id="tabulka">
-      <div id="sedo">
-        <div id="lide"></div>
-        <div id="data">
-          <!-- <div class="radek_tabulky">
+      <div id="lide" ></div>
+      <div id="data">
+        <!-- <div class="radek_tabulky">
         <div class="popisek">Jméno</div>
         <div class="data" id="jmeno"></div>
       </div> -->
-        </div>
-        <div id="informace"></div>
-        <div id="ix"></div>
       </div>
+      <div id="informace"></div>
+      <div id="ix"></div>
+
     </div>
   </div>
-  
+
 </body>
 
 </html>
