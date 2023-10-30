@@ -302,8 +302,11 @@ function language_set(langue) {
 function editpersone(data) {
     data = JSON.parse(data);
     for (var key in data) {
+        if (key == "karta" && data["karta"]!=null){
+            console.log(data[key]);
+            karta_img(data[key]);
+        }
         if (key == "karta"){
-            karta(data[key]);
             continue;
         }
         var hodnota = data[key];
@@ -318,11 +321,16 @@ function editpersone(data) {
 }
 
 // TODOO dodělat
-function karta(data){
+function karta_img(data){
     var deleteimage = document.getElementById("delete_image")
     // console.log(data)
     data = JSON.parse(data);
-    
+    console.log(data);
+    var  img = "<label class='obrazek_label'> vyberte obrázek na smazání: </label>";
+    for (let index = 0; index < data.length; index++) {
+        img +='<label class="obrazek_label"><input type="checkbox" name="del_images[]" value="'+data[index]+'"><img src="'+data[index]+'" alt="obrazek" class="obrazek"></label>';
+    }
+    deleteimage.innerHTML = img;
 }
 
 function nothing() {

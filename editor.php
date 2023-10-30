@@ -272,4 +272,4 @@ if (isset($_GET["response"])) {
 </script>
 
 </html>
-<label><img src="" alt="obrazek"><input type="checkbox" name="del_images[]" value="">	</label>
+

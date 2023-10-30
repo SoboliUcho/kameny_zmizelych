@@ -44,20 +44,39 @@ if ($matka == "NULL" && $matka_id != "NULL") {
     $matka = "'" . $clovek["jmeno"] . " " . $clovek["prijmeni"] . "'";
 }
 
-if ($karta != "NULL" && isset($_POST["id"])) {
+if (($karta != "NULL" && isset($_POST["id"]) || $_POST["del_images"])) {
     $sql = get_persone_karta($conn, $_POST["id"]);
     $old_karta = array();
     foreach ($sql as $okarta) {
         $old_karta = $okarta["karta"];
     }
     $old_karta = json_decode($old_karta, true);
-    for ($i=0; $i < count($karta); $i++) { 
-        // echo($karta[$i]);
-        $old_karta[]= $karta[$i];
+
+    if (isset($_POST["del_images"])) {
+        $del_images = $_POST["del_images"];
+        for ($i = 0; $i < count($del_images); $i++) {
+            foreach ($old_karta as $index => $okarta) {
+                if ($okarta === $del_images[$i]) {
+                    unset($old_karta[$index]);
+                }
+            }
+            unlink($del_images[$i]);
+        }
+        
     }
+
+    if ($karta != "NULL") {
+        for ($i = 0; $i < count($karta); $i++) {
+            // echo($karta[$i]);
+            $old_karta[] = $karta[$i];
+        }
+    } else {
+        $karta = $old_karta;
+    }
+
 }
-if ($karta != "NULL"){
-    $karta = "'".json_encode($karta, JSON_UNESCAPED_UNICODE)."'";
+if ($karta != "NULL") {
+    $karta = "'" . json_encode($karta, JSON_UNESCAPED_UNICODE) . "'";
 }
 
 if (isset($_POST["id"])) {
@@ -98,14 +117,14 @@ disconenect_to_database($conn);
 echo $response;
 // echo $sql;
 $location = "Location: editor.php?response=$response";
-header($location);
+// header($location);
 
 function karta($jmeno, $prijmeni)
 {
     // echo("karta");
     $files = $_FILES["karta"];
     $images = array();
-    print_r($files);
+    // print_r($files);
     foreach ($files['name'] as $key => $name) {
         $fileTmpName = $files['tmp_name'][$key];
         $fileSize = $files['size'][$key];
@@ -123,7 +142,7 @@ function karta($jmeno, $prijmeni)
             move_uploaded_file($fileTmpName, $uploadPath);
             $images[] = $uploadPath;
             // print_r($images);
-        // echo "<br>";
+            // echo "<br>";
         }
 
     }
