@@ -87,4 +87,10 @@ function get_all_report($conn){
     $result = $conn->query($sql);
     return $result;
 }
+
+function get_persone_karta($conn, $id){
+    $sql = "SELECT karta FROM lide WHERE id = $id";;
+    $result = $conn->query($sql);
+    return $result;
+}
 ?>

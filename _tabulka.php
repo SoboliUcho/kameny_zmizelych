@@ -14,6 +14,9 @@ if ($type == "people") {
 elseif($type == "edit"){
     echo(persone($id,$conn));
 }
+elseif($type == "karta"){
+    echo(json_encode(get_persone_karta($conn, $id), JSON_UNESCAPED_UNICODE));
+}
 else{
     disconenect_to_database($conn);
 }

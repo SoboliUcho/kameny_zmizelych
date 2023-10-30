@@ -44,6 +44,22 @@ if ($matka == "NULL" && $matka_id != "NULL") {
     $matka = "'" . $clovek["jmeno"] . " " . $clovek["prijmeni"] . "'";
 }
 
+if ($karta != "NULL" && isset($_POST["id"])) {
+    $sql = get_persone_karta($conn, $_POST["id"]);
+    $old_karta = array();
+    foreach ($sql as $okarta) {
+        $old_karta = $okarta["karta"];
+    }
+    $old_karta = json_decode($old_karta, true);
+    for ($i=0; $i < count($karta); $i++) { 
+        // echo($karta[$i]);
+        $old_karta[]= $karta[$i];
+    }
+}
+if ($karta != "NULL"){
+    $karta = "'".json_encode($karta, JSON_UNESCAPED_UNICODE)."'";
+}
+
 if (isset($_POST["id"])) {
     $id = $_POST['id'];
     $sql = "UPDATE lide SET 
@@ -80,6 +96,7 @@ if (mysqli_query($conn, $sql)) {
 
 disconenect_to_database($conn);
 echo $response;
+// echo $sql;
 $location = "Location: editor.php?response=$response";
 header($location);
 
@@ -88,27 +105,32 @@ function karta($jmeno, $prijmeni)
     // echo("karta");
     $files = $_FILES["karta"];
     $images = array();
+    print_r($files);
     foreach ($files['name'] as $key => $name) {
         $fileTmpName = $files['tmp_name'][$key];
-        // $fileSize = $files['size'][$key];
+        $fileSize = $files['size'][$key];
         $fileError = $files['error'][$key];
         $fileName = $files["name"][$key];
-
+        // print_r($files['name'][$key]);
+        // echo "<br>";
         if ($fileError === 0) {
-            // Definujte cestu, kde chcete uložit nahrávaný obrázek
-            $fileName = $jmeno ."_". $prijmeni ."_". uniqid() ."_". $fileName;
-            $uploadPath = "'karty/" . $fileName . "'";
+            $fileName = str_replace("'", "", $jmeno) . "_" . str_replace("'", "", $prijmeni) . "_" . uniqid() . "_" . $fileName;
+            $fileName = iconv('utf-8', 'us-ascii//TRANSLIT', $fileName);
 
+            $uploadPath = "karty/" . $fileName;
+            // echo $uploadPath."\n\r";
             // Přesuňte nahrávaný soubor na server
             move_uploaded_file($fileTmpName, $uploadPath);
             $images[] = $uploadPath;
+            // print_r($images);
+        // echo "<br>";
+        }
 
-        }
-        else{
-            continue;
-        }
     }
-    // echo $uploadPath;
+    if (count($images) > 0) {
+        // $json = "'". json_encode($images,JSON_UNESCAPED_UNICODE) ."'";
+        return $images;
+    }
     return "NULL";
 }
 ?>

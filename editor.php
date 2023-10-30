@@ -208,6 +208,9 @@ if (isset($_GET["response"])) {
                     <label for="karta">Karta:</label>
                     <input type="file" id="karta" name="karta[]" multiple="multiple" >
                 </div>
+                <div id = "delete_image">
+
+                </div>
                 <div>
                     <label for="informace">Informace:</label>
                     <textarea id="informace" name="informace"></textarea>
@@ -269,3 +272,4 @@ if (isset($_GET["response"])) {
 </script>
 
 </html>
+<label><img src="" alt="obrazek"><input type="checkbox" name="del_images[]" value="">	</label>
