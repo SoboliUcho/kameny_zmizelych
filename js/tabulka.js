@@ -164,7 +164,7 @@ function persone(data) {
         "datum_presidleni",
         "presidlil",
         "datum_odhaseni",
-        "karta",
+        // "karta",
     ]
 
     var nazvy = language_set("cz");
@@ -211,8 +211,19 @@ function persone(data) {
         subtext += '</div>\n</div>\n'
         text += subtext
     }
-
+    
     clovek.innerHTML = text;
+    if (data["karta"] != null) {
+        var img = "";
+    var karta = JSON.parse(data["karta"]);
+        for (let index = 0; index < karta.length; index++) {
+            // console.log(karta)
+            img +='<img src="'+karta[index]+'" alt="obrazek" class="obrazek">';
+            
+        }
+        var text = '<div class="radek_tabulky">\n<div class="popisek karta"> Karta: </div>\n <div class="data_r" id="karta">'+img+'</div>\n</div>\n';
+        clovek.innerHTML += text
+    } 
 
     if (data["informace"] != null) {
         var subtext = '<div id="radek_informace">\n<div class="popisek_informace"> Informace: </div>\n <div class="data_r" id="informacet">' + data["informace"] + '</div>\n</div>\n';
@@ -291,6 +302,10 @@ function language_set(langue) {
 function editpersone(data) {
     data = JSON.parse(data);
     for (var key in data) {
+        if (key == "karta"){
+            karta(data[key]);
+            continue;
+        }
         var hodnota = data[key];
         var pole = document.getElementById(key);
         // console.log(hodnota);
@@ -300,6 +315,14 @@ function editpersone(data) {
         }
     }
     console.log(data)
+}
+
+// TODOO dodělat
+function karta(data){
+    var deleteimage = document.getElementById("delete_image")
+    // console.log(data)
+    data = JSON.parse(data);
+    
 }
 
 function nothing() {
