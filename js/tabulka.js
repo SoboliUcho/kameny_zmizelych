@@ -1,11 +1,30 @@
 function tabulka_request(id, type) {
     if (type == "people") {
+
         var cFunction = people_in_house;
+        close()
     }
     else if (type == "persone") {
         var mapa = document.getElementById("mapa");
         mapa.classList.add("gray");
-        console.log(id)
+        // console.log(id)
+        var loading = document.getElementById('data');
+        loadinig(loading);
+        var curent_active = document.getElementsByClassName("active")
+        for (var i = 0; i < curent_active.length; i++) {
+            curent_active[i].classList.remove("active");
+        };
+        var current_element = document.getElementById(id);
+        if (current_element != null) {
+            current_element.classList.add("active");
+        }
+        tabulka_hide();
+        var cFunction = persone;
+        close();
+    }
+    else if (type == "persone2") {
+        // console.log(id)
+        type = "persone"
         var loading = document.getElementById('data');
         loadinig(loading);
         var curent_active = document.getElementsByClassName("active")
@@ -18,15 +37,19 @@ function tabulka_request(id, type) {
         }
 
         var cFunction = persone;
+        close();
     }
     else if (type == "father") {
         var cFunction = father;
+        close();
     }
     else if (type == "mother") {
         var cFunction = mother;
+        close();
     }
     else if (type == "edit") {
         var cFunction = editpersone;
+        close();
     }
     else {
         var cFunction = nothing;
@@ -64,15 +87,16 @@ function informace_clik(event) {
         return false
     }
     return true
-
 }
 
 function tabulka_hide(){
     var tabulka = document.getElementById("tabulka");
     if (tabulka.classList.contains("hidden")) {
+        // console.log("remove hidden")
         tabulka.classList.remove("hidden");
         setTimeout(function () {
             tabulka.classList.remove('visuallyhidden');
+            // console.log("remove visual")
           }, 20);
         
       } else {
@@ -84,33 +108,18 @@ function tabulka_hide(){
 }
 
 function people_in_house(data) {
-    var tabulka = document.getElementById("tabulka");
-    tabulka.classList.remove("hidden");
-    setTimeout(function () {
-        tabulka.classList.remove('visuallyhidden');
-      }, 20);
-
     document.addEventListener('click', function handleClickOutsideBox(event) {
-        console.log("clik")
         var lide_tabulka = document.getElementById("lide");
         var data_tabulka = document.getElementById("data");
-        // console.log(event.target)
-        // console.log(lide_clik(event))
         if (lide_clik(event) && !data_tabulka.contains(event.target) && informace_clik(event)) {
             var mapa = document.getElementById("mapa");
             mapa.classList.remove("gray");
-
-            tabulka.classList.add("visuallyhidden");
-            setTimeout(() => {
-                tabulka.classList.add ("hidden");
-              }, 500);
-            console.log("hide")
+            tabulka_hide()
+            document.removeEventListener('click', handleClickOutsideBox)
             close();
         }
     });
-    console.log(data);
     data = JSON.parse(data);
-    console.log(data);
     if (data["error"] !== undefined) {
         return;
     }
@@ -130,10 +139,10 @@ function div_lide(data) {
 }
 
 function persone(data) {
-
+    
+    // return;
     var clovek = document.getElementById('data');
     data = JSON.parse(data);
-    console.log(data)
 
     if (document.getElementById(data["id"]) == null) {
         text = "<div class = 'clovek active' id =" + data["id"] + ">" + data["jmeno"] + " " + data["prijmeni"] + "</div>"
@@ -218,7 +227,7 @@ function persone(data) {
     var karta = JSON.parse(data["karta"]);
         for (let index = 0; index < karta.length; index++) {
             // console.log(karta)
-            img +='<img src="'+karta[index]+'" alt="obrazek" class="obrazek">';
+            img +='<div class = "ctverec"><img src="'+karta[index]+'" alt="obrazek" class="obrazek"><div>';
             
         }
         var text = '<div class="radek_tabulky">\n<div class="popisek karta"> Karta: </div>\n <div class="data_r" id="karta">'+img+'</div>\n</div>\n';
@@ -240,18 +249,26 @@ function persone(data) {
     if (data["matka_id"] != null) {
         mother(data)
     }
+    var obrazky = document.getElementsByClassName("obrazek");
+    for (var i = 0; i < obrazky.length; i++) {
+        obrazky[i].addEventListener("click", openimage);
+    }
 }
 
 function father(data) {
     var otec = document.getElementById(data["otec_id"])
     otec.addEventListener("click", function (event) {
+        event.stopPropagation()
         change_persone(event);
     });
 }
 
 function mother(data) {
     var matka = document.getElementById(data["matka_id"])
-    matka.addEventListener("click", change_persone);
+    matka.addEventListener("click", function (event) {
+        event.stopPropagation()
+        change_persone(event);
+    });
 }
 
 function close() {
@@ -261,7 +278,7 @@ function close() {
 function change_persone(event) {
     var id_div = event.target.id;
     console.log(id_div);
-    tabulka_request(id_div, "persone");
+    tabulka_request(id_div, "persone2");
 }
 
 function loadinig(misto) {
@@ -328,9 +345,13 @@ function karta_img(data){
     console.log(data);
     var  img = "<label class='obrazek_label'> vyberte obrázek na smazání: </label>";
     for (let index = 0; index < data.length; index++) {
-        img +='<label class="obrazek_label"><input type="checkbox" name="del_images[]" value="'+data[index]+'"><img src="'+data[index]+'" alt="obrazek" class="obrazek"></label>';
+        img +='<label class="obrazek_label"><input type="checkbox" name="del_images[]" value="'+data[index]+'"><div class="ctverec"><img src="'+data[index]+'" alt="obrazek" class="obrazek"></div></label>';
     }
     deleteimage.innerHTML = img;
+}
+
+function openimage(event){
+    
 }
 
 function nothing() {

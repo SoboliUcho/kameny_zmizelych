@@ -93,4 +93,12 @@ function get_persone_karta($conn, $id){
     $result = $conn->query($sql);
     return $result;
 }
+
+function convertCzechToEnglish($text) {
+    $czech = ['á', 'č', 'ď', 'é', 'ě', 'í', 'ň', 'ó', 'ř', 'š', 'ť', 'ú', 'ů', 'ý', 'ž', ' '];
+    $english = ['a', 'c', 'd', 'e', 'e', 'i', 'n', 'o', 'r', 's', 't', 'u', 'u', 'y', 'z', '-'];
+
+    return str_replace($czech, $english, $text);
+}
+
 ?>

@@ -1,14 +1,31 @@
-.prepinace{
+body {
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
+}
+
+.prepinace {
     display: flex;
     flex-direction: row;
     margin: 10px;
 }
-.prepinac{
+
+.prepinac {
     padding: 10px;
     border: 1px solid black;
     margin: 1px;
 }
-.obsah{
+
+.obsah {
     padding: 10px;
     padding-top: 0px;
+}
+
+.ctverec {
+    width: 200px;
+    /* height: 6vw; */
+    /* overflow: hidden; */
+} 
+.obrazek {
+    width: 100%;
 }

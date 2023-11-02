@@ -46,23 +46,28 @@ if ($matka == "NULL" && $matka_id != "NULL") {
 
 if (($karta != "NULL" && isset($_POST["id"]) || $_POST["del_images"])) {
     $sql = get_persone_karta($conn, $_POST["id"]);
-    $old_karta = array();
+    $old_karta_json = "";
     foreach ($sql as $okarta) {
-        $old_karta = $okarta["karta"];
+        $old_karta_json = $okarta["karta"];
     }
-    $old_karta = json_decode($old_karta, true);
+    $old_karta = array();
+    $old_karta[] = json_decode($old_karta_json, true);
 
     if (isset($_POST["del_images"])) {
         $del_images = $_POST["del_images"];
         for ($i = 0; $i < count($del_images); $i++) {
             foreach ($old_karta as $index => $okarta) {
                 if ($okarta === $del_images[$i]) {
+
                     unset($old_karta[$index]);
+
                 }
             }
-            unlink($del_images[$i]);
+            try {
+                unlink($del_images[$i]);
+            } catch (Exception $e) {
+            }
         }
-        
     }
 
     if ($karta != "NULL") {
@@ -114,10 +119,10 @@ if (mysqli_query($conn, $sql)) {
 }
 
 disconenect_to_database($conn);
-echo $response;
+// echo $response;
 // echo $sql;
 $location = "Location: editor.php?response=$response";
-// header($location);
+header($location);
 
 function karta($jmeno, $prijmeni)
 {
@@ -134,11 +139,10 @@ function karta($jmeno, $prijmeni)
         // echo "<br>";
         if ($fileError === 0) {
             $fileName = str_replace("'", "", $jmeno) . "_" . str_replace("'", "", $prijmeni) . "_" . uniqid() . "_" . $fileName;
-            $fileName = iconv('utf-8', 'us-ascii//TRANSLIT', $fileName);
+            $fileName = convertCzechToEnglish($fileName);
 
             $uploadPath = "karty/" . $fileName;
             // echo $uploadPath."\n\r";
-            // Přesuňte nahrávaný soubor na server
             move_uploaded_file($fileTmpName, $uploadPath);
             $images[] = $uploadPath;
             // print_r($images);
@@ -152,4 +156,5 @@ function karta($jmeno, $prijmeni)
     }
     return "NULL";
 }
+// | *.zip; pokus*; .vscode/; mapy/; database/; bordel/; domains/; subdom/
 ?>

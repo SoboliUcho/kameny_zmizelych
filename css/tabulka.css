@@ -147,6 +147,14 @@
 .data_r {
     flex: 1;
 }
+.ctverec {
+    width: 6vw;
+    height: 6vw;
+    overflow: hidden;
+} 
+.obrazek {
+    height: 100%;
+}
 
 #ix {
     background: transparent url("../images/ix.svg") center/1em auto no-repeat;
