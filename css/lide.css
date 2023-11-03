@@ -1,0 +1,102 @@
+:root {
+    --bs-brown-pilot: #2F1107;
+    --bs-brown-dark: #4F3732;
+    --bs-brown-light: #EFE6E0;
+    --bs-brown-mid: #BDA394;
+    --bs-red: #FF0E1C;
+    --bs-primary: #2F1107;
+    --bs-secondary: #4F3732;
+    --bs-success: #2F1107;
+    --bs-info: #EFE6E0;
+    --bs-warning: #BDA394;
+    --bs-danger: #FF0E1C;
+    --bs-light: #EFE6E0;
+    --bs-dark: #4F3732;
+    --bs-white: #FFFFFF;
+    --bs-font-sans-serif: 'Raleway', sans-serif;
+    --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+}
+
+#nelista{
+    /* align-items: center; */
+    width: 100%;
+    align-self: center;
+}
+/* #nelista *{
+    color: black;
+} */
+.zaklad{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
+    justify-content: space-between;
+}
+.data{
+    align-self: center;
+}
+.vice{
+    align-self: end;
+}
+.clovek{
+    display: flex;
+    background-color: var(--bs-white);
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+.clovek:nth-child(even) {
+    background-color: var(--bs-brown-light);  
+    /* filter: brightness(0.5); */
+}
+
+.center {
+    width: 80%;
+}
+
+.rozsireni .data {
+    box-sizing: border-box;
+    padding: 10px;
+    /* background-color: var(--bs-brown-mid); */
+    align-items: stretch;
+    flex-direction: column;
+    flex-wrap: wrap;
+    /* height: 100%; */
+    /* width: 40%; */
+    /* overflow: auto; */
+    /* border-top: 10px solid var(--bs-brown-mid);
+    border-bottom: 10px solid var(--bs-brown-mid); */
+}
+.radek_tabulky {
+    /* background-color: var(--bs-brown-mid); */
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+    align-items: center;
+    line-height: 1.5;
+    margin: 0px;
+    padding: 10px;
+    border-bottom: 0.5px solid rgb(219 219 219);
+}
+.radek_tabulky:last-of-type{
+    border-bottom: 0.5px none rgb(219 219 219);
+    
+}
+.popisek {
+    flex: 1;
+    font-weight: bold;
+    display: flex;
+    width: 100px;
+    flex-direction: column;
+    text-align: left;
+    padding-left: 10px;
+
+}
+
+.data_r {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+}

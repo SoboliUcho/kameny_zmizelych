@@ -101,4 +101,19 @@ function convertCzechToEnglish($text) {
     return str_replace($czech, $english, $text);
 }
 
+function get_all_persone_location($conn){
+    $sql = "SELECT 
+    l.id, 
+    l.jmeno, 
+    l.prijmeni, 
+    l.datum_narozeni,
+    l.dum_id, 
+    d.ulice,
+    d.cislo_domu
+    FROM lide l 
+    JOIN domy d on d.id = l.dum_id
+    ORDER BY l.prijmeni ASC, l.jmeno ASC";
+    $result = $conn->query($sql);
+    return $result;
+}
 ?>

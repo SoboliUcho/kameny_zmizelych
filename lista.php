@@ -56,13 +56,13 @@
         
         </a>';
     }
-    if ($currentPage == 'lide.php') {
-      echo '<a href="o_projektu.html" class="info aktive">
+    if ($currentPage == 'o_projektu.php') {
+      echo '<a href="o_projektu.php" class="info aktive">
         <div class="infotext">O projektu</div>
         
         </a>';
     } else {
-      echo '<a href="o_projektu.html" class="info">
+      echo '<a href="o_projektu.php" class="info">
         <div class="infotext">O projektu</div>
         
         </a>';
@@ -90,9 +90,18 @@
   var menu = document.getElementById("infobox")
   var submenu = document.getElementById("sublista")
   menu.addEventListener("click", function (event) {
+    event.stopPropagation()
     console.log("clik");
     menu.classList.toggle("iks");
     submenu.classList.toggle('iks');
+    document.addEventListener('click', function handleClickOutsideBox(event) {
+      if (!submenu.contains(event.target)) {
+        menu.classList.toggle("iks");
+        submenu.classList.toggle('iks');
+        document.removeEventListener('click', handleClickOutsideBox);
+      }
+    })
   });
+
 </script>
 <img id="progres" src="images\in_progres.png" alt="">

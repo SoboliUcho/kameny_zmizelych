@@ -58,9 +58,8 @@ if (($karta != "NULL" && isset($_POST["id"]) || $_POST["del_images"])) {
         for ($i = 0; $i < count($del_images); $i++) {
             foreach ($old_karta as $index => $okarta) {
                 if ($okarta === $del_images[$i]) {
-
                     unset($old_karta[$index]);
-
+                    break;
                 }
             }
             try {
@@ -75,13 +74,12 @@ if (($karta != "NULL" && isset($_POST["id"]) || $_POST["del_images"])) {
             // echo($karta[$i]);
             $old_karta[] = $karta[$i];
         }
-    } else {
-        $karta = $old_karta;
     }
 
 }
-if ($karta != "NULL") {
-    $karta = "'" . json_encode($karta, JSON_UNESCAPED_UNICODE) . "'";
+if ($old_karta != "NULL") {
+    $old_karta = "'" . json_encode($old_karta, JSON_UNESCAPED_UNICODE) . "'";
+    $karta = $old_karta;
 }
 
 if (isset($_POST["id"])) {

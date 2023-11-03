@@ -26,9 +26,6 @@ $conn = conenect_to_database_kameny();
   <script src="js\mapa.js"></script>
   <script src="js\tabulka.js"></script>
 
-  <!-- <link rel="stylesheet" href="https://unpkg.com/simplebar@latest/dist/simplebar.css" />
-  <script src="https://unpkg.com/simplebar@latest/dist/simplebar.min.js"></script> -->
-
   <title>Kameny zmizelých</title>
   <!--  -->
   <!--  -->
@@ -66,6 +63,7 @@ $conn = conenect_to_database_kameny();
       <div id="ix"></div>
 
     </div>
+    <div class="obrazkyshow hidden visuallyhidden" id="obrazkyshow"></div>
   </div>
 
 </body>
