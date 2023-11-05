@@ -44,15 +44,15 @@ if ($matka == "NULL" && $matka_id != "NULL") {
     $matka = "'" . $clovek["jmeno"] . " " . $clovek["prijmeni"] . "'";
 }
 
-if (($karta != "NULL" && isset($_POST["id"]) || $_POST["del_images"])) {
-    $sql = get_persone_karta($conn, $_POST["id"]);
-    $old_karta_json = "";
-    foreach ($sql as $okarta) {
-        $old_karta_json = $okarta["karta"];
-    }
-    $old_karta = array();
-    $old_karta[] = json_decode($old_karta_json, true);
+$sql = get_persone_karta($conn, $_POST["id"]);
+$old_karta_json = "";
+foreach ($sql as $okarta) {
+    $old_karta_json = $okarta["karta"];
+}
+$old_karta = json_decode($old_karta_json, true);
 
+if (($karta != "NULL" && isset($_POST["id"])) || isset($_POST["del_images"])) {
+   
     if (isset($_POST["del_images"])) {
         $del_images = $_POST["del_images"];
         for ($i = 0; $i < count($del_images); $i++) {
@@ -68,7 +68,9 @@ if (($karta != "NULL" && isset($_POST["id"]) || $_POST["del_images"])) {
             }
         }
     }
-
+    echo ($sql);
+    print_r($old_karta);
+    print_r($karta);
     if ($karta != "NULL") {
         for ($i = 0; $i < count($karta); $i++) {
             // echo($karta[$i]);
@@ -118,7 +120,7 @@ if (mysqli_query($conn, $sql)) {
 
 disconenect_to_database($conn);
 // echo $response;
-// echo $sql;
+echo $sql;
 $location = "Location: editor.php?response=$response";
 header($location);
 

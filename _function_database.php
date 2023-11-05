@@ -89,14 +89,14 @@ function get_all_report($conn){
 }
 
 function get_persone_karta($conn, $id){
-    $sql = "SELECT karta FROM lide WHERE id = $id";;
+    $sql = "SELECT karta FROM lide WHERE id = $id";
     $result = $conn->query($sql);
     return $result;
 }
 
 function convertCzechToEnglish($text) {
-    $czech = ['á', 'č', 'ď', 'é', 'ě', 'í', 'ň', 'ó', 'ř', 'š', 'ť', 'ú', 'ů', 'ý', 'ž', ' '];
-    $english = ['a', 'c', 'd', 'e', 'e', 'i', 'n', 'o', 'r', 's', 't', 'u', 'u', 'y', 'z', '-'];
+    $czech = ['á', 'č', 'ď', 'é', 'ě', 'í', 'ň', 'ó', 'ř', 'š', 'ť', 'ú', 'ů', 'ý', 'ž', 'Á', 'Č', 'Ď', 'É', 'Ě', 'Í', 'Ň', 'Ó', 'Ř', 'Š', 'Ť', 'Ú', 'Ů', 'Ý', 'Ž',' '];
+    $english = ['a', 'c', 'd', 'e', 'e', 'i', 'n', 'o', 'r', 's', 't', 'u', 'u', 'y', 'z', 'A', 'C', 'D', 'E', 'E', 'I', 'N', 'O', 'R', 'S', 'T', 'U', 'U', 'Y', 'Z','-'];
 
     return str_replace($czech, $english, $text);
 }

@@ -1,15 +1,24 @@
 <div class='clovek' id='$id'>
-  <div class='zaklad'>
-    <div class='jmeno'>$name $surname</div>
-    <div class='data'>
-      <div class='datum'>$date_of_birth</div>
-      <div class='bydliste'>$street $house_number</div>
-    </div>
-    <button class='vice' value='$id' id='button$id'>Více informací</button>
+  <div class='center'>
+    <div class='zaklad'>
+      <div class='jmeno'>$name $surname</div>
+      <div class='data'>
+        <div class='datum'>$date_of_birth</div>
+        <div class='bydliste'>$street $house_number</div>
+      </div>
+      <button class='vice' value='$id' id='button$id'>Více informací</button>
 
-  </div>
-  <div class='rozsireni'>
-    <div class='data'></div>
-    <div class='info'></div>
+    </div>
+    <div class='rozsireni hidden visuallyhidden'>
+      <div class='data'></div>
+      <div class='informace'></div>
+    </div>
+    <script>
+      var button$id = document.getElementById('button$id')
+      button$id.addEventListener('click', function clik_on_button(event) {
+        tabulka_request(event.target.value, 'page')
+        console.log(event.target.value)
+      })
+    </script>
   </div>
 </div>

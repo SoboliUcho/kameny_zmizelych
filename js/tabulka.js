@@ -394,7 +394,7 @@ function page(data){
         else {
             var id = keys[i];
         }
-        if (keys[i].includes("datum") || keys[i].includes("presidlil") || keys[i].includes("den_prichodu") ){
+        if (keys[i].includes("datum") || keys[i].includes("presidlil") || keys[i].includes("den_prichodu")){
             var date = new Date(data[keys[i]])
             const day = date.getDate();
             const month = date.getMonth() + 1;
@@ -450,5 +450,34 @@ function page(data){
         var subtext = '<div id="radek_informace">\n<div class="popisek_informace"> Informace: </div>\n <div class="data_r" id="informacet">' + data["informace"] + '</div>\n</div>\n';
         clovek.getElementsByClassName("informace")[0].innerHTML = subtext;
     }
+    var obrazky = clovek.getElementsByClassName("obrazek");
+    for (var i = 0; i < obrazky.length; i++) {
+        obrazky[i].addEventListener("click", openimagepage);
+    }
+    rozsireni[0].classList.remove("hidden");
+    setTimeout(function () {
+        rozsireni[0].classList.remove('visuallyhidden');
+        // console.log("remove visual")
+      }, 20);
 
+}
+
+function openimagepage(event){
+    event.stopPropagation()
+    var obr = document.getElementById("obrazkyshow")
+    var nelisat =document.getElementById("nelista")
+    obr.innerHTML= '<img src="'+event.target.src+'" alt="obrazek" class="popuoutimage">'
+    obr.classList.remove("hidden")
+    nelisat.classList.add("gray");
+    setTimeout(function () {
+        obr.classList.remove('visuallyhidden');
+      }, 20)
+    document.addEventListener("click", function closeimg(event) {
+        nelisat.classList.remove("gray");
+        obr.classList.add("visuallyhidden");
+        setTimeout(() => {
+            obr.classList.add ("hidden");
+          }, 500);
+        document.removeEventListener('click', closeimg)
+    })
 }
