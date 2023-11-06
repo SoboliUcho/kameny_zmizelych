@@ -1,0 +1,176 @@
+:root {
+    --bs-brown-pilot: #2F1107;
+    --bs-brown-dark: #4F3732;
+    --bs-brown-light: #EFE6E0;
+    --bs-brown-mid: #BDA394;
+    --bs-red: #FF0E1C;
+    --bs-primary: #2F1107;
+    --bs-secondary: #4F3732;
+    --bs-success: #2F1107;
+    --bs-info: #EFE6E0;
+    --bs-warning: #BDA394;
+    --bs-danger: #FF0E1C;
+    --bs-light: #EFE6E0;
+    --bs-dark: #4F3732;
+    --bs-white: #FFFFFF;
+    --bs-font-sans-serif: 'Raleway', sans-serif;
+    --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+}
+.lista {
+    background-color: var(--bs-brown-pilot);
+    color: var(--bs-brown-light);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: center;
+}
+
+#logo {
+    transition: 0.5s;
+}
+#logo_velke {
+    display: block;
+    /* visibility: visible; */
+}
+#logo_male{
+    display: none;
+    /* visibility: hidden; */
+}
+
+#nazev {
+    box-sizing: border-box;
+    flex-grow: 1;
+    font-size: 2.3em;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+#progres {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 2;
+    width: 30%;
+}
+
+.infobox {
+    display: flex;
+    flex-direction: column;
+    width: 2.3em;
+}
+.infobox #rect{
+    fill: #00000000;
+    stroke-opacity: 0;
+ }  
+ .infobox .menuline{
+    fill: var(--bs-brown-light);
+    stroke: var(--bs-brown-light);
+    stroke-width: 10;
+    stroke-linecap: square;
+    stroke-linejoin: round;
+    stroke-dasharray: none;
+    stroke-opacity: 1;
+    image-rendering: auto;
+    transition: 0.5s;
+ }
+ .infobox:hover .menuline{
+    stroke: var(--bs-danger);
+ }
+
+.iks #line1{
+    /* transform-origin: 0% 25%; */
+    transform: rotate(45deg) translate(0%, -25%) scalex(1.4142);
+ }
+
+ .iks #line2{
+    stroke-opacity: 0;
+}
+
+.iks #line3{
+    transform-origin: 0% 100%;
+    transform: rotate(-45deg) translate(0%, 25%) scalex(1.4142);
+ }
+
+.sublista.iks{
+    max-height:300px;
+    flex-direction: row;
+    /* background-color: var(--bs-brown-pilot); */
+    border-top: 2px solid #000;
+    transition: max-height 0.5s ease-in;
+}
+.sublista {
+    display: flex;
+    max-height: 300px;
+    flex-direction: row;
+    position: absolute;
+    justify-content: flex-end;
+    z-index: 2;
+    max-height: 0px;
+    width: 100%;
+    overflow: hidden;
+    background-color: var(--bs-brown-pilot);
+    /* transition: transform 4s; */
+    transition: max-height 0.5s ease-out; 
+}
+.pomoc{
+    height: 0px;
+    width: 100%;
+}
+
+.info {
+    margin: 10px;
+    margin-bottom: 0px;
+    transition: 0.5s;
+}
+.infotext{
+    margin: 10px;
+}
+
+a {
+    text-decoration: none;
+    color: var(--bs-brown-light);
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.info:hover {
+    color: var(--bs-danger);
+    border-bottom: 10px solid var(--bs-red);
+}
+.info.aktive {
+    color: var(--bs-danger);
+    border-bottom: 10px solid var(--bs-red);
+}
+
+@media screen and (max-width: 600px) {
+    #logo {
+        width: 85px;
+        /* overflow: hidden; */
+    }
+
+    #logo_velke {
+        display: none;
+        /* visibility: hidden; */
+    }
+    #logo_male{
+        display: block;
+        /* visibility: visible; */
+    }
+}
+
+@media screen and (max-width: 910px) {
+    #nazev {
+        /* flex-grow: 0; */
+        font-size: 2.3em;
+        position: relative;
+        left: 0%;
+        transform: translate(0%, 0%);
+        margin-left: 20px;
+        text-align: center;
+        /* flex-shrink: 3; */
+        /* overflow: hidden; */
+    }
+}

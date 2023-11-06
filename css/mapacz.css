@@ -1,0 +1,29 @@
+#mapa *{
+    /* display: none; */
+    cursor: default;
+}
+#mapa{
+    transition: filter 0.5s;
+}
+
+.gray {
+    filter: grayscale(100%); 
+}
+.copyright.print{
+    font-size: 10px;
+}
+.copyright.print a{
+    font-size: 10px;
+}
+#mapa .button-group button{
+    background-color: var(--bs-brown-pilot);
+    color: var(--bs-brown-light);
+}
+#mapa .zoom *{
+    background-color: var(--bs-brown-pilot);
+    color: var(--bs-brown-light);
+}
+#mapa .compass {
+    background-color: var(--bs-brown-pilot);
+    color: var(--bs-brown-light);
+}

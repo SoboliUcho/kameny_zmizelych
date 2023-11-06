@@ -1,0 +1,123 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responzivní tabulka</title>
+    <style>
+        body {
+            background-color: #333;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+        }
+
+        .cards {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card {
+            background-color: #444;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 150px;
+        }
+
+        .card:hover {
+            background-color: #555;
+        }
+
+        .user-table {
+            background-color: #666;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 5px;
+            width: 300px;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #444;
+        }
+
+        tr:nth-child(even) {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="cards">
+            <div class="card" onclick="showUser('Karel')">Karel</div>
+            <div class="card" onclick="showUser('Josef')">Josef</div>
+            <div class="card" onclick="showUser('Pepa')">Pepa</div>
+            <div class="card" onclick="showUser('Kukuřice')">Kukuřice</div>
+        </div>
+        <div class="user-table">
+            <div id="user-names"></div>
+            <table id="user-info">
+                <tr>
+                    <th>Jméno</th>
+                    <td id="user-name"></td>
+                </tr>
+                <tr>
+                    <th>Příjmení</th>
+                    <td id="user-surname"></td>
+                </tr>
+                <tr>
+                    <th>Věk</th>
+                    <td id="user-age"></td>
+                </tr>
+                <tr>
+                    <th>Místo</th>
+                    <td id="user-location"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Funkce pro zobrazení údajů uživatele podle jména
+        function showUser(name) {
+            const userInfo = {
+                Karel: { name: "Karel", surname: "Novák", age: 30, location: "Praha" },
+                Josef: { name: "Josef", surname: "Svoboda", age: 25, location: "Brno" },
+                Pepa: { name: "Pepa", surname: "Kovář", age: 35, location: "Olomouc" },
+                Kukuřice: { name: "Kukuřice", surname: "Šílená", age: 28, location: "Plzeň" }
+            };
+
+            const user = userInfo[name];
+
+            if (user) {
+                document.getElementById("user-names").textContent = name;
+                document.getElementById("user-name").textContent = user.name;
+                document.getElementById("user-surname").textContent = user.surname;
+                document.getElementById("user-age").textContent = user.age;
+                document.getElementById("user-location").textContent = user.location;
+            }
+        }
+    </script>
+</body>
+</html>
