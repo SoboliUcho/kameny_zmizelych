@@ -7,6 +7,7 @@ body {
     margin: 0px;
     display: flex;
     flex-direction: column;
+    line-height: 1.5;
     /* filter: grayscale(100%); */
     /* background-image: url("../images/depositphotos_635479520-stock-photo-background-texture-old-brick-wall.jpg");
 background-size: cover;

@@ -69,7 +69,7 @@ if (isset($_GET["response"])) {
                     ?>
                 </select>
                 <div>
-                    <input type="submit" value="Načíst" />
+                    <input type="submit" value="Načíst" >
                 </div>
             </form>
             <script type="text/javascript">

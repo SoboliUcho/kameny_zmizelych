@@ -1,4 +1,5 @@
 <?php
+# GitLab Flavors: begin
 // Uživatel pro správu databáze (má plná přístupová práva):
 // Jméno: a331056_kameny
 // Heslo: jSwfrnh4
@@ -6,12 +7,15 @@
 // Uživatel s omezenými právy pro použití ve vašich skriptech:
 // Jméno: w331056_kameny
 // Heslo: p34vLN4d
+# GitLab Flavors: end
 function conenect_to_database_kameny()
-{
+{   
+    # GitLab Flavors: begin
     // $servername = "md380.wedos.net";
     // $username = "a331056_kameny";
     // $password = "jSwfrnh4";
     // $dbname = "d331056_kameny";
+    # GitLab Flavors: end
     $servername = "localhost";
     $username = "root";
     $password = "";
