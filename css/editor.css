@@ -31,7 +31,7 @@ body {
     width: 100%;
 }
 
-.delete_image {
+#delete_image {
     display: flex;
     flex-direction: column;
 }
@@ -39,4 +39,33 @@ body {
 .obrazek_label {
     display: flex;
     flex-direction: row;
+}
+
+form div{
+    display: flex;
+    max-width: 50%;
+    margin: 10px;
+}
+form div label{
+    flex: 1;
+}
+form div input{
+    flex: 2;
+}
+form div select{
+    flex: 2;
+}
+form div textarea{
+    flex: 2;
+}
+#deti_div{
+    display: flex;
+    flex-direction: column;
+}
+#okaz_div{
+    display: flex;
+    flex-direction: column;
+}
+input[type="checkbox"] {
+    flex: 0;
 }

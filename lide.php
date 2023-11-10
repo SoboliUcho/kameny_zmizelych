@@ -8,7 +8,7 @@ if (isset($_GET['pocet'])) {
   $pocet_na_stranku = 20;
 }
 if (isset($_GET['stranka'])) {
-  $cislo_pvniho = ($_GET['stranka']-1) * $pocet_na_stranku;
+  $cislo_pvniho = ($_GET['stranka'] - 1) * $pocet_na_stranku;
   $urlarray = $_GET;
   $stranka = $_GET['stranka'];
   unset($urlarray['stranka']);
@@ -46,6 +46,7 @@ if (isset($_GET['dum'])) {
   <link rel="stylesheet" href="css/lide.css">
 
   <!-- <script src="js/logintable.js"></script> -->
+  
   <script src="js\tabulka.js"></script>
   <title>Kameny zmizelých - lidé</title>
 </head>
@@ -54,44 +55,64 @@ if (isset($_GET['dum'])) {
   <?php include('lista.php'); ?>
   <div class="form">
     <form action="lide.php" method="get">
-      <label for="pocet">Ulice</label>
-      <select name="ulice" class="vyber" id="ulice">
-        <option value="NULL" selected> -- </option>
+      <label for="pocet">Ulice
+        <select name="ulice" class="vyber" id="ulice">
+          <option value="NULL" <?php if ($ulice == null) {
+            echo "selected";
+          } ?>> -- </option>
 
-        <?php
-        $houses = get_all_house($conn);
-        $houses = json_decode($houses, true);
-        $strets = array();
-        foreach ($houses as $house) {
-          if (!in_array($house['ulice'], $strets)) {
-            $strets[] = $house["ulice"];
+          <?php
+          $houses = get_all_house($conn);
+          $houses = json_decode($houses, true);
+          $strets = array();
+          foreach ($houses as $house) {
+            if (!in_array($house['ulice'], $strets)) {
+              $strets[] = $house["ulice"];
+            }
           }
-        }
-        foreach ($strets as $stret) {
-          echo "<option value='$stret' >$stret</option>";
-        }
-        ?>
-      </select>
+          foreach ($strets as $stret) {
+            echo "<option value='$stret'";
+            if ($ulice == $stret) {
+              echo "selected";
+            }
+            echo ">$stret</option>";
+          }
+          ?>
+        </select>
+      </label>
 
-      <label for="dum">Dům</label>
-      <select name="dum" class="vyber" id="dum">
-        <option value="NULL" selected> -- </option>
-        <?php
-        foreach ($houses as $house) {
-          $house_id = $house["id"];
-          $house_name = $house["ulice"] . " " . $house["cislo_domu"];
-          echo "<option value='$house_id'>$house_name</option>";
-        }
-        ?>
-      </select>
-
-      <label for="pocet">Počet osob na stránce</label>
-      <select name="pocet" class="vyber" id="pocet">
-        <option value="20" selected>20</option>
-        <option value="50">50</option>
-        <option value="100">100</option>
-      </select>
-      <input type="submit" value="Filtrovat">
+      <label for="dum">Dům
+        <select name="dum" class="vyber" id="dum">
+          <option value="NULL" <?php if ($dum == null) {
+            echo "selected";
+          } ?>> -- </option>
+          <?php
+          foreach ($houses as $house) {
+            $house_id = $house["id"];
+            $house_name = $house["ulice"] . " " . $house["cislo_domu"];
+            echo "<option value='$house_id'";
+            if ($dum == $house_id) {
+              echo "selected";
+            }
+            echo ">$house_name</option>";
+          }
+          ?>
+        </select>
+      </label>
+      <label for="pocet">Počet osob na stránce
+        <select name="pocet" class="vyber" id="pocet">
+          <option value="20" <?php if ($pocet_na_stranku == 20) {
+            echo "selected";
+          } ?>>20</option>
+          <option value="50" <?php if ($pocet_na_stranku == 50) {
+            echo "selected";
+          } ?>>50</option>
+          <option value="100" <?php if ($pocet_na_stranku == 100) {
+            echo "selected";
+          } ?>>100</option>
+        </select>
+      </label>
+      <input class="filtrovat" type="submit" value="Filtrovat">
     </form>
   </div>
   <div id="nelista">
@@ -112,10 +133,15 @@ if (isset($_GET['dum'])) {
       $house_number = $person["cislo_domu"];
       // echo "$street $ulice";
       if ($ulice != "NULL" && $ulice != $street) {
-        continue;
+        if ($dum != $person["dum_id"]) {
+          continue;
+        }
+
       }
       if ($dum != "NULL" && $dum != $person["dum_id"]) {
-        continue;
+        if ($ulice != $street) {
+          continue;
+        }
       }
       $counter_all_condition++;
       $counter++;
@@ -123,8 +149,8 @@ if (isset($_GET['dum'])) {
         continue;
       }
       // echo $_GET["stranka"];
-
-      if ($counter >($cislo_pvniho + $pocet_na_stranku) ) {
+    
+      if ($counter > ($cislo_pvniho + $pocet_na_stranku)) {
         continue;
       }
 
@@ -165,10 +191,10 @@ if (isset($_GET['dum'])) {
     // echo"$stranky $counter_all_condition";
     $urlarray = $_GET;
     for ($i = 1; $i <= $stranky; $i++) {
-      $urlarray ["stranka"] = $i;
+      $urlarray["stranka"] = $i;
       $url = http_build_query($urlarray);
       $url = "lide.php?" . $url;
-      
+
       if ($stranka == $i) {
         echo "<a href='$url'>
         <div class='stranka aktualni'>$i</div>

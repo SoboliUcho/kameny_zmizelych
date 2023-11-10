@@ -1,6 +1,6 @@
 <?php
 if (isset($_COOKIE['prihlaseni'])) {
-    header("Location: prihlaseni.php");
+    header("Location: editor.php");
 }
 require('_function_database.php');
 // header('Content-Type: text/html; charset=utf-8');

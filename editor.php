@@ -69,7 +69,7 @@ if (isset($_GET["response"])) {
                     ?>
                 </select>
                 <div>
-                    <input type="submit" value="Načíst" >
+                    <input type="submit" value="Načíst">
                 </div>
             </form>
             <script type="text/javascript">
@@ -82,45 +82,116 @@ if (isset($_GET["response"])) {
             <form action="_new_persone.php" method="post" class="form" id="nosoba_f" enctype="multipart/form-data">
                 <div id="id_form" style="display: none;">
                 </div>
-                <div>
-                    <label for="jmeno">Jméno:</label>
-                    <input type="text" id="jmeno" name="jmeno">
-                </div>
-                <div>
-                    <label for="prijmeni">Příjmení:</label>
-                    <input type="text" id="prijmeni" name="prijmeni">
-                </div>
-                <div>
-                    <label for="datum_narozeni">Datum narození:</label>
-                    <input type="date" id="datum_narozeni" name="datum_narozeni">
-                </div>
-                <div>
-                    <label for="misto_narozeni">Místo narození:</label>
-                    <input type="text" id="misto_narozeni" name="misto_narozeni">
-                </div>
-                <div>
-                    <label for="rodinny_stav">Rodinný stav:</label>
-                    <input type="text" id="rodinny_stav" name="rodinny_stav">
-                </div>
-                <div>
-                    <label for="nabozenske_vyznani">Náboženské vyznání:</label>
-                    <input type="text" id="nabozenske_vyznani" name="nabozenske_vyznani">
-                </div>
-                <div>
-                    <label for="statni_prislusnost">Státní příslušnost:</label>
-                    <input type="text" id="statni_prislusnost" name="statni_prislusnost">
-                </div>
-                <div>
-                    <label for="okres">Nové bydliště - Okres:</label>
-                    <input type="text" id="okres" name="okres">
-                </div>
-                <div>
-                    <label for="dum_id">Domy</label>
-                    <select name="domy" id="dum_id">
-                        <option value="">Vyber adresu</option>
-                        <?php
+                <?php
+                $id_nick = data_nick();
+                $nazvy = nicks_alter();
+                // print_r ( $nazvy );
+                
+                for ($i = 0; $i < count($id_nick); $i++) {
+                    if ($id_nick[$i] == "id" || $id_nick[$i] == "deti_id") {
+                        continue;
+                    }
+                    $id_label = $id_nick[$i];
+                    // echo $nazvy[$i];
+                    $nazvy_label = $nazvy[$i];
+
+                    if ($id_nick[$i] == "deti") {
+                        echo "<div id='deti_div'><div>
+                        <label>Dítě:</label>
+                        <input type='text' class = 'dite_name' name='deti[]'>
+                    </div>
+                    <div>
+                        <label >Dítě z databáze:</label>
+                        <select name='deti_id[]' class='dite_op'><option value='NULL'>Vyber člověka:</option>";
+                        foreach ($lide as $clovek) {
+                            $id = $clovek["id"];
+                            $jmeno = $clovek["jmeno"];
+                            $prijmeni = $clovek["prijmeni"];
+                            $datum_narozeni = $clovek["datum_narozeni"];
+                            $text = "<option value=\"$id\">$jmeno $prijmeni, $datum_narozeni</option>";
+                            echo $text;
+                        }
+                        echo " </select>
+                                </div>
+                                </div><div class='tlacitko'>
+                                <input type='button' id='ndite' value='Další dítě'>
+                            </div>";
+                        continue;
+                    }
+                    if ($id_nick[$i] == "odkazy") {
+                        echo "<div id='okaz_div'><div>
+                        <label>Název odkazu:</label>
+                        <input type='text' name='odkazy[]' class='nazev'>
+                        </div>
+                        <div>
+                        <label>Odkaz:</label>
+                        <input type='url' name='url[]' class='url' placeholder='https://example.com'>
+                        </div>
+                        </div><div class='tlacitko'>
+                        <input type='button' id='nodkaz' value='Další odkaz'>
+                        </div>
+                        ";
+                        continue;
+                    }
+
+
+                    echo "<div>
+                    <label for='$id_label'>$nazvy_label:</label>";
+
+                    if ($id_nick[$i] == "datum_narozeni" || $id_nick[$i] == "den_prichodu" || $id_nick[$i] == "mrtvy" || $id_nick[$i] == "realmrtvy" || $id_nick[$i] == "presidlil" || $id_nick[$i] == "datum_odhaseni") {
+                        echo "<input type='date' id='$id_label' name='$id_label'> 
+                        </div>";
+                        continue;
+                    }
+
+                    if (strpos($id_nick[$i], "_id") !== false && $id_nick[$i] != "dum_id") {
+                        echo "<select name='$id_label' id='$id_label'>
+                        <option value='NULL'>Vyber člověka:</option>";
+                        foreach ($lide as $clovek) {
+                            $id = $clovek["id"];
+                            $jmeno = $clovek["jmeno"];
+                            $prijmeni = $clovek["prijmeni"];
+                            $datum_narozeni = $clovek["datum_narozeni"];
+                            $text = "<option value=\"$id\">$jmeno $prijmeni, $datum_narozeni</option>";
+                            echo $text;
+                        }
+                        echo " </select>
+                        </div>";
+                        continue;
+                    }
+
+                    if ($id_nick[$i] == "pohlavi") {
+                        echo " <select name='$id_label' id='$id_label' >
+                        <option value='0'>Muž</option>
+                        <option value='1'>Žena</option>
+                        </select>
+                        </div>";
+                        continue;
+                    }
+
+                    if ($id_nick[$i] == "majitel_mot_vozidla") {
+                        echo " <select name='$id_label' id='$id_label' >
+                        <option value='0'>Ne</option>
+                        <option value='1'>Ano</option>
+                        </select>
+                        </div>";
+                        continue;
+                    }
+                    if ($id_nick[$i] == "karta") {
+                        echo "<input type='file' id='karta' name='karta[]' multiple='multiple'>
+                        </div>
+                        <div id='delete_image'>
+                        </div>";
+                        continue;
+                    }
+                    if ($id_nick[$i] == "informace") {
+                        echo "<textarea id='informace' name='informace'> </textarea>
+                        </div>";
+                        continue;
+                    }
+                    if ($id_nick[$i] == "dum_id") {
+                        echo " <select name='dum_id' id='dum_id'><option value=''>Vyber adresu</option>";
                         $domy = get_all_house($conn);
-                        // echo $domy;
                         $domy = json_decode($domy, true);
                         foreach ($domy as $dum) {
                             $id = $dum["id"];
@@ -130,91 +201,14 @@ if (isset($_GET["response"])) {
                             $text = "<option value=\"$id\">$ulice $cislo_domu, $mesto</option>";
                             echo $text;
                         }
-                        ?>
-                    </select>
-                </div>
-                <div>
-                    <label for="den_prichodu">Den příchodu:</label>
-                    <input type="text" id="den_prichodu" name="den_prichodu">
-                </div>
-                <div>
-                    <label for="otec">Otec:</label>
-                    <input type="text" id="otec" name="otec">
-                </div>
-                <div>
-                    <label for="otec_id">Otec z databáze</label>
-                    <select name="otec_id" id="otec_id">
-                        <option value="NULL">Vyber člověka</option>
-                        <?php
-                        foreach ($lide as $clovek) {
-                            $id = $clovek["id"];
-                            $jmeno = $clovek["jmeno"];
-                            $prijmeni = $clovek["prijmeni"];
-                            $datum_narozeni = $clovek["datum_narozeni"];
-                            $text = "<option value=\"$id\">$jmeno $prijmeni, $datum_narozeni</option>";
-                            echo $text;
-                        }
-                        ?>
-                    </select>
-                </div>
-                <div>
-                    <label for="matka">Matka:</label>
-                    <input type="text" id="matka" name="matka">
-                </div>
-                <div>
-                    <label for="matka_id">Matka z databáze</label>
-                    <select name="matka_id" id="matka_id">
-                        <option value="NULL">Vyber člověka</option>
-                        <?php
-                        foreach ($lide as $clovek) {
-                            $id = $clovek["id"];
-                            $jmeno = $clovek["jmeno"];
-                            $prijmeni = $clovek["prijmeni"];
-                            $datum_narozeni = $clovek["datum_narozeni"];
-                            $text = "<option value=\"$id\">$jmeno $prijmeni, $datum_narozeni</option>";
-                            echo $text;
-                        }
-                        disconenect_to_database($conn);
-                        ?>
-                    </select>
-                </div>
-                <div>
-                    <label for="majitel_mot_vozidla">Majitel motorového vozidla:</label>
-                    <select name="majitel_mot_vozidla" id="majitel_mot_vozidla">
-                        <option value="0">Ne</option>
-                        <option value="1">Ano</option>
-                    </select>
-                </div>
-                <!-- <div>
-                <label for="cinny_v_protiletadlove_obrane">Činný v protiletadlové obraně:</label>
-                <select name="cinny_v_protiletadlove_obrane" id="cinny_v_protiletadlove_obrane">
-                    <option value="0">Ne</option>
-                    <option value="1">Ano</option>
-                </select>
-            </div> -->
-                <div>
-                    <label for="datum_presidleni">Datum přesídlení:</label>
-                    <input type="text" id="datum_presidleni" name="datum_presidleni">
-                </div>
-                <div>
-                    <label for="presidlil">Přesídlil (kam):</label>
-                    <input type="text" id="presidlil" name="presidlil">
-                </div>
-                <div>
-                    <label for="datum_odhaseni">Odhlášen dne:</label>
-                    <input type="date" id="datum_odhaseni" name="datum_odhaseni">
-                </div>
-                <div>
-                    <label for="karta">Karta:</label>
-                    <input type="file" id="karta" name="karta[]" multiple="multiple" >
-                </div>
-                <div id = "delete_image">
-
-                </div>
-                <div>
-                    <label for="informace">Informace:</label>
-                    <textarea id="informace" name="informace"></textarea>
-                </div>
+                        echo "</select>
+                    </div>";
+                        continue;
+                    }
+                    echo " <input type=text' id='$id_label' name='$id_label'>
+                    </div>";
+                }
+                ?>
                 <div>
                     <input type="submit" value="Odeslat">
                 </div>
@@ -268,8 +262,48 @@ if (isset($_GET["response"])) {
 </body>
 <script type="text/javascript">
     hideall();
-    console.log("hide")
+    console.log("hide");
+    var dite_buton = document.getElementById("ndite");
+    dite_buton.addEventListener("click", function (event) {
+        event.preventDefault();
+        nove_dite();
+    });
+    var odkaz_buton = document.getElementById("nodkaz");
+    odkaz_buton.addEventListener("click", function (event) {
+        event.preventDefault();
+        nove_odkaz();
+    });
+    function nove_dite(){
+        var nazevd = document.createElement('div');
+        var dite = document.createElement('div');
+        nazevd.innerHTML += "<label>Dítě:</label><input type='text' class = 'dite_name' name='dite[]'>"
+        dite.innerHTML = <?php
+        echo "\"<label>Dítě z databáze</label><select name='dite_id[]' class='dite_op'> <option value='NULL' >Vyber člověka</option>.";
+        foreach ($lide as $clovek) {
+            $id = $clovek["id"];
+            $jmeno = $clovek["jmeno"];
+            $prijmeni = $clovek["prijmeni"];
+            $datum_narozeni = $clovek["datum_narozeni"];
+            $text = "<option value='$id'>$jmeno $prijmeni, $datum_narozeni</option>";
+            echo $text;
+        }
+        echo "</select>\"";
+        disconenect_to_database($conn);
+        ?>
+        // nove_dite(text);
+        var div = document.getElementById("deti_div");
+        div.appendChild(nazevd);
+        div.appendChild(dite);
+    }
+    function nove_odkaz(){
+        var nazevu = document.createElement('div');
+        var odkaz = document.createElement('div');
+        var div = document.getElementById("okaz_div");
+        nazevu.innerHTML += "<label>Název odkazu:</label><input type='text' name='odkaz[]' class='nazev'>";
+        odkaz.innerHTML += "<label>Odkaz:<input type='url' name='url[]' class='url' placeholder='https://example.com'>";
+        div.appendChild(nazevu);
+        div.appendChild(odkaz);
+    }
 </script>
 
 </html>
-

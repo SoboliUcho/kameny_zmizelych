@@ -222,10 +222,54 @@
     transition: color 0.15s ease-in-out,background-color 0.15s ease-in-out,border-color 0.15s ease-in-out,box-shadow 0.15s ease-in-out;
 }
 .stranka.aktualni{
-    background-color: var(--bs-brown-dark);
+    background-color: var(--bs-brown-pilot);
     color: var(--bs-brown-light);
 }
 .stranka:hover{
-    background-color: var(--bs-brown-dark);
+    background-color: var(--bs-brown-pilot);
     color: var(--bs-brown-light);
+}
+.form{
+    width: 80%;
+    align-self: center;
+}
+.form form{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.vyber{
+    border: 2px solid #C4C4C4;
+    border-radius: 0;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-right: 15px;
+    padding-left: 10px;
+    margin: 10px;
+    margin-bottom: 20px;
+}
+.vyber:focus{
+    border-radius: 0;
+    border: 2px solid;
+}
+.filtrovat{
+    color: var(--bs-brown-light);
+    background-color: var(--bs-brown-pilot);
+    border: 2px solid var(--bs-brown-pilot);
+    font-weight: bold;
+    border-radius: 0;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-left: 0px;
+    margin: 10px;
+    margin-bottom: 20px;
+    transition: 0.5s;
+}
+.filtrovat:hover{
+    color: var(--bs-brown-light);
+    background-color: var(--bs-red);    
+    border: 2px solid var(--bs-red);
+
 }

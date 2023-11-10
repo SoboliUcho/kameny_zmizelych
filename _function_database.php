@@ -1,5 +1,4 @@
 <?php
-# GitLab Flavors: begin
 // Uživatel pro správu databáze (má plná přístupová práva):
 // Jméno: a331056_kameny
 // Heslo: jSwfrnh4
@@ -7,15 +6,12 @@
 // Uživatel s omezenými právy pro použití ve vašich skriptech:
 // Jméno: w331056_kameny
 // Heslo: p34vLN4d
-# GitLab Flavors: end
 function conenect_to_database_kameny()
 {   
-    # GitLab Flavors: begin
     // $servername = "md380.wedos.net";
     // $username = "a331056_kameny";
     // $password = "jSwfrnh4";
     // $dbname = "d331056_kameny";
-    # GitLab Flavors: end
     $servername = "localhost";
     $username = "root";
     $password = "";
@@ -119,5 +115,88 @@ function get_all_persone_location($conn){
     ORDER BY l.prijmeni ASC, l.jmeno ASC";
     $result = $conn->query($sql);
     return $result;
+}
+
+function get_all_spravce($conn){
+
+}
+
+function get_spravovane($conn, $id){
+    
+}
+
+
+function data_nick(){
+    $nicks = array(
+    "id",
+    "jmeno",
+    "prijmeni",
+    "rozena",
+    "pohlavi",
+    "datum_narozeni",
+    "misto_narozeni",
+    "statni_prislusnost",
+    "nabozenske_vyznani",
+    "den_prichodu",
+    "transport",
+    "mrtvy",
+    "realmrtvy",
+    "dum_id", 
+    "rodinny_stav",
+    "partner_id",
+    "partner",
+    "otec_id", 
+    "otec-j",
+    "matka_id", 
+    "matka-j",
+    "deti_id", 
+    "deti",
+    "datum_presidleni",
+    "presidlil",
+    "datum_odhaseni",
+    "zamnestnani",
+    "majitel_mot_vozidla",
+    "odkazy",
+    "karta", 
+    "informace", 
+    // "spravce"
+    );
+    return $nicks;
+}
+function nicks_alter(){
+    $cz = [
+        "Id",
+        "Jméno",
+        "Příjmení",
+        "Rozená",
+        "Pohlavi",
+        "Datum narození",
+        "Místo narození",
+        "Státní příslušnost",
+        "Náboženské vyznání",
+        "Den příchodu",
+        "Číslo transportu",
+        "Prohlášen za mrtvého",
+        "Zemřel", 
+        "Dům",
+        "Rodinný stav",
+        "Partner z databaze",
+        "Partner",
+        "Otec z databaze",
+        "Otec",
+        "Matka z databaze",
+        "Matka",
+        "Děti z databaze",
+        "Děti",
+        "Datum přesídlení",
+        "Přesídlil",
+        "Datum odhlášení",
+        "zaměstnání",
+        "Majitel motorového vozidla",
+        "Odkazy",
+        "Fotky",
+        "Další informace"
+    ];
+    return $cz;
 }
 ?>

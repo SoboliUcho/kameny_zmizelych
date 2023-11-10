@@ -20,7 +20,6 @@
 </div>
 <div class="pomoc">
   <div class="sublista" id="sublista">
-
     <?php
     $currentPage = basename($_SERVER['PHP_SELF']);
     if ($currentPage == 'index.php') {
@@ -34,6 +33,7 @@
       
       </a>';
     }
+
     if ($currentPage == 'lide.php') {
       echo '<a href="lide.php" class="info aktive">
         <div class="infotext">Lidé</div>
@@ -45,6 +45,7 @@
         
         </a>';
     }
+
     if ($currentPage == 'report.php') {
       echo '<a href="report.php" class="info aktive">
         <div class="infotext">Report</div>
@@ -56,6 +57,7 @@
         
         </a>';
     }
+
     if ($currentPage == 'o_projektu.php') {
       echo '<a href="o_projektu.php" class="info aktive">
         <div class="infotext">O projektu</div>
@@ -67,6 +69,19 @@
         
         </a>';
     }
+
+    if ($currentPage == 'podporovatele.php') {
+      echo '<a href="podporovatele.php" class="info aktive">
+        <div class="infotext">Podporovatelé</div>
+        
+        </a>';
+    } else {
+      echo '<a href="podporovatele.php" class="info">
+        <div class="infotext">Podporovatelé</div>
+        
+        </a>';
+    }
+
     if (isset($_COOKIE['prihlaseni'])) {
       if ($currentPage == 'editor.php') {
         echo '<a href="editor.php" class="info aktive">

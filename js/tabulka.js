@@ -45,7 +45,7 @@ function tabulka_request(id, type) {
     else if (type == "edit") {
         var cFunction = editpersone;
     }
-    else if(type == "page"){
+    else if (type == "page") {
         type = "persone"
         var cFunction = page;
     }
@@ -83,7 +83,7 @@ function informace_clik(event) {
     return true
 }
 
-function tabulka_hide(){
+function tabulka_hide() {
     var tabulka = document.getElementById("tabulka");
     if (tabulka.classList.contains("hidden")) {
         // console.log("remove hidden")
@@ -91,14 +91,14 @@ function tabulka_hide(){
         setTimeout(function () {
             tabulka.classList.remove('visuallyhidden');
             // console.log("remove visual")
-          }, 20);
-        
-      } else {
+        }, 20);
+
+    } else {
         tabulka.classList.add("visuallyhidden");
         setTimeout(() => {
-            tabulka.classList.add ("hidden");
-          }, 500);
-      }
+            tabulka.classList.add("hidden");
+        }, 500);
+    }
 }
 
 function people_in_house(data) {
@@ -106,7 +106,7 @@ function people_in_house(data) {
         var lide_tabulka = document.getElementById("lide");
         var data_tabulka = document.getElementById("data");
         var obr = document.getElementById("obrazkyshow")
-        if (lide_clik(event) && !data_tabulka.contains(event.target) && informace_clik(event)&&obr.classList.contains("hidden")) {
+        if (lide_clik(event) && !data_tabulka.contains(event.target) && informace_clik(event) && obr.classList.contains("hidden")) {
             var mapa = document.getElementById("mapa");
             mapa.classList.remove("gray");
             tabulka_hide()
@@ -143,72 +143,22 @@ function persone(data) {
         lide.innerHTML += text;
     }
 
-    var text = "";
     var keys = keysword();
     var nazvy = language_set("cz");
 
-    var popisek = "";
 
-    for (var i = 1; i < keys.length; i++) {
-        if (data[keys[i]] == null) {
-            continue;
-        }
-        if (keys[i].includes("id")) {
-            var id = data[keys[i]];
-        }
-        else {
-            var id = keys[i];
-        }
-        if (keys[i].includes("datum") || keys[i].includes("presidlil") || keys[i].includes("den_prichodu") ){
-            var date = new Date(data[keys[i]])
-            const day = date.getDate();
-            const month = date.getMonth() + 1;
-            const year = date.getFullYear();
-            data[keys[i]] = `${day}. ${month}. ${year}`;
-        }
-        if (keys[i] == "otec-j") {
-            if (data["otec_id"] != null) {
-                id = data["otec_id"];
-                popisek = " n_ososba"
-            }
-        } else if (keys[i] == "matka-j") {
-            if (data["matka_id"] != null) {
-                id = data["matka_id"];
-                popisek = " n_ososba"
-            }
-        }
-        else {
-            id = keys[i];
-        }
-        var subtext = '<div class="radek_tabulky">\n<div class="popisek' + popisek + '">' + nazvy[i] + ': </div>\n <div class="data_r" id="' + id + '">';
-
-        if (keys[i] == "majitel_mot_vozidla" || keys[i] == "cinny_v_protiletadlove_obrane") {
-            if (data[i] = 1) {
-                subtext += "Ano"
-            }
-            else {
-                subtext += "Ne"
-            }
-        }
-        else {
-            subtext += data[keys[i]]
-        }
-        subtext += '</div>\n</div>\n'
-        text += subtext
-    }
-    
-    clovek.innerHTML = text;
+    clovek.innerHTML = innerHTMLtext(data, keys, nazvy);
     if (data["karta"] != null) {
         var img = "";
-    var karta = JSON.parse(data["karta"]);
+        var karta = JSON.parse(data["karta"]);
         for (let index = 0; index < karta.length; index++) {
             // console.log(karta)
-            img +='<div class = "ctverec"><img src="'+karta[index]+'" alt="obrazek" class="obrazek"></div>';
-            
+            img += '<div class = "ctverec"><img src="' + karta[index] + '" alt="obrazek" class="obrazek"></div>';
+
         }
-        var text = '<div class="radek_tabulky">\n<div class="popisek karta"> Karta: </div>\n <div class="data_r" id="karta">'+img+'</div>\n</div>\n';
+        var text = '<div class="radek_tabulky">\n<div class="popisek karta"> Karta: </div>\n <div class="data_r" id="karta">' + img + '</div>\n</div>\n';
         clovek.innerHTML += text
-    } 
+    }
 
     if (data["informace"] != null) {
         var subtext = '<div id="radek_informace">\n<div class="popisek_informace"> Informace: </div>\n <div class="data_r" id="informacet">' + data["informace"] + '</div>\n</div>\n';
@@ -229,6 +179,92 @@ function persone(data) {
     for (var i = 0; i < obrazky.length; i++) {
         obrazky[i].addEventListener("click", openimage);
     }
+    deti_id = JSON.parse(data["deti_id"]);
+    if (deti_id != null) {
+        for (let i = 0; i < deti_id.length; i++) {
+            if (deti_id[i] != "NULL") {
+                dite = document.getElementById(deti_id[i]);
+                dite.addEventListener("click", function (event) {
+                    event.stopPropagation()
+                    change_persone(event);
+                });
+            }
+        }
+    }
+}
+
+function innerHTMLtext(data, keys, nazvy) {
+    var text = "";
+
+    var popisek = "";
+
+    for (var i = 1; i < keys.length; i++) {
+        if (data[keys[i]] == null) {
+            continue;
+        }
+        else {
+            var id = keys[i];
+        }
+        if (keys[i].includes("datum") || keys[i].includes("presidlil") || keys[i].includes("den_prichodu") || keys[i].includes("mrtvy")) {
+            var date = new Date(data[keys[i]])
+            const day = date.getDate();
+            const month = date.getMonth() + 1;
+            const year = date.getFullYear();
+            data[keys[i]] = `${day}. ${month}. ${year}`;
+        }
+        if (keys[i] == "otec-j") {
+            if (data["otec_id"] != null) {
+                id = data["otec_id"];
+                popisek = " n_ososba"
+            }
+        } else if (keys[i] == "matka-j") {
+            if (data["matka_id"] != null) {
+                id = data["matka_id"];
+                popisek = " n_ososba"
+            }
+        }
+        else {
+            id = keys[i];
+        }
+        if (nazvy[i] instanceof Array) {
+            if (data["pohlavi"] == "NULL") {
+                data["pohlavi"] = 0;
+            }
+            nazev = nazvy[i][data["pohlavi"]];
+        }
+        else {
+            var nazev = nazvy[i];
+        }
+
+        var insrted_text = "";
+        if (keys[i] == "majitel_mot_vozidla" || keys[i] == "cinny_v_protiletadlove_obrane") {
+            if (data[keys[i]] == 1) {
+                // console.log(data[keys[i]])
+                insrted_text += "Ano"
+            }
+            else {
+                continue;
+            }
+        } else if (keys[i] == "deti") {
+            insrted_text += "<div class='deti'>"
+            deti = JSON.parse(data["deti"]);
+            deti_id = JSON.parse(data["deti_id"])
+            for (let i = 0; i < deti.length; i++) {
+                if (deti_id[i] != null) {
+                    id = deti_id[i];
+                    popisek = " n_ososba";
+                }
+                insrted_text += "<did class='dite'>" + deti[i] + "</div>";
+            }
+            insrted_text += "</div>";
+        }
+        else {
+            insrted_text += data[keys[i]]
+        }
+        var subtext = '<div class="radek_tabulky">\n<div class="popisek' + popisek + '">' + nazev + ': </div>\n <div class="data_r" id="' + id + '">' + insrted_text + '</div>\n</div>\n'
+        text += subtext
+    }
+    return text;
 }
 
 function father(data) {
@@ -268,65 +304,107 @@ function language_set(langue) {
         "Id",
         "Jméno",
         "Příjmení",
+        "Rozená",
         "Datum narození",
         "Místo narození",
-        "Rodinný stav",
-        "Náboženské vyznání",
         "Státní příslušnost",
-        "Nové bydliště",
-        "Okres",
-        "Ulice",
-        "Číslo",
-        // "Dům Id",
+        "Náboženské vyznání",
         "Den příchodu",
+        "číslo transportu",
+        ["Prohlášen za mrtvého", "Prohlášena za mrtvou"],
+        ["Zemřel", "Zemřela"],
+        "Rodinný stav",
+        ["Manželka", "Manžel"],
+        // "Dům Id",
         "Otec",
         "Matka",
-        "Majitel motorového vozidla",
-        "Činný v protiletadlové obraně",
+        "Děti",
         "Datum přesídlení",
         "Přesídlil",
         "Datum odhlášení",
-        "Karta",
-        "Informace"
+        "Zamněstnáni",
+        ["Majitel motorového vozidla", "Majitelka motorového vozidla"],
+        // "Činný v protiletadlové obraně",
+        "Odkazy",
+        "Fotky",
+        "Další informace"
     ];
     return (cz);
 }
 
- function keysword(){
+function keysword() {
     var keys = [
         "id",
         "jmeno",
         "prijmeni",
+        "rozena",
         "datum_narozeni",
         "misto_narozeni",
-        "rodinny_stav",
-        "nabozenske_vyznani",
         "statni_prislusnost",
-        "nove_bydliste",
-        "okres",
-        "ulice",
-        "cislo",
-        // "dum_id",
+        "nabozenske_vyznani",
         "den_prichodu",
+        "transport",
+        "mrtvy",
+        "realmrtvy",
+        "rodinny_stav",
+        // "dum_id", 
+        // "partner_id",
+        "partner",
+        // "otec_id", 
         "otec-j",
+        // "matka_id", 
         "matka-j",
-        "majitel_mot_vozidla",
-        "cinny_v_protiletadlove_obrane",
+        // "deti_id", 
+        "deti",
         "datum_presidleni",
         "presidlil",
         "datum_odhaseni",
-        // "karta",
+        "zamnestnani",
+        "majitel_mot_vozidla",
+        "odkazy",
+        // "karta", 
+        // "informace", 
+        // "spravce"
     ]
     return keys;
- }
+}
+
+
 function editpersone(data) {
     data = JSON.parse(data);
     for (var key in data) {
-        if (key == "karta" && data["karta"]!=null){
+        if (key == "karta" && data["karta"] != null) {
             console.log(data[key]);
             karta_img(data[key]);
         }
-        if (key == "karta"){
+        if (key == "karta" || key == "deti_id") {
+            continue;
+        }
+        if (key == "deti"){
+            var deti = JSON.parse(data[key])
+            var detiid = JSON.parse(data["deti_id"])
+            for (let i = 0; i < deti.length; i++) {
+                var input = document.getElementsByClassName("dite_name");
+                var selct = document.getElementsByClassName('dite_op');
+                input[i].value = deti[i];
+                selct[i].value=detiid[i];
+                console. log("echo");
+                console.log(detiid[i]);
+                nove_dite();
+            }
+            continue;
+        }
+        if (key == "odkazy"){
+            var odkazy = JSON.parse(data[key])
+            for (let i = 0; i < odkazy.length; i++) {
+                var nazev = document.getElementsByClassName("dite_name");
+                var url = document.getElementsByClassName('dite_op');
+                nazev[i].value = odkazy[i][0];
+                url[i].value=odkazy[i][1];
+                console. log("echo");
+                console.log(detiid[i]);
+                nove_odkaz();
+            }
             continue;
         }
         var hodnota = data[key];
@@ -338,34 +416,34 @@ function editpersone(data) {
     console.log(data)
 }
 
-function karta_img(data){
+function karta_img(data) {
     var deleteimage = document.getElementById("delete_image")
     // console.log(data)
     data = JSON.parse(data);
     console.log(data);
-    var  img = "<label class='obrazek_label'> vyberte obrázek na smazání: </label>";
+    var img = "<label class='obrazek_label'> vyberte obrázek na smazání: </label>";
     for (let index = 0; index < data.length; index++) {
-        img +='<label class="obrazek_label"><input type="checkbox" name="del_images[]" value="'+data[index]+'"><div class="ctverec"><img src="'+data[index]+'" alt="obrazek" class="obrazek"></div></label>';
+        img += '<label class="obrazek_label"><input type="checkbox" name="del_images[]" value="' + data[index] + '"><div class="ctverec"><img src="' + data[index] + '" alt="obrazek" class="obrazek"></div></label>';
     }
     deleteimage.innerHTML = img;
 }
 
-function openimage(event){
+function openimage(event) {
     event.stopPropagation()
     var obr = document.getElementById("obrazkyshow")
-    var tabulka =document.getElementById("tabulka")
-    obr.innerHTML= '<img src="'+event.target.src+'" alt="obrazek" class="popuoutimage">'
+    var tabulka = document.getElementById("tabulka")
+    obr.innerHTML = '<img src="' + event.target.src + '" alt="obrazek" class="popuoutimage">'
     obr.classList.remove("hidden")
     tabulka.classList.add("gray");
     setTimeout(function () {
         obr.classList.remove('visuallyhidden');
-      }, 20)
+    }, 20)
     document.addEventListener("click", function closeimg(event) {
         tabulka.classList.remove("gray");
         obr.classList.add("visuallyhidden");
         setTimeout(() => {
-            obr.classList.add ("hidden");
-          }, 500);
+            obr.classList.add("hidden");
+        }, 500);
         document.removeEventListener('click', closeimg)
     })
 }
@@ -374,77 +452,32 @@ function nothing() {
 
 }
 
-function page(data){
-    
+function page(data) {
+
     data = JSON.parse(data);
     var clovek = document.getElementById(data["id"]);
     var rozsireni = clovek.getElementsByClassName("rozsireni");
     tabulka = rozsireni[0].getElementsByClassName("data");
 
-    var text = "";
     var keys = keysword();
     var nazvy = language_set("cz");
 
-    var popisek = "";
+    keys = keys.filter(item => item != "jmeno");
+    keys = keys.filter(item => item != "prijmeni");
 
-    for (var i = 1; i < keys.length; i++) {
-        if (data[keys[i]] == null || keys[i] == "jmeno"|| keys[i] == "prijmeni") {
-            continue;
-        }
-        else {
-            var id = keys[i];
-        }
-        if (keys[i].includes("datum") || keys[i].includes("presidlil") || keys[i].includes("den_prichodu")){
-            var date = new Date(data[keys[i]])
-            const day = date.getDate();
-            const month = date.getMonth() + 1;
-            const year = date.getFullYear();
-            data[keys[i]] = `${day}. ${month}. ${year}`;
-        }
-        if (keys[i] == "otec-j") {
-            if (data["otec_id"] != null) {
-                id = data["otec_id"];
-                popisek = " n_ososba"
-            }
-        } else if (keys[i] == "matka-j") {
-            if (data["matka_id"] != null) {
-                id = data["matka_id"];
-                popisek = " n_ososba"
-            }
-        }
-        else {
-            id = keys[i];
-        }
-        var subtext = '<div class="radek_tabulky">\n<div class="popisek' + popisek + '">' + nazvy[i] + ': </div>\n <div class="data_r" id="' + id + '">';
+    tabulka[0].innerHTML = innerHTMLtext(data, keys, nazvy);
 
-        if (keys[i] == "majitel_mot_vozidla" || keys[i] == "cinny_v_protiletadlove_obrane") {
-            if (data[i] = 1) {
-                subtext += "Ano"
-            }
-            else {
-                subtext += "Ne"
-            }
-        }
-        else {
-            subtext += data[keys[i]]
-        }
-        subtext += '</div>\n</div>\n'
-        text += subtext
-    }
-    
-    tabulka[0].innerHTML = text;
-   
     if (data["karta"] != null) {
         var img = "";
-    var karta = JSON.parse(data["karta"]);
+        var karta = JSON.parse(data["karta"]);
         for (let index = 0; index < karta.length; index++) {
             // console.log(karta)
-            img +='<div class = "ctverec"><img src="'+karta[index]+'" alt="obrazek" class="obrazek"></div>';
-            
+            img += '<div class = "ctverec"><img src="' + karta[index] + '" alt="obrazek" class="obrazek"></div>';
+
         }
-        var text = '<div class="radek_tabulky">\n<div class="popisek karta"> Karta: </div>\n <div class="data_r" id="karta">'+img+'</div>\n</div>\n';
+        var text = '<div class="radek_tabulky">\n<div class="popisek karta"> Karta: </div>\n <div class="data_r" id="karta">' + img + '</div>\n</div>\n';
         tabulka[0].innerHTML += text
-    } 
+    }
 
     if (data["informace"] != null) {
         var subtext = '<div id="radek_informace">\n<div class="popisek_informace"> Informace: </div>\n <div class="data_r" id="informacet">' + data["informace"] + '</div>\n</div>\n';
@@ -458,26 +491,26 @@ function page(data){
     setTimeout(function () {
         rozsireni[0].classList.remove('visuallyhidden');
         // console.log("remove visual")
-      }, 20);
+    }, 20);
 
 }
 
-function openimagepage(event){
+function openimagepage(event) {
     event.stopPropagation()
     var obr = document.getElementById("obrazkyshow")
-    var nelisat =document.getElementById("nelista")
-    obr.innerHTML= '<img src="'+event.target.src+'" alt="obrazek" class="popuoutimage">'
+    var nelisat = document.getElementById("nelista")
+    obr.innerHTML = '<img src="' + event.target.src + '" alt="obrazek" class="popuoutimage">'
     obr.classList.remove("hidden")
     nelisat.classList.add("gray");
     setTimeout(function () {
         obr.classList.remove('visuallyhidden');
-      }, 20)
+    }, 20)
     document.addEventListener("click", function closeimg(event) {
         nelisat.classList.remove("gray");
         obr.classList.add("visuallyhidden");
         setTimeout(() => {
-            obr.classList.add ("hidden");
-          }, 500);
+            obr.classList.add("hidden");
+        }, 500);
         document.removeEventListener('click', closeimg)
     })
 }

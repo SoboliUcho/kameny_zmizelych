@@ -55,7 +55,7 @@ function editclovek(event) {
     var id = '<label for= "id" >ID:</label ><input type="text" id="id" name="id" value="" readonly>';
 
     var form = document.getElementById("id_form");
-    form.innerHTML+=id;
+    form.innerHTML += id;
 
     var type = "edit";
     tabulka_request(selectedValue, "edit");
@@ -68,6 +68,10 @@ function prepnout(event) {
     var type = event.target.id;
     if (type == "nosoba") {
         var visible = document.getElementById("nosoba_form");
+        var form = document.getElementById("nosoba_f")
+        form.reset();
+        var image = document.getElementById("delete_image")
+        image.innerHTML = ""
     }
     if (type == "edit") {
         var visible = document.getElementById("eosoba_form");

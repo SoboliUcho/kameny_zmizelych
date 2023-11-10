@@ -3,11 +3,12 @@
     cursor: default;
 }
 #mapa{
-    transition: filter 0.5s;
+    transition: filter 0.5s opacity 0.5s;
 }
 
 .gray {
     filter: grayscale(100%); 
+    opacity: 0.7;
 }
 .copyright.print{
     font-size: 10px;
