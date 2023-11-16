@@ -21,72 +21,27 @@
 <div class="pomoc">
   <div class="sublista" id="sublista">
     <?php
+    $odkazy=["index.php", "lide.php", "report.php", "o_projektu.php", "napsali_o_nas.php", "podporovatele.php"];
+    $odkazy_nazev=["Mapa", "Lidé", "report", "O projektu", "Napsali o nás", "Podporovatelé"];
     $currentPage = basename($_SERVER['PHP_SELF']);
-    if ($currentPage == 'index.php') {
-      echo ' <a href="index.php" class="info aktive">
-        <div class="infotext">MAPA</div>
-        
-        </a>';
-    } else {
-      echo ' <a href="index.php" class="info">
-      <div class="infotext">MAPA</div>
-      
-      </a>';
-    }
-
-    if ($currentPage == 'lide.php') {
-      echo '<a href="lide.php" class="info aktive">
-        <div class="infotext">Lidé</div>
-        
-        </a>';
-    } else {
-      echo '<a href="lide.php" class="info">
-        <div class="infotext">Lidé</div>
-        
-        </a>';
-    }
-
-    if ($currentPage == 'report.php') {
-      echo '<a href="report.php" class="info aktive">
-        <div class="infotext">Report</div>
-        
-        </a>';
-    } else {
-      echo '<a href="report.php" class="info">
-        <div class="infotext">Report</div>
-        
-        </a>';
-    }
-
-    if ($currentPage == 'o_projektu.php') {
-      echo '<a href="o_projektu.php" class="info aktive">
-        <div class="infotext">O projektu</div>
-        
-        </a>';
-    } else {
-      echo '<a href="o_projektu.php" class="info">
-        <div class="infotext">O projektu</div>
-        
-        </a>';
-    }
-
-    if ($currentPage == 'podporovatele.php') {
-      echo '<a href="podporovatele.php" class="info aktive">
-        <div class="infotext">Podporovatelé</div>
-        
-        </a>';
-    } else {
-      echo '<a href="podporovatele.php" class="info">
-        <div class="infotext">Podporovatelé</div>
-        
-        </a>';
+    for ($i=0; $i < count($odkazy); $i++) { 
+      $odkaz = $odkazy[$i];
+      $odkaz_nazev = $odkazy_nazev[$i];
+      if ($currentPage == $odkazy[$i]) {
+        echo"<a href='$odkaz' class='info aktive'>
+          <div class='infotext'>$odkaz_nazev</div>
+          </a>";
+      } else {
+        echo"<a href='$odkaz' class='info'>
+        <div class='infotext'>$odkaz_nazev</div>
+        </a>";
+      }
     }
 
     if (isset($_COOKIE['prihlaseni'])) {
       if ($currentPage == 'editor.php') {
         echo '<a href="editor.php" class="info aktive">
         <div class="infotext">editor</div>
-        
         </a>';
       } else {
         echo '<a href="editor.php" class="info">

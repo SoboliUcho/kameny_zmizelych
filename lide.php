@@ -44,6 +44,7 @@ if (isset($_GET['dum'])) {
   <link rel="stylesheet" href="css/loader.css">
   <!-- <link rel="stylesheet" href="css/tabulka.css"> -->
   <link rel="stylesheet" href="css/lide.css">
+  <link rel="stylesheet" href="css/ciselnik.css">
 
   <!-- <script src="js/logintable.js"></script> -->
   
@@ -169,11 +170,18 @@ if (isset($_GET['dum'])) {
               <div class='data'></div>
               <div class='informace'></div>
             </div>
-          <script>
+            <script>
             var button$id = document.getElementById('button$id')
             button$id.addEventListener('click', function clik_on_button(event) {
-                tabulka_request(event.target.value, 'page')
-                console.log(event.target.value)
+                var clovek = document.getElementById($id);
+                var rozsireni = clovek.getElementsByClassName('rozsireni');
+                if (rozsireni[0].classList.contains('hidden'))
+                {tabulka_request(event.target.value, 'page')
+                console.log(event.target.value)}
+                else{
+                  rozsireni[0].classList.add('visuallyhidden');
+                  rozsireni[0].classList.add('hidden');
+                }
             })
             </script>
             </div>

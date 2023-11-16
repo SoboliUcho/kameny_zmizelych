@@ -31,3 +31,12 @@ CREATE TABLE donatori (
 )
 ALTER TABLE lide
 ADD zamnestnani varchar(255) COLLATE utf8mb4_czech_ci DEFAULT NULL,
+
+ALTER TABLE spravci
+ADD visible tinyint(1) DEFAULT 1
+
+ALTER TABLE lide
+ADD FOREIGN KEY (dum_id) REFERENCES domy(id),
+ADD FOREIGN KEY (otec_id) REFERENCES lide(id),
+ADD FOREIGN KEY (matka_id) REFERENCES lide(id),
+ADD FOREIGN KEY (partner_id) REFERENCES lide(id);

@@ -118,13 +118,48 @@ function get_all_persone_location($conn){
 }
 
 function get_all_spravce($conn){
-
+    $sql = "SELECT * FROM spravci";
+    $result = $conn->query($sql);
+    return $result;
+}
+function get_all_donators($conn){
+    $sql = "SELECT * FROM donatori";
+    $result = $conn->query($sql);
+    return $result;
 }
 
 function get_spravovane($conn, $id){
-    
+    $sql = "SELECT 
+    l.id, 
+    l.jmeno, 
+    l.prijmeni, 
+    l.datum_narozeni,
+    l.dum_id, 
+    d.ulice,
+    d.cislo_domu
+    FROM lide l 
+    JOIN domy d on d.id = l.dum_id
+    where l.spravce = $id
+    ORDER BY l.prijmeni ASC, l.jmeno ASC";
+    $result = $conn->query($sql);
+    return $result;
 }
-
+function get_nespravovane($conn){
+    $sql = "SELECT 
+    l.id, 
+    l.jmeno, 
+    l.prijmeni, 
+    l.datum_narozeni,
+    l.dum_id, 
+    d.ulice,
+    d.cislo_domu
+    FROM lide l 
+    JOIN domy d on d.id = l.dum_id
+    where l.spravce is NULL
+    ORDER BY l.prijmeni ASC, l.jmeno ASC";
+    $result = $conn->query($sql);
+    return $result;
+}
 
 function data_nick(){
     $nicks = array(
@@ -191,7 +226,7 @@ function nicks_alter(){
         "Datum přesídlení",
         "Přesídlil",
         "Datum odhlášení",
-        "zaměstnání",
+        "Zaměstnání",
         "Majitel motorového vozidla",
         "Odkazy",
         "Fotky",
@@ -199,4 +234,12 @@ function nicks_alter(){
     ];
     return $cz;
 }
+
+function get_all_clanky($conn){
+    $sql = "SELECT * FROM napsali ORDER BY datum DESC;";
+    $result = $conn->query($sql);
+    return $result;
+}
+
+
 ?>

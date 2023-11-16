@@ -79,6 +79,9 @@ function prepnout(event) {
     if (type == "ndum") {
         var visible = document.getElementById("ndum_form");
     }
+    if (type == "nclanek") {
+        var visible = document.getElementById("novy_clanek_form");
+    }
     visible.style.display = "";
 }
 
@@ -86,7 +89,9 @@ function hideall() {
     var edit = document.getElementById("eosoba_form");
     var n_ososba = document.getElementById("nosoba_form");
     var ndum = document.getElementById("ndum_form");
+    var nclanek = document.getElementById("novy_clanek_form");
     edit.style.display = "none";
     n_ososba.style.display = "none";
     ndum.style.display = "none";
+    nclanek.style.display = "none";
 }

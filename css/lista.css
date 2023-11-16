@@ -16,6 +16,9 @@
     --bs-font-sans-serif: 'Raleway', sans-serif;
     --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
 }
+*{
+    font-family: "Raleway", sans-serif;
+}
 .lista {
     background-color: var(--bs-brown-pilot);
     color: var(--bs-brown-light);
@@ -123,18 +126,16 @@
     margin: 10px;
     margin-bottom: 0px;
     transition: 0.5s;
-}
-.infotext{
-    margin: 10px;
-}
-
-a {
     text-decoration: none;
     color: var(--bs-brown-light);
     font-size: 1rem;
     font-weight: 700;
     text-transform: uppercase;
 }
+.infotext{
+    margin: 10px;
+}
+
 
 .info:hover {
     color: var(--bs-danger);

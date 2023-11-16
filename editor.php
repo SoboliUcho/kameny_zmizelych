@@ -40,13 +40,17 @@ if (isset($_GET["response"])) {
             <div id="nosoba" class="prepinac">nová osoba</div>
             <div id="edit" class="prepinac">editace osoby</div>
             <div id="ndum" class="prepinac">nový dům</div>
+            <div id="nclanek" class="prepinac">nový clanek</div>
+            <a href="napsali_o_nas.php" class="prepinac">Upravit članek</a>
             <script type="text/javascript">
                 var nosoba = document.getElementById("nosoba");
                 var edit = document.getElementById("edit");
                 var ndum = document.getElementById("ndum");
+                var nclanek = document.getElementById("nclanek");
                 nosoba.addEventListener("click", prepnout);
                 edit.addEventListener("click", prepnout);
                 ndum.addEventListener("click", prepnout);
+                nclanek.addEventListener("click", prepnout);
             </script>
         </div>
 
@@ -257,8 +261,12 @@ if (isset($_GET["response"])) {
                 </div>
             </form>
         </div>
+        <?php 
+        include("novyclanek.php");
+        ?>
 
     </div>
+
 </body>
 <script type="text/javascript">
     hideall();
