@@ -79,7 +79,7 @@ if (isset($_GET['stranka'])) {
         <?php
         $donatorove = get_all_donators($conn);
         foreach ($donatorove as $donator) {
-          if ($donator['visible'] == 0) {
+          if ($donator['visible'] == 0 && !isset($_COOKIE['prihlaseni'])) {
             continue;
           }
           $id = $donator["id"];

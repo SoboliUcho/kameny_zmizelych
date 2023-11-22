@@ -1,4 +1,4 @@
-<div class="form" id="novy_clanek_form">
+<div class="form divform" id="novy_clanek_form">
   <form action="_novy_clanek.php" method="post" id="novy_clanek">
     <div>
       <label for="nadpisform">Nadpis: </label>

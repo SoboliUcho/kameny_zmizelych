@@ -8,15 +8,23 @@ body {
     display: flex;
     flex-direction: row;
     margin: 10px;
+    flex-wrap: wrap;
 }
 
 .prepinac {
+    /* flex: 1; */
     padding: 10px;
     border: 1px solid black;
     margin: 1px;
     cursor: pointer;
     text-decoration: none;
     color: black;
+    transition: 0.5s;
+}
+.prepinac:hover {
+    background-color: var(--bs-brown-pilot);
+    color: var(--bs-brown-light);
+    /* font-weight: bold; */
 }
 
 .obsah {
@@ -71,4 +79,12 @@ form div textarea{
 }
 input[type="checkbox"] {
     flex: 0;
+}
+#spravovane_domy{
+    display: flex;
+    flex-direction: column;
+}
+#spravovani_lide {
+    display: flex;
+    flex-direction: column;
 }

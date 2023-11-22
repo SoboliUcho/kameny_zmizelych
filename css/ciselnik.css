@@ -24,3 +24,8 @@
     background-color: var(--bs-brown-pilot);
     color: var(--bs-brown-light);
 }
+
+.ciselnik a{
+    text-decoration: none;
+
+}

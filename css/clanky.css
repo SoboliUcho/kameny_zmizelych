@@ -104,6 +104,10 @@
     border-radius: 0;
     border: 2px solid;
 }
+.vyber:focus-visible {
+    border-radius: 0;
+    border: 2px solid;
+}
 
 .filtrovat {
     color: var(--bs-brown-light);
@@ -167,6 +171,7 @@
     margin: 10px;
     margin-bottom: 20px;
     transition: 0.5s;
+    text-decoration: none;
 }
 
 .tlacitko:hover {

@@ -69,7 +69,11 @@ function get_all_house($conn)
     $domypole = json_encode($domy, JSON_UNESCAPED_UNICODE);
     return $domypole;
 }
-
+function people_in_house($house_id, $conn){
+    $sql = "SELECT id, jmeno, prijmeni FROM lide WHERE dum_id = '$house_id'";
+    $result = $conn->query($sql);
+    return $result;
+}
 function get_all_persone($conn){
     $sql = "SELECT id, jmeno, prijmeni, datum_narozeni FROM lide ORDER BY `lide`.`prijmeni` ASC, `lide`.`jmeno` ASC ";
     $result = $conn->query($sql);
@@ -119,6 +123,16 @@ function get_all_persone_location($conn){
 
 function get_all_spravce($conn){
     $sql = "SELECT * FROM spravci";
+    $result = $conn->query($sql);
+    return $result;
+}
+function get_spravce($id, $conn){
+    $sql = "SELECT * FROM spravci WHERE id = $id";
+    $result = $conn->query($sql);
+    return $result;
+}
+function get_donator($id, $conn){
+    $sql = "SELECT * FROM donatori WHERE id = $id";
     $result = $conn->query($sql);
     return $result;
 }
@@ -174,6 +188,7 @@ function data_nick(){
     "nabozenske_vyznani",
     "den_prichodu",
     "transport",
+    "presidlil",
     "mrtvy",
     "realmrtvy",
     "dum_id", 
@@ -187,7 +202,6 @@ function data_nick(){
     "deti_id", 
     "deti",
     "datum_presidleni",
-    "presidlil",
     "datum_odhaseni",
     "zamnestnani",
     "majitel_mot_vozidla",
@@ -211,6 +225,7 @@ function nicks_alter(){
         "Náboženské vyznání",
         "Den příchodu",
         "Číslo transportu",
+        "Datum trasportu",
         "Prohlášen za mrtvého",
         "Zemřel", 
         "Dům",
@@ -224,7 +239,6 @@ function nicks_alter(){
         "Děti z databaze",
         "Děti",
         "Datum přesídlení",
-        "Přesídlil",
         "Datum odhlášení",
         "Zaměstnání",
         "Majitel motorového vozidla",
@@ -240,6 +254,5 @@ function get_all_clanky($conn){
     $result = $conn->query($sql);
     return $result;
 }
-
 
 ?>

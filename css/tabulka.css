@@ -122,15 +122,24 @@
     line-height: 1.5;
     margin: 0px;
     padding: 10px;
+    border-bottom: 0.5px solid #947f73;
 }
 
 .radek_tabulky:first-of-type {
     padding-top: 0px;
 }
+.radek_tabulky:last-of-type {
+    border-bottom: 0.5px none #947f73;}
 
-.radek_tabulky:nth-child(even) {
-    /* background-color: white; */
+.radek_tabulky:nth-of-type(even){
     filter: brightness(0.92);
+}
+.prazdky_radek{
+    column-gap: 10px;
+    line-height: 1.5;
+    margin: 0px;
+    padding: 10px;
+    border-bottom: 0.5px solid #947f73;
 }
 
 .popisek {

@@ -112,8 +112,8 @@ if ($url != "NULL" && count($url) > 0) {
         if (!empty($odkazy[$i])) {
             $odkaz_ararray[] = $odkazy[$i];
             $url_ararray[] = $url[$i];
-        } else if (!empty($deti[$i])) {
-            $odkaz_ararray = $url[$i];
+        } else if (!empty($url[$i])) {
+            $odkaz_ararray[] = $url[$i];
             $url_ararray[] = $url[$i];
         }
     }

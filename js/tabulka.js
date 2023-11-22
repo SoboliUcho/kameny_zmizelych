@@ -49,6 +49,12 @@ function tabulka_request(id, type) {
         type = "persone"
         var cFunction = page;
     }
+    else if (type == "editspravce") {
+        var cFunction = spravce;
+    }
+    else if (type == "editdonator") {
+        var cFunction = donator;
+    }
     else {
         var cFunction = nothing;
     }
@@ -156,7 +162,7 @@ function persone(data) {
             img += '<div class = "ctverec"><img src="' + karta[index] + '" alt="obrazek" class="obrazek"></div>';
 
         }
-        var text = '<div class="radek_tabulky">\n<div class="popisek karta"> Karta: </div>\n <div class="data_r" id="karta">' + img + '</div>\n</div>\n';
+        var text = '<div class="radek_tabulky">\n<div class="popisek karta">' + nazvy[nazvy.length - 2] + ':</div>\n <div class="data_r" id="karta">' + img + '</div>\n</div>\n';
         clovek.innerHTML += text
     }
 
@@ -199,7 +205,16 @@ function innerHTMLtext(data, keys, nazvy) {
     var popisek = "";
 
     for (var i = 1; i < keys.length; i++) {
+        if (keys[i] == "") {
+            text += '<div class=" prazdky_radek"></div><div></div>'
+        }
         if (data[keys[i]] == null) {
+            continue;
+        }
+        else if (keys[i] == "rozena" && keys.includes("prijmeni")) {
+            continue;
+        }
+        else if (keys[i] == "misto_narozeni" && keys.includes("datum_narozeni")) {
             continue;
         }
         else {
@@ -258,6 +273,12 @@ function innerHTMLtext(data, keys, nazvy) {
             }
             insrted_text += "</div>";
         }
+        else if (keys[i] == "prijmeni" && data["rozena"] != null) {
+            insrted_text += data[keys[i]] + " (rozená " + data["rozena"] + ")"
+        }
+        else if (keys[i] == "datum_narozeni" && data["misto_narozeni"] != null) {
+            insrted_text += data[keys[i]] + " " + data["misto_narozeni"] + ""
+        }
         else {
             insrted_text += data[keys[i]]
         }
@@ -307,23 +328,26 @@ function language_set(langue) {
         "Rozená",
         "Datum narození",
         "Místo narození",
+        ["Zemřel", "Zemřela"],
+        ["Prohlášen za mrtvého", "Prohlášena za mrtvou"],
         "Státní příslušnost",
         "Náboženské vyznání",
-        "Den příchodu",
-        "Číslo transportu",
-        ["Prohlášen za mrtvého", "Prohlášena za mrtvou"],
-        ["Zemřel", "Zemřela"],
-        "Rodinný stav",
-        ["Manželka", "Manžel"],
-        // "Dům Id",
+        "Zaměstnání",
+        "",
         "Otec",
         "Matka",
+        "Rodinný stav",
+        ["Manželka", "Manžel"],
         "Děti",
-        "Datum přesídlení",
-        "Přesídlil",
-        "Datum odhlášení",
-        "Zaměstnání",
         ["Majitel motorového vozidla", "Majitelka motorového vozidla"],
+        "",
+        "Den příchodu",
+        "Datum transportu",
+        "Číslo transportu",
+        // "Dům Id",
+        "Datum přesídlení",
+        "Datum odhlášení",
+        "",
         // "Činný v protiletadlové obraně",
         "Odkazy",
         "Fotky",
@@ -340,27 +364,30 @@ function keysword() {
         "rozena",
         "datum_narozeni",
         "misto_narozeni",
-        "statni_prislusnost",
-        "nabozenske_vyznani",
-        "den_prichodu",
-        "transport",
         "mrtvy",
         "realmrtvy",
+        "statni_prislusnost",
+        "nabozenske_vyznani",
+        "zamnestnani",
+        "",
+        "otec-j",
+        "matka-j",
         "rodinny_stav",
+        "partner",
+        "deti",
+        "majitel_mot_vozidla",
+        "",
+        "den_prichodu",
+        "presidlil",
+        "transport",
         // "dum_id", 
         // "partner_id",
-        "partner",
         // "otec_id", 
-        "otec-j",
         // "matka_id", 
-        "matka-j",
         // "deti_id", 
-        "deti",
         "datum_presidleni",
-        "presidlil",
         "datum_odhaseni",
-        "zamnestnani",
-        "majitel_mot_vozidla",
+        "",
         "odkazy",
         // "karta", 
         // "informace", 
@@ -380,28 +407,34 @@ function editpersone(data) {
         if (key == "karta" || key == "deti_id") {
             continue;
         }
-        if (key == "deti"){
+        if (key == "deti") {
             var deti = JSON.parse(data[key])
             var detiid = JSON.parse(data["deti_id"])
+            if (deti == null) {
+                continue;
+            }
             for (let i = 0; i < deti.length; i++) {
                 var input = document.getElementsByClassName("dite_name");
                 var selct = document.getElementsByClassName('dite_op');
                 input[i].value = deti[i];
-                selct[i].value=detiid[i];
-                console. log("echo");
+                selct[i].value = detiid[i];
+                // console.log("echo");
                 console.log(detiid[i]);
                 nove_dite();
             }
             continue;
         }
-        if (key == "odkazy"){
+        if (key == "odkazy") {
             var odkazy = JSON.parse(data[key])
+            if (odkazy == null) {
+                continue;
+            }
             for (let i = 0; i < odkazy.length; i++) {
-                var nazev = document.getElementsByClassName("dite_name");
-                var url = document.getElementsByClassName('dite_op');
+                var nazev = document.getElementsByClassName("nazev");
+                var url = document.getElementsByClassName('url');
                 nazev[i].value = odkazy[i][0];
-                url[i].value=odkazy[i][1];
-                console. log("echo");
+                url[i].value = odkazy[i][1];
+                console.log("echo");
                 console.log(detiid[i]);
                 nove_odkaz();
             }
@@ -464,6 +497,8 @@ function page(data) {
 
     keys = keys.filter(item => item != "jmeno");
     keys = keys.filter(item => item != "prijmeni");
+    nazvy = nazvy.filter(item => item != "Příjmení")
+    nazvy = nazvy.filter(item => item != "Jméno")
 
     tabulka[0].innerHTML = innerHTMLtext(data, keys, nazvy);
 
@@ -513,4 +548,49 @@ function openimagepage(event) {
         }, 500);
         document.removeEventListener('click', closeimg)
     })
+}
+
+function spravce(data) {
+    data = JSON.parse(data);
+    console.log(data);
+    var jmeno = document.getElementById("jmenos");
+    var email = document.getElementById("emails");
+    var id = document.getElementById("ids");
+    var checkbox = document.getElementById("visibles");
+    jmeno.value = data[0]["jmeno"];
+    email.value = data[0]["email"];
+    id.value = data[0]["id"];
+    if (data[0]["visible"] == 1) {
+        checkbox.checked = true;
+    }
+    else {
+        checkbox.checked = false;
+    }
+    for (let i = 0; i < data[1].length; i++) {
+        var lide = document.getElementsByClassName("clovek_s_id");
+        lide[i].value = data[1][i]["id"];
+        dalsi_clovek();
+    }
+}
+function donator(data){
+    console.log(data);
+    data = JSON.parse(data);
+    var jmeno = document.getElementById("jmenod");
+    var email = document.getElementById("emaild");
+    var id = document.getElementById("idd");
+    var cena = document.getElementById("prispel");
+    var stara_castka = document.getElementById("stara_castka");
+    var checkbox = document.getElementById("visibled");
+    jmeno.value = data["jmeno"];
+    email.value = data["email"];
+    id.value = data["id"];
+    stara_castka.value = data["castka"];
+    if (data["visible"] == 1) {
+        checkbox.checked = true;
+    }
+    else {
+        checkbox.checked = false;
+    }
+    var text = "Přispěl " + data["castka"] + " Kć";
+    cena.innerHTML = text;
 }

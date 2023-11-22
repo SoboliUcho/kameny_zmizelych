@@ -199,6 +199,9 @@ if (isset($_GET['dum'])) {
     // echo"$stranky $counter_all_condition";
     $urlarray = $_GET;
     for ($i = 1; $i <= $stranky; $i++) {
+      if ($stranky == 1){
+        break;
+      }
       $urlarray["stranka"] = $i;
       $url = http_build_query($urlarray);
       $url = "lide.php?" . $url;

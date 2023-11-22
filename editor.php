@@ -37,26 +37,41 @@ if (isset($_GET["response"])) {
     <?php include('lista.php'); ?>
     <div class="obsah">
         <div class="prepinace">
-            <div id="nosoba" class="prepinac">nová osoba</div>
-            <div id="edit" class="prepinac">editace osoby</div>
-            <div id="ndum" class="prepinac">nový dům</div>
-            <div id="nclanek" class="prepinac">nový clanek</div>
-            <a href="napsali_o_nas.php" class="prepinac">Upravit članek</a>
-            <script type="text/javascript">
-                var nosoba = document.getElementById("nosoba");
-                var edit = document.getElementById("edit");
-                var ndum = document.getElementById("ndum");
-                var nclanek = document.getElementById("nclanek");
-                nosoba.addEventListener("click", prepnout);
-                edit.addEventListener("click", prepnout);
-                ndum.addEventListener("click", prepnout);
-                nclanek.addEventListener("click", prepnout);
-            </script>
+            <?php
+            $prepinace = [
+                ['id' => 'nosoba', 'text' => 'Nová osoba'],
+                ['id' => 'edit', 'text' => 'Editace osoby'],
+                ['id' => 'ndum', 'text' => 'Nový dům'],
+                ['id' => 'nclanek', 'text' => 'Nový článek'],
+                ['id' => 'eclanek', 'text' => 'Editovat článek'],
+                ['id' => 'npodporovatel', 'text' => 'Nový podporovatel'],
+                ['id' => 'epodporovatel', 'text' => 'Upravit podporovatele'],
+                ['id' => 'nspravce', 'text' => 'Nový správce'],
+                ['id' => 'espravce', 'text' => 'Editovat správce']
+            ];
+
+            foreach ($prepinace as $prepinac) {
+                if ($prepinac['id'] == "eclanek") {
+                    echo '<a href="napsali_o_nas.php" class="prepinac">Upravit članek</a>';
+                    continue;
+                }
+                echo '<div id="' . $prepinac['id'] . '" class="prepinac">' . $prepinac['text'] . '</div>';
+            }
+            echo '<script type="text/javascript">';
+            foreach ($prepinace as $prepinac) {
+                if (($prepinac['id'] == "eclanek")) {
+                    continue;
+                }
+                echo 'var ' . $prepinac['id'] . '= document.getElementById("' . $prepinac['id'] . '");' . $prepinac['id'] . '.addEventListener("click", prepnout);';
+            }
+            echo '</script>';
+
+            ?>
         </div>
 
-        <div id="eosoba_form">
+        <div id="eosoba_form" class="divform">
+            <div class="nadpis">Človek k editaci</div>
             <form class="form" id="eosoba">
-                <div></div>
                 <label for="lide">Lidé</label>
                 <select name="lide" id="lide" required>
                     <option value="">Vyber člověka</option>
@@ -82,7 +97,9 @@ if (isset($_GET["response"])) {
             </script>
         </div>
 
-        <div id="nosoba_form">
+        <div id="nosoba_form" class="divform">
+            <div class="nadpis">Človek (nový / editace)</div>
+
             <form action="_new_persone.php" method="post" class="form" id="nosoba_f" enctype="multipart/form-data">
                 <div id="id_form" style="display: none;">
                 </div>
@@ -219,7 +236,9 @@ if (isset($_GET["response"])) {
             </form>
         </div>
 
-        <div id="ndum_form">
+        <div id="ndum_form" class="divform">
+            <div class="nadpis">Nový dům - poloha kamenů</div>
+
             <form class="form" id="nform">
                 <div>
                     <label for="adresa">Nový dům </label>
@@ -261,16 +280,176 @@ if (isset($_GET["response"])) {
                 </div>
             </form>
         </div>
-        <?php 
+        <?php
         include("novyclanek.php");
         ?>
+        <div id="espravce_form" class="divform">
+            <div class="nadpis">Správce k editaci</div>
 
+            <form class="form" id="espravcef">
+                <label for="lide">Lidé</label>
+                <select name="lide" id="spravcove" required>
+                    <option value="">Vyber člověka</option>
+                    <?php
+                    $spravci = get_all_spravce($conn);
+                    foreach ($spravci as $clovek) {
+                        $id = $clovek["id"];
+                        $jmeno = $clovek["jmeno"];
+                        $text = "<option value=\"$id\">$jmeno</option>";
+                        echo $text;
+                    }
+                    ?>
+                </select>
+                <div>
+                    <input type="submit" value="Načíst">
+                </div>
+            </form>
+            <script type="text/javascript">
+                var form = document.getElementById("espravcef");
+                form.addEventListener("submit", editspravce);
+            </script>
+        </div>
+        <div id="nspravce_form" class="divform">
+            <div class="nadpis">Informace o spravci</div>
+
+            <form action="_new_spravce.php" method="POST" class="form" id="nspravce_f">
+                <div id="id_spravce" style="display: none;">
+                </div>
+                <div>
+                    <label for="jmenos">Jméno</label>
+                    <input type="text" id="jmenos" name="jmeno">
+                </div>
+                <div>
+                    <label for="emails">Email</label>
+                    <input type="text" id="emails" name="email">
+                </div>
+                <div>
+                    <label for="visibles">Viditelný</label>
+                    <input type="checkbox" id="visibles" name="viditelny" checked>
+                </div>
+                <div id="spravovane_domy">
+                    Vyber spravované domy
+                    <div>
+                        <select name='dum_id[]'>
+                            <option value=''>Vyber adresu</option>
+                            <?php
+                            foreach ($domy as $dum) {
+                                $id = $dum["id"];
+                                $ulice = $dum["ulice"];
+                                $cislo_domu = $dum["cislo_domu"];
+                                $mesto = $dum["mesto"];
+                                $text = "<option value='$id'>$ulice $cislo_domu, $mesto</option>";
+                                echo $text;
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <input type="button" value="Přidat dům" id="pridat_dum">
+                </div>
+                <div id="spravovani_lide">
+                    Přidat spravovaného člověka pokud není součástí vybraných domů
+                    <div>
+                        <select name='clovek_id[]' class="clovek_s_id">
+                            <option value='NULL'>Vyber člověka:</option>;
+                            <?php
+                            foreach ($lide as $clovek) {
+                                $id = $clovek["id"];
+                                $jmeno = $clovek["jmeno"];
+                                $prijmeni = $clovek["prijmeni"];
+                                $datum_narozeni = $clovek["datum_narozeni"];
+                                $text = "<option value=\"$id\">$jmeno $prijmeni, $datum_narozeni</option>";
+                                echo $text;
+                            }
+                            ?>
+                        </select>
+                    </div>
+
+                </div>
+                <div>
+                    <input type="button" value="Přidat člověka" id="pridat_cloveka">
+                </div>
+                <div>
+                    <input type="submit" value="Odeslat">
+                </div>
+            </form>
+
+        </div>
+        <div id="edonator_form" class="divform">
+            <div class="nadpis">Donátor k editaci</div>
+            <form class="form" id="edonatorf" class="form">
+                <label for="lide">Lidé</label>
+                <select name="lide" id="donatori" required>
+                    <option value="">Vyber člověka</option>
+                    <?php
+                    $donatori = get_all_donators($conn);
+                    foreach ($donatori as $clovek) {
+                        $id = $clovek["id"];
+                        $jmeno = $clovek["jmeno"];
+                        $text = "<option value=\"$id\">$jmeno</option>";
+                        echo $text;
+                    }
+                    ?>
+                </select>
+                <div>
+                    <input type="submit" value="Načíst">
+                </div>
+            </form>
+            <script type="text/javascript">
+                var form = document.getElementById("edonatorf");
+                form.addEventListener("submit", editdonator);
+            </script>
+        </div>
+        <div id="ndonator_form" class="divform">
+            <div class="nadpis">informace k donatoru</div>
+            <form action="_new_donator.php" method="POST" class="form" id="ndonator_f">
+                <div id="id_donator" style="display: none;">
+                </div>
+                <div>
+                    <label for="jmenod">Jméno</label>
+                    <input type="text" id="jmenod" name="jmeno">
+                </div>
+                <div>
+                    <label for="emaild">Email</label>
+                    <input type="text" id="emaild" name="email">
+                </div>
+                <div class="prispel">
+                    <label for="castkad">Přispěl</label>
+                    <input type="number" id="castkad" name="castka" placeholder="zadaná částka se přičte k původní">
+                    <div id="prispel"></div>
+                </div>
+                <div>
+                    <input type="checkbox" id="visibled" name="viditelny" checked>
+                    <label for="visibled"> Viditelný</label>
+                </div>
+                <div class="prispel" style="display:none;">
+                    <label for="stara_castka">Přispěl</label>
+                    <input type="number" id="stara_castka" name="stara_castka" placeholder="zadaná částka se přičte k původní" value="0">
+                    <div id="prispel"></div>
+                </div>
+                <div>
+                    <input type="submit" value="Odeslat">
+                </div>
+            </form>
+            <div>
+                Načíst z darujme.cz 
+                <form action="_darujme_cz.php">
+                <div>
+                    <input type="submit" value="Načíst">
+                </div>
+                </form>
+            </div>
+        </div>
     </div>
 
 </body>
 <script type="text/javascript">
-    hideall();
+    var divform = document.getElementsByClassName("divform");
+    divform = Array.from(divform).map(element => element.id);
+    hideall(divform);
     console.log("hide");
+
     var dite_buton = document.getElementById("ndite");
     dite_buton.addEventListener("click", function (event) {
         event.preventDefault();
@@ -281,12 +460,22 @@ if (isset($_GET["response"])) {
         event.preventDefault();
         nove_odkaz();
     });
-    function nove_dite(){
+    var dum_buton = document.getElementById("pridat_dum");
+    dum_buton.addEventListener("click", function (event) {
+        event.preventDefault();
+        dalsi_dum();
+    });
+    var clovek_buton = document.getElementById("pridat_cloveka");
+    clovek_buton.addEventListener("click", function (event) {
+        event.preventDefault();
+        dalsi_clovek();
+    });
+    function nove_dite() {
         var nazevd = document.createElement('div');
         var dite = document.createElement('div');
-        nazevd.innerHTML += "<label>Dítě:</label><input type='text' class = 'dite_name' name='dite[]'>"
+        nazevd.innerHTML += "<label>Dítě:</label><input type='text' class = 'dite_name' name='deti[]'>";
         dite.innerHTML = <?php
-        echo "\"<label>Dítě z databáze</label><select name='dite_id[]' class='dite_op'> <option value='NULL' >Vyber člověka</option>.";
+        echo "\"<label>Dítě z databáze</label><select name='deti_id[]' class='dite_op'> <option value='NULL' >Vyber člověka</option>.";
         foreach ($lide as $clovek) {
             $id = $clovek["id"];
             $jmeno = $clovek["jmeno"];
@@ -303,14 +492,50 @@ if (isset($_GET["response"])) {
         div.appendChild(nazevd);
         div.appendChild(dite);
     }
-    function nove_odkaz(){
+    function nove_odkaz() {
         var nazevu = document.createElement('div');
         var odkaz = document.createElement('div');
         var div = document.getElementById("okaz_div");
-        nazevu.innerHTML += "<label>Název odkazu:</label><input type='text' name='odkaz[]' class='nazev'>";
+        nazevu.innerHTML += "<label>Název odkazu:</label><input type='text' name='odkazy[]' class='nazev'>";
         odkaz.innerHTML += "<label>Odkaz:<input type='url' name='url[]' class='url' placeholder='https://example.com'>";
         div.appendChild(nazevu);
         div.appendChild(odkaz);
+    }
+    function dalsi_dum() {
+        var dum = document.createElement('div');
+        dum.innerHTML = <?php
+        echo "\"<select name='dum_id[]'><option value=''>Vyber adresu</option>";
+        foreach ($domy as $dum) {
+            $id = $dum["id"];
+            $ulice = $dum["ulice"];
+            $cislo_domu = $dum["cislo_domu"];
+            $mesto = $dum["mesto"];
+            $text = "<option value='$id'>$ulice $cislo_domu, $mesto</option>";
+            echo $text;
+        }
+        echo "</select>\"";
+        ?>
+        // nove_dite(text);
+        var div = document.getElementById("spravovane_domy");
+        div.appendChild(dum);
+    }
+    function dalsi_clovek() {
+        var clovek = document.createElement('div');
+        clovek.innerHTML = <?php
+        echo "\"<select name='clovek_id[]' class='clovek_s_id'><option value='NULL'>Vyber člověka:</option>";
+        foreach ($lide as $clovek) {
+            $id = $clovek["id"];
+            $jmeno = $clovek["jmeno"];
+            $prijmeni = $clovek["prijmeni"];
+            $datum_narozeni = $clovek["datum_narozeni"];
+            $text = "<option value='$id'>$jmeno $prijmeni, $datum_narozeni</option>";
+            echo $text;
+        }
+        echo " </select>\"";
+        ?>
+        // nove_dite(text);
+        var div = document.getElementById("spravovani_lide");
+        div.appendChild(clovek);
     }
 </script>
 

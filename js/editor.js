@@ -64,34 +64,74 @@ function editclovek(event) {
 }
 
 function prepnout(event) {
-    hideall();
+    var tlacitka = ["nosoba", "edit", "ndum", "nclanek", "npodporovatel", "epodporovatel", "nspravce", "espravce"]
+    var form = ["nosoba_form", "eosoba_form", "ndum_form", "novy_clanek_form", "ndonator_form", "edonator_form", "nspravce_form", "espravce_form"]
+    hideall(form);
     var type = event.target.id;
-    if (type == "nosoba") {
-        var visible = document.getElementById("nosoba_form");
-        var form = document.getElementById("nosoba_f")
-        form.reset();
-        var image = document.getElementById("delete_image")
-        image.innerHTML = ""
+    for (let i = 0; i < tlacitka.length; i++) {
+        // console.log(tlacitka[i]);
+        // console.log(form[i]);
+        if (type == tlacitka[i]) {
+            var visible = document.getElementById(form[i]);
+            visible.style.display = "";
+        }
+        if (type == "nosoba") {
+            var formular = document.getElementById("nosoba_f")
+            formular.reset();
+            var image = document.getElementById("delete_image")
+            image.innerHTML = ""
+        }
+        if (type == "nspravce"){
+            var formular = document.getElementById("nspravce_f")
+            formular.reset();
+        }
+        if (type == "npodporovatel"){
+            var formular = document.getElementById("ndonator_f");
+            formular.reset();
+            var div = document.getElementById("prispel");
+            div.innerHTML = "";
+        }
     }
-    if (type == "edit") {
-        var visible = document.getElementById("eosoba_form");
-    }
-    if (type == "ndum") {
-        var visible = document.getElementById("ndum_form");
-    }
-    if (type == "nclanek") {
-        var visible = document.getElementById("novy_clanek_form");
-    }
-    visible.style.display = "";
 }
 
-function hideall() {
-    var edit = document.getElementById("eosoba_form");
-    var n_ososba = document.getElementById("nosoba_form");
-    var ndum = document.getElementById("ndum_form");
-    var nclanek = document.getElementById("novy_clanek_form");
-    edit.style.display = "none";
-    n_ososba.style.display = "none";
-    ndum.style.display = "none";
-    nclanek.style.display = "none";
+function hideall(form) {
+    // console.log(form)
+    for (let i = 0; i < form.length; i++) {
+        var formular = document.getElementById(form[i]);
+        // console.log(formular)
+        formular.style.display = "none";
+    }
+    return;
+}
+function editspravce(event) {
+    event.preventDefault();
+    var select = document.getElementById("spravcove");
+    var selectedValue = select.value;
+    // console.log(selectedValue)
+
+    var id = '<label for= "ids" >ID:</label ><input type="text" id="ids" name="ids" value="" readonly>';
+
+    var form = document.getElementById("id_spravce");
+    form.innerHTML = id;
+
+    var type = "edit";
+    tabulka_request(selectedValue, "editspravce");
+    var n_ososba = document.getElementById("nspravce_form");
+    n_ososba.style.display = "";
+}
+function editdonator(event){
+    event.preventDefault();
+    var select = document.getElementById("donatori");
+    var selectedValue = select.value;
+    // console.log(selectedValue)
+
+    var id = '<label for= "idd" >ID:</label ><input type="text" id="idd" name="idd" value="" readonly>';
+
+    var form = document.getElementById("id_donator");
+    form.innerHTML = id;
+
+    var type = "edit";
+    tabulka_request(selectedValue, "editdonator");
+    var n_ososba = document.getElementById("ndonator_form");
+    n_ososba.style.display = "";
 }
