@@ -236,7 +236,7 @@ echo $response;
 echo "<br>";
 echo $sql;
 $location = "Location: editor.php?response=$response";
-// header($location);
+header($location);
 
 // uprava obrazku
 function karta($jmeno, $prijmeni)
