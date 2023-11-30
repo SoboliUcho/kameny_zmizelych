@@ -48,6 +48,7 @@
     position: absolute;
     left: 50%;
     transform: translate(-50%, 0%);
+    font-weight: bold;
 }
 
 #progres {
@@ -56,12 +57,14 @@
     right: 0;
     z-index: 2;
     width: 30%;
+    pointer-events: none;
 }
 
 .infobox {
     display: flex;
     flex-direction: column;
     width: 2.3em;
+    cursor: pointer;
 }
 .infobox #rect{
     fill: #00000000;
@@ -109,7 +112,7 @@
     flex-direction: row;
     position: absolute;
     justify-content: flex-end;
-    z-index: 2;
+    z-index: 4;
     max-height: 0px;
     width: 100%;
     overflow: hidden;
@@ -146,6 +149,34 @@
     border-bottom: 10px solid var(--bs-red);
 }
 
+@media screen and (max-width: 910px) {
+    #nazev {
+        /* flex-grow: 0; */
+        font-size: 2.3em;
+        position: relative;
+        left: 0%;
+        transform: translate(0%, 0%);
+        margin-left: 20px;
+        text-align: center;
+        /* flex-shrink: 3; */
+        /* overflow: hidden; */
+    }
+}
+@media screen and (max-width: 750px) {
+    .sublista.iks{
+        /* height: 400px; */
+        max-height: 400px;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: flex-start;
+    }
+    .sublista{
+        flex-direction: column;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: flex-start;
+    }
+}
 @media screen and (max-width: 600px) {
     #logo {
         width: 85px;
@@ -161,17 +192,15 @@
         /* visibility: visible; */
     }
 }
-
-@media screen and (max-width: 910px) {
-    #nazev {
-        /* flex-grow: 0; */
-        font-size: 2.3em;
-        position: relative;
-        left: 0%;
-        transform: translate(0%, 0%);
-        margin-left: 20px;
-        text-align: center;
-        /* flex-shrink: 3; */
-        /* overflow: hidden; */
+@media screen and (max-width: 570px) {
+    #logo_male{
+        width: 100%;
+    }
+    #nazev{
+        font-size: 8vw;
+    }
+    .lista {
+        padding-top: 0;
+        padding-bottom: 0;
     }
 }

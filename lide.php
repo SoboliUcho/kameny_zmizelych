@@ -155,7 +155,7 @@ if (isset($_GET['dum'])) {
         continue;
       }
 
-      echo "<div class='clovek' id='$id'>
+      echo "<div class='clovek' id='clovek$id'>
                 <div class='center'>
             <div class='zaklad'>
               <div class='jmeno'>$name $surname</div>
@@ -173,7 +173,7 @@ if (isset($_GET['dum'])) {
             <script>
             var button$id = document.getElementById('button$id')
             button$id.addEventListener('click', function clik_on_button(event) {
-                var clovek = document.getElementById($id);
+                var clovek = document.getElementById('clovek$id');
                 var rozsireni = clovek.getElementsByClassName('rozsireni');
                 if (rozsireni[0].classList.contains('hidden'))
                 {tabulka_request(event.target.value, 'page')

@@ -33,6 +33,7 @@ function odpoved(geocoder) { /* Odpověď */
 
 
     }
+    // var value = document.getElementById("")
     var mestoInput = document.getElementById("nmesto");
     var uliceInput = document.getElementById("nulice");
     var cisloDomuInput = document.getElementById("ncislo_domu");
@@ -64,8 +65,8 @@ function editclovek(event) {
 }
 
 function prepnout(event) {
-    var tlacitka = ["nosoba", "edit", "ndum", "nclanek", "npodporovatel", "epodporovatel", "nspravce", "espravce"]
-    var form = ["nosoba_form", "eosoba_form", "ndum_form", "novy_clanek_form", "ndonator_form", "edonator_form", "nspravce_form", "espravce_form"]
+    var tlacitka = ["nosoba", "edit", "ndum", "nclanek", "npodporovatel", "epodporovatel", "nspravce", "espravce", "o_projektu"]
+    var form = ["nosoba_form", "eosoba_form", "ndum_form", "novy_clanek_form", "ndonator_form", "edonator_form", "nspravce_form", "espravce_form", "o_projektu_form"]
     hideall(form);
     var type = event.target.id;
     for (let i = 0; i < tlacitka.length; i++) {

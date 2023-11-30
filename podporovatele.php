@@ -1,10 +1,21 @@
 <?php
+
+require('_function_database.php');
+require('_darujme_cz_functions.php');
+$conn = conenect_to_database_kameny();
+
 if (isset($_COOKIE['prihlaseni'])) {
   // header("Location: prihlaseni.php");
+  load_data_dar($conn);
 }
-require('_function_database.php');
-// header('Content-Type: text/html; charset=utf-8');
-$conn = conenect_to_database_kameny();
+$old_date = get_data_by_file_get("update_date.txt");
+$curent_date = date("Y-m-d");
+$curent_date = strtotime($curent_date . " 00:00:00");
+if ($old_date < $curent_date){
+  load_data_dar($conn);
+  file_put_contents( "update_date.txt", $curent_date);
+}
+
 if (isset($_GET['stranka'])) {
   $cislo_pvniho = ($_GET['stranka'] - 1) * $pocet_na_stranku;
   $urlarray = $_GET;
@@ -16,6 +27,7 @@ if (isset($_GET['stranka'])) {
   $urlarray = $_GET;
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="cz">
 
@@ -58,7 +70,7 @@ if (isset($_GET['stranka'])) {
     <div class="prepinac <?php
     if (isset($_GET['kamen'])) {
       echo "active";
-    }?>" id="kamen">Kameny k adopci</div>
+    } ?>" id="kamen">Kameny k adopci</div>
   </div>
   <div id="nelista">
 

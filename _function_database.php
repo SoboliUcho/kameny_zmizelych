@@ -8,14 +8,11 @@
 // Heslo: p34vLN4d
 function conenect_to_database_kameny()
 {   
-    // $servername = "md380.wedos.net";
-    // $username = "a331056_kameny";
-    // $password = "jSwfrnh4";
-    // $dbname = "d331056_kameny";
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "kameny";
+    require "log_tokens.php";
+    $servername = $database["servername"];
+    $username = $database["username"];
+    $password = $database["password"];
+    $dbname = $database["dbname"];
 
     // Vytvoření připojení
     $conn = new mysqli($servername, $username, $password, $dbname);
@@ -31,9 +28,10 @@ function conenect_to_database_kameny()
 }
 function conenect_to_database($dbname)
 {
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
+    require "log_tokens.php";
+    $servername = $database["servername"];
+    $username = $database["username"];
+    $password = $database["password"];
 
     // Vytvoření připojení
     $conn = new mysqli($servername, $username, $password, $dbname);
@@ -57,7 +55,27 @@ function disconenect_to_database($conn)
 function get_all_house($conn)
 {
     $domy = array();
-    $sql = "SELECT * FROM domy";
+    $sql = "SELECT * FROM domy WHERE visible = 1 order by ulice ASC, cislo_domu ASC";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $domy[] = $row;
+        }
+    } else {
+        return false;
+    }
+    $domypole = json_encode($domy, JSON_UNESCAPED_UNICODE);
+    return $domypole;
+}
+function get_house($id, $conn){
+    $sql = "SELECT * FROM domy where id = $id";
+    $result = $conn->query($sql);
+    return $result;
+}
+function get_all_house_editor($conn)
+{
+    $domy = array();
+    $sql = "SELECT * FROM domy order by stare_cislo ASC";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
@@ -70,7 +88,7 @@ function get_all_house($conn)
     return $domypole;
 }
 function people_in_house($house_id, $conn){
-    $sql = "SELECT id, jmeno, prijmeni FROM lide WHERE dum_id = '$house_id'";
+    $sql = "SELECT id, jmeno, prijmeni FROM lide WHERE dum_id = '$house_id'  AND visible = 1";
     $result = $conn->query($sql);
     return $result;
 }
@@ -116,6 +134,7 @@ function get_all_persone_location($conn){
     d.cislo_domu
     FROM lide l 
     JOIN domy d on d.id = l.dum_id
+    WHERE l.visible = 1
     ORDER BY l.prijmeni ASC, l.jmeno ASC";
     $result = $conn->query($sql);
     return $result;
@@ -169,7 +188,7 @@ function get_nespravovane($conn){
     d.cislo_domu
     FROM lide l 
     JOIN domy d on d.id = l.dum_id
-    where l.spravce is NULL
+    where l.spravce is NULL AND visible = 1
     ORDER BY l.prijmeni ASC, l.jmeno ASC";
     $result = $conn->query($sql);
     return $result;
@@ -209,6 +228,7 @@ function data_nick(){
     "karta", 
     "informace", 
     // "spravce"
+    "visible",
     );
     return $nicks;
 }
@@ -244,7 +264,8 @@ function nicks_alter(){
         "Majitel motorového vozidla",
         "Odkazy",
         "Fotky",
-        "Další informace"
+        "Další informace",
+        "Viditelný"
     ];
     return $cz;
 }

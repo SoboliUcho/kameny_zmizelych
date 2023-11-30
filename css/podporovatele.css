@@ -15,10 +15,12 @@
     text-decoration: underline;
     cursor: pointer;
 }
-.prepinac:hover{
+
+.prepinac:hover {
     text-decoration: none;
 }
-.prepinac.active{
+
+.prepinac.active {
     text-decoration: none;
 }
 
@@ -29,6 +31,9 @@
     align-items: flex-start;
     justify-content: flex-start;
     border-bottom: 0.5px solid rgb(219 219 219);
+}
+.kamen:last-child {
+    border-bottom: 0.5px none rgb(219 219 219);
 }
 
 .rozsireni {
@@ -43,6 +48,7 @@
 .subjmeno {
     padding: 10px;
     flex: 1;
+    font-weight: bold;
 }
 
 #prispeli_tabulka {
@@ -61,6 +67,12 @@
     margin: 20px;
 }
 
+iframe {
+    height: 495px !important;
+}
+
+
+/* css widgetu (je vložev do formuláře na sránce darujme.cz) */
 /* * {
     font-family: "Raleway", sans-serif;
 }
@@ -120,3 +132,26 @@
 .widget-current {
     font-size: 35px;
 } */
+@media screen and (max-width: 500px) {
+    .prpinace {
+        box-sizing: border-box;
+        flex-direction: column;
+        font-size: 7vw;
+        gap: 0px;
+        width: 100%;
+        padding:
+            0px 10px;
+    }
+
+    #prispeli_tabulka {
+        flex-direction: column;
+    }
+
+    #darovat {
+        order: 1;
+    }
+
+    .donatori {
+        order: 2;
+    }
+}

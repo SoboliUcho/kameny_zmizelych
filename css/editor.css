@@ -88,3 +88,14 @@ input[type="checkbox"] {
     display: flex;
     flex-direction: column;
 }
+#o_projektu_form form div{
+    box-sizing: border-box;
+    max-width: 100%;
+}
+#o_projektu_form form {
+    box-sizing: border-box;
+    width: 90%;
+}
+.nadpis{
+    font-size: 20px;
+}

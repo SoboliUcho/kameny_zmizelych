@@ -4,7 +4,7 @@
     <img src="images/muzeum_boskovice_logo_male.svg" alt="Muzeum boskovicka" id="logo_male">
   </a>
 
-  <h1 id="nazev"> KAMENY ZMIZELÝCH </h1>
+  <div id="nazev"> KAMENY ZMIZELÝCH </div>
   <div class="infobox" id="infobox">
     <svg class="ham" width="100%" height="100%" viewBox="0 0 100 100" version="1.1" id="svg5"
       xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
@@ -21,12 +21,17 @@
 <div class="pomoc">
   <div class="sublista" id="sublista">
     <?php
+    // $odkazy=["index.php", "lide.php", "report.php", "o_projektu.php", "napsali_o_nas.php", "podporovatele.php"];
     $odkazy=["index.php", "lide.php", "report.php", "o_projektu.php", "napsali_o_nas.php", "podporovatele.php"];
+
     $odkazy_nazev=["Mapa", "Lidé", "report", "O projektu", "Napsali o nás", "Podporovatelé"];
     $currentPage = basename($_SERVER['PHP_SELF']);
     for ($i=0; $i < count($odkazy); $i++) { 
       $odkaz = $odkazy[$i];
       $odkaz_nazev = $odkazy_nazev[$i];
+      if ($odkazy[$i] == "report.php"){
+        continue;
+      }
       if ($currentPage == $odkazy[$i]) {
         echo"<a href='$odkaz' class='info aktive'>
           <div class='infotext'>$odkaz_nazev</div>
@@ -74,4 +79,4 @@
   });
 
 </script>
-<img id="progres" src="images\in_progres.png" alt="">
+<!-- <img id="progres" src="images\in_progres.png" alt=""> -->

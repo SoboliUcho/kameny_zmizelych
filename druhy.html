@@ -1,61 +1,31 @@
+<div class='clovek' id='$id'>
+  <div class='center'>
+<div class='zaklad'>
+<div class='jmeno'>$name $surname</div>
+<div class='data'>
+  <div class='datum'>$date_of_birth</div>
+  <div class='bydliste'>$street $house_number</div>
+</div>
+<button class='vice' value='$id' id = 'button$id'>Více informací</button>
+
+</div>
+<div class='rozsireni hidden visuallyhidden'>
+<div class='data'></div>
+<div class='informace'></div>
+</div>
 <script>
-            var button$id = document.getElementById('button$id')
-            button$id.addEventListener('click', function clik_on_button(event) {
-                var clovek = document.getElementById($id);
-                var rozsireni = clovek.getElementsByClassName(rozsireni);
-                if (rozsireni[0].classList.contains('hidden'))
-                {tabulka_request(event.target.value, 'page')
-                console.log(event.target.value)}
-                else{
-                  rozsireni.classList.add('visuallyhidden');
-        setTimeout(() => {
-            rozsireni.classList.add('hidden');
-        }, 500);
-                }
-            })
-            </script>
- <script>
-  var button$id = document.getElementById('button$id')
-  button$id.addEventListener('click', function clik_on_button(event) {
-      var clovek = document.getElementById('$id');
-      var rozsireni = clovek.getElementsByClassName('rozsireni');
-      if (rozsireni[0].classList.contains("hidden")) {
-      rozsireni[0].classList.remove('hidden');
-      setTimeout(function () {
-      rozsireni[0].classList.remove('visuallyhidden');
-      }, 20);
-      console.log(event.target.value)}
-      else {
-        rozsireni[0].classList.add('hidden');
-      setTimeout(function () {
-      rozsireni[0].classList.add('visuallyhidden');
-      }, 20);
-      }
-
-  })
-  </script>";
-
-if (tabulka.classList.contains("hidden")) {
-  // console.log("remove hidden")
-  tabulka.classList.remove("hidden");
-  setTimeout(function () {
-      tabulka.classList.remove('visuallyhidden');
-      // console.log("remove visual")
-  }, 20);
-
-} else {
-  tabulka.classList.add("visuallyhidden");
-  setTimeout(() => {
-      tabulka.classList.add("hidden");
-  }, 500);
-}
-}
-<div class="radek_tabulky"></div>
-<div class="radek_tabulky"></div>
-<div class="radek_tabulky"></div>
-<div class="prazdky_radek"></div>
-<div class="radek_tabulky"></div>
-<div class="radek_tabulky"></div>
-<div class="radek_tabulky"></div>
-<div class="radek_tabulky"></div>
-
+var button$id = document.getElementById('button$id')
+button$id.addEventListener('click', function clik_on_button(event) {
+  var clovek = document.getElementById('$id');
+  var rozsireni = clovek.getElementsByClassName('rozsireni');
+  if (rozsireni[0].classList.contains('hidden'))
+  {tabulka_request(event.target.value, 'page')
+  console.log(event.target.value)}
+  else{
+    rozsireni[0].classList.add('visuallyhidden');
+    rozsireni[0].classList.add('hidden');
+  }
+})
+</script>
+</div>
+</div>

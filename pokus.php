@@ -1,41 +1,36 @@
-<?php
-require('_function_database.php');
-// header('Content-Type: text/html; charset=utf-8');
-if (isset($_GET['datum']) && !empty($_GET['datum'])) {
-    $datum = $_GET['datum'];
-    $datum = strtotime($datum);
-} else {
-    $datum = "NULL";
-}
-echo $datum;
-echo "<br>"
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+    
+<!-- <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script> -->
+    <script>
+        tinymce.init({
+            selector:'#novyObsah',
+            language: 'cs',
+            plugins:"  autolink accordion  lists advlist link media table image quickbars media",
+            // plugins:"a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist link media mediaembed pageembed permanentpen powerpaste table advtable tinymcespellchecker",
+            toolbar: "undo redo | bold italic casechange | blocks | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent | link insertfile image table | removeformat",
+            table_appearance_options: false,
+            table_use_colgroups: false,
+        });
+    </script>
+</head>
+
+<body>
+    <form action="_o_projektu.php" method="post">
+        <textarea id="novyObsah" name="novyObsah" rows="10" cols="80"></textarea><br>
+        <input type="submit" value="Aktualizovat Obsah">
+    </form>
+
+</body>
+
+</html>
+
+<?php
+print_r($_POST)
     ?>
-<form action="" method="get">
-    <label for="datum">Datum
-        <input type="date" name="datum">
-    </label>
-    </label>
-    <input class="filtrovat" type="submit" value="Filtrovat">
-</form>
-<button class='edit' value='$id' id='button$id'>Opravit</button>
-<script>
-    var tlacitko = document.getElementById('button$id');
-    tlacitko.addEventListener('click', function clik_on_button(event) {
-        var form = document.getElementById('novy_clanek')
-        // var id_pole = form.getElementById("id");
-        var url_pole = form.getElementById("url");
-        var nazev_pole = form.getElementById("nazev");
-        var text_pole = form.getElementById("text");
-        var datum_pole = form.getElementById("datum");
-        if (id_pole == null) {
-            form.innerHTML += "<div style='display:none'><input type='text' name='id' id='id' value='$id'></div>";
-            id_pole = form.getElementById('idpole');
-        }
-        id_pole.value = '$id';
-        datum_pole.value = '$date_visible';
-        nazev_pole.value = '$name';
-        text_pole.value = '$text'
-        url_pole.value = '$url'
-    })
-</script>

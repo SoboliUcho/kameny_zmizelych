@@ -55,6 +55,9 @@ function tabulka_request(id, type) {
     else if (type == "editdonator") {
         var cFunction = donator;
     }
+    else if (type == "dum") {
+        var cFunction = dum_edit;
+    }
     else {
         var cFunction = nothing;
     }
@@ -175,38 +178,39 @@ function persone(data) {
     for (var i = 0; i < divlidi.length; i++) {
         divlidi[i].addEventListener("click", change_persone);
     }
-    if (data["otec_id"] != null) {
-        father(data)
-    }
-    if (data["matka_id"] != null) {
-        mother(data)
-    }
+    var div_n_osoba = document.getElementsByClassName("n_ososba")
+    // for (var i = 0; i < div_n_osoba.length; i++) {
+    //     div_n_osoba[i].addEventListener("click", change_persone);
+    // }
+    // if (data["otec_id"] != null) {
+    //     father(data)
+    // }
+    // if (data["matka_id"] != null) {
+    //     mother(data)
+    // }
     var obrazky = document.getElementsByClassName("obrazek");
     for (var i = 0; i < obrazky.length; i++) {
         obrazky[i].addEventListener("click", openimage);
     }
-    deti_id = JSON.parse(data["deti_id"]);
-    if (deti_id != null) {
-        for (let i = 0; i < deti_id.length; i++) {
-            if (deti_id[i] != "NULL") {
-                dite = document.getElementById(deti_id[i]);
-                dite.addEventListener("click", function (event) {
-                    event.stopPropagation()
-                    change_persone(event);
-                });
-            }
-        }
+    var n_ososba = document.getElementsByClassName("n_ososba");
+    for (let i = 0; i < n_ososba.length; i++) {
+        n_ososba[i].addEventListener("click", function (event) {
+            event.stopPropagation();
+            change_persone(event);
+        })
     }
 }
-
 function innerHTMLtext(data, keys, nazvy) {
     var text = "";
 
-    var popisek = "";
-
+    var last_key = [];
     for (var i = 1; i < keys.length; i++) {
-        if (keys[i] == "") {
-            text += '<div class=" prazdky_radek"></div><div></div>'
+        var popisek = "";
+
+        if (keys[i] == '_' && last_key[last_key.length - 1] != '_') {
+            text += '<div class="prazdky_radek"></div><div></div>'
+            last_key.push(keys[i])
+            continue
         }
         if (data[keys[i]] == null) {
             continue;
@@ -237,6 +241,11 @@ function innerHTMLtext(data, keys, nazvy) {
                 id = data["matka_id"];
                 popisek = " n_ososba"
             }
+        } else if (keys[i] == "partner") {
+            if (data["matka_id"] != null) {
+                id = data["partner_id"];
+                popisek = " n_ososba"
+            }
         }
         else {
             id = keys[i];
@@ -254,24 +263,32 @@ function innerHTMLtext(data, keys, nazvy) {
         var insrted_text = "";
         if (keys[i] == "majitel_mot_vozidla" || keys[i] == "cinny_v_protiletadlove_obrane") {
             if (data[keys[i]] == 1) {
-                // console.log(data[keys[i]])
                 insrted_text += "Ano"
             }
             else {
                 continue;
             }
         } else if (keys[i] == "deti") {
-            insrted_text += "<div class='deti'>"
             deti = JSON.parse(data["deti"]);
             deti_id = JSON.parse(data["deti_id"])
-            for (let i = 0; i < deti.length; i++) {
-                if (deti_id[i] != null) {
-                    id = deti_id[i];
-                    popisek = " n_ososba";
+            for (let j = 0; j < deti.length; j++) {
+                if (deti_id[j] != null) {
+                    idd = deti_id[j];
+                    popisekd = " n_ososba";
                 }
-                insrted_text += "<did class='dite'>" + deti[i] + "</div>";
+                else {
+                    idd = "dite" + j;
+                    popisekd = ""
+                }
+                insrted_text += "<div class='dite" + popisekd + "' id='" + idd + "'>" + deti[j] + "</div>";
             }
-            insrted_text += "</div>";
+        }
+        else if (keys[i] == "odkazy") {
+            id = "odkazy"
+            url = JSON.parse(data["odkazy"]);
+            for (let j = 0; j < url.length; j++) {
+                insrted_text += "<a class='n_ososba' href='" + url[j][1] + "' target='_blank'>" + url[j][0] + "</a>";
+            }
         }
         else if (keys[i] == "prijmeni" && data["rozena"] != null) {
             insrted_text += data[keys[i]] + " (rozená " + data["rozena"] + ")"
@@ -282,8 +299,15 @@ function innerHTMLtext(data, keys, nazvy) {
         else {
             insrted_text += data[keys[i]]
         }
-        var subtext = '<div class="radek_tabulky">\n<div class="popisek' + popisek + '">' + nazev + ': </div>\n <div class="data_r" id="' + id + '">' + insrted_text + '</div>\n</div>\n'
-        text += subtext
+        var subtext = '<div class="radek_tabulky">\n<div class="popisek">' + nazev + ': </div>\n <div class="data_r' + popisek + '" id="' + id + '">' + insrted_text + '</div>\n</div>\n'
+        text += subtext;
+        last_key.push(keys[i])
+    }
+    if (last_key[last_key.length - 1] == "_") {
+        var substringToRemove = '<div class="prazdky_radek"></div><div></div>'
+        var lastOccurrenceIndex = text.lastIndexOf(substringToRemove);
+        var modifiedText = text.substring(0, lastOccurrenceIndex) + text.substring(lastOccurrenceIndex + substringToRemove.length)
+        text = modifiedText
     }
     return text;
 }
@@ -369,14 +393,14 @@ function keysword() {
         "statni_prislusnost",
         "nabozenske_vyznani",
         "zamnestnani",
-        "",
+        "_",
         "otec-j",
         "matka-j",
         "rodinny_stav",
         "partner",
         "deti",
         "majitel_mot_vozidla",
-        "",
+        "_",
         "den_prichodu",
         "presidlil",
         "transport",
@@ -387,7 +411,7 @@ function keysword() {
         // "deti_id", 
         "datum_presidleni",
         "datum_odhaseni",
-        "",
+        "_",
         "odkazy",
         // "karta", 
         // "informace", 
@@ -418,8 +442,6 @@ function editpersone(data) {
                 var selct = document.getElementsByClassName('dite_op');
                 input[i].value = deti[i];
                 selct[i].value = detiid[i];
-                // console.log("echo");
-                console.log(detiid[i]);
                 nove_dite();
             }
             continue;
@@ -435,7 +457,6 @@ function editpersone(data) {
                 nazev[i].value = odkazy[i][0];
                 url[i].value = odkazy[i][1];
                 console.log("echo");
-                console.log(detiid[i]);
                 nove_odkaz();
             }
             continue;
@@ -488,7 +509,7 @@ function nothing() {
 function page(data) {
 
     data = JSON.parse(data);
-    var clovek = document.getElementById(data["id"]);
+    var clovek = document.getElementById("clovek" + data["id"]);
     var rozsireni = clovek.getElementsByClassName("rozsireni");
     tabulka = rozsireni[0].getElementsByClassName("data");
 
@@ -572,7 +593,7 @@ function spravce(data) {
         dalsi_clovek();
     }
 }
-function donator(data){
+function donator(data) {
     console.log(data);
     data = JSON.parse(data);
     var jmeno = document.getElementById("jmenod");
@@ -593,4 +614,7 @@ function donator(data){
     }
     var text = "Přispěl " + data["castka"] + " Kć";
     cena.innerHTML = text;
+}
+function dum_edit(data){
+    
 }

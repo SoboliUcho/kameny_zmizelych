@@ -3,7 +3,11 @@ if (!isset($_COOKIE['prihlaseni'])) {
     header("Location: prihlaseni.php");
 }
 require('_function_database.php');
+?>
 
+<!DOCTYPE html>
+<html lang="cz">
+<?php
 $conn = conenect_to_database_kameny();
 if (isset($_GET["response"])) {
     $response = $_GET["response"];
@@ -11,9 +15,6 @@ if (isset($_GET["response"])) {
     <script>alert("' . $response . '");</script>');
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="cz">
 
 <head>
     <meta charset="UTF-8">
@@ -30,6 +31,20 @@ if (isset($_GET["response"])) {
     <script src="js/mapa.js"></script>
     <script src="js/tabulka.js"></script>
     <script src="js/editor.js"></script>
+    <script src="tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: '#novyObsah',
+            language: 'cs',
+            plugins: "  autolink accordion  lists advlist link media table image quickbars media",
+            // plugins:"a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist link media mediaembed pageembed permanentpen powerpaste table advtable tinymcespellchecker",
+            toolbar: "undo redo | bold italic casechange | blocks | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent | link insertfile image table | removeformat",
+            table_appearance_options: false,
+            table_use_colgroups: false,
+            width: '100%',
+            content_css: 'css/main.css',
+        });
+    </script>
     <title>editor</title>
 </head>
 
@@ -42,12 +57,15 @@ if (isset($_GET["response"])) {
                 ['id' => 'nosoba', 'text' => 'Nová osoba'],
                 ['id' => 'edit', 'text' => 'Editace osoby'],
                 ['id' => 'ndum', 'text' => 'Nový dům'],
+                ['id' => 'edum', 'text' => 'Editovat dům'],
                 ['id' => 'nclanek', 'text' => 'Nový článek'],
                 ['id' => 'eclanek', 'text' => 'Editovat článek'],
                 ['id' => 'npodporovatel', 'text' => 'Nový podporovatel'],
                 ['id' => 'epodporovatel', 'text' => 'Upravit podporovatele'],
                 ['id' => 'nspravce', 'text' => 'Nový správce'],
-                ['id' => 'espravce', 'text' => 'Editovat správce']
+                ['id' => 'espravce', 'text' => 'Editovat správce'],
+                ['id' => 'o_projektu', 'text' => 'Editovat O projektu']
+
             ];
 
             foreach ($prepinace as $prepinac) {
@@ -189,6 +207,14 @@ if (isset($_GET["response"])) {
                         </div>";
                         continue;
                     }
+                    if ($id_nick[$i] == "visible") {
+                        echo " <select name='$id_label' id='$id_label' >
+                        <option value='1'>Ano</option>
+                        <option value='0'>Ne</option>
+                        </select>
+                        </div>";
+                        continue;
+                    }
 
                     if ($id_nick[$i] == "majitel_mot_vozidla") {
                         echo " <select name='$id_label' id='$id_label' >
@@ -212,14 +238,15 @@ if (isset($_GET["response"])) {
                     }
                     if ($id_nick[$i] == "dum_id") {
                         echo " <select name='dum_id' id='dum_id'><option value=''>Vyber adresu</option>";
-                        $domy = get_all_house($conn);
+                        $domy = get_all_house_editor($conn);
                         $domy = json_decode($domy, true);
                         foreach ($domy as $dum) {
                             $id = $dum["id"];
                             $ulice = $dum["ulice"];
+                            $stare = $dum["stare_cislo"];
                             $cislo_domu = $dum["cislo_domu"];
                             $mesto = $dum["mesto"];
-                            $text = "<option value=\"$id\">$ulice $cislo_domu, $mesto</option>";
+                            $text = "<option value=\"$id\">$stare - Nová adresa: $ulice $cislo_domu</option>";
                             echo $text;
                         }
                         echo "</select>
@@ -253,27 +280,137 @@ if (isset($_GET["response"])) {
                 JAK.Events.addListener(form, "submit", geokoduj);
             </script>
 
-            <form action="_new_house.php" method="post" class="form">
+            <div class="nadpis">Editovat dům - Staré číslo domu</div>
+            <form class="form" id="dum_z_dat">
 
                 <div>
+                    <select name='dum_id' id='dum_id_ndum'>
+                        <option value=''>Vyber adresu</option>
+                        <?php
+                        foreach ($domy as $dum) {
+                            $id = $dum["id"];
+                            $ulice = $dum["ulice"];
+                            $stare = $dum["stare_cislo"];
+                            $cislo_domu = $dum["cislo_domu"];
+                            $mesto = $dum["mesto"];
+                            $text = "<option value=\"$id\">$stare - Nová adresa: $ulice $cislo_domu</option>";
+                            echo $text;
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div>
+                    <input type="submit" value="Hledat">
+                </div>
+            </form>
+            <script>
+                var form = document.getElementById("dum_z_dat");
+                form.addEventListener("submit", editdum);
+                function editdum(event) {
+                    event.preventDefault();
+                    var domy = JSON.parse(<?php echo (json_encode(get_all_house_editor($conn))) ?>, true);
+                    var select = document.getElementById("dum_id_ndum");
+                    var selectedValue = select.value;
+                    // console.log(selectedValue)
+                    // console.log(domy)
+                    for (let i = 0; i < domy.length; i++) {
+                        // for (var dum in domy) {
+                        var dum = domy[i]
+                        if (dum["id"] != selectedValue) {
+                            continue;
+                        }
+                        console.log(dum)
+                        var id = document.getElementById("id_domu");
+                        var cislo_domu = document.getElementById("ncislo_domu");
+                        var nulice = document.getElementById("nulice");
+                        var nmesto = document.getElementById("nmesto");
+                        var old_siclo = document.getElementById("old_siclo");
+                        var checkbox = document.getElementById("visibles");
+                        if (dum["gps_x"] == null || dum["gps_y"] == null) {
+                            var query = dum["ulice"] + " " + dum["cislo_domu"] + " " + dum["mesto"]
+                            console.log(query)
+                            new SMap.Geocoder(query, odpovedform);
+
+                        } else {
+                            var gpsXInput = document.getElementById("gps_x");
+                            var gpsYInput = document.getElementById("gps_y");
+                            gpsXInput.value = dum["gps_x"]
+                            gpsYInput.value = dum["gps_y"]
+                        }
+                        id.value = dum["id"]
+                        cislo_domu.value = dum["cislo_domu"];
+                        nulice.value = dum["ulice"];
+                        nmesto.value = dum["mesto"];
+                        old_siclo.value = dum["stare_cislo"];
+                        if (dum["visible"] == 1) {
+                            checkbox.checked = true;
+                        }
+                        else {
+                            checkbox.checked = false;
+                        }
+                    }
+                }
+                function odpovedform(geocoder) {
+                    if (!geocoder.getResults()[0].results.length) {
+                        alert("Tohle místo neznáme.");
+                        return;
+                    }
+                    var vysledky = geocoder.getResults()[0].results;
+                    var item = vysledky.shift()
+                    // console.log(item.label)
+                    var regex = /(.+?)\s(\d+\/\d+),\s(.+?),\s(.+)$/;
+                    var matches = item.label.match(regex);
+                    var lomítka = matches[2].split('/');
+                    // console.log(item);
+
+                    var addressInfo = {
+                        ulice: matches[1],
+                        pscislo: lomítka[0],
+                        ocislo: lomítka[1],
+                        mesto: matches[3],
+                        stat: matches[4],
+                        gps_x: item.coords.x,
+                        gps_y: item.coords.y
+                    };
+                    console.log(addressInfo)
+                    var gpsXInput = document.getElementById("gps_x");
+                    var gpsYInput = document.getElementById("gps_y");
+                    gpsXInput.value = addressInfo.gps_x;
+                    gpsYInput.value = addressInfo.gps_y;
+                }
+            </script>
+            <div class="nadpis">Kontrola dat</div>
+            <form action="_new_house.php" method="post" class="form">
+                <div style="display:none">
+                    <label for="id_domu">ID:</label><input type="text" id="id_domu" name="id" value="" readonly>
+                </div>
+                <div>
                     <label for="nulice">ulice:</label>
-                    <input type="text" id="nulice" name="nulice" value="" readonly required>
+                    <input type="text" id="nulice" name="nulice" value="" required>
                 </div>
                 <div>
                     <label for="ncislo_domu">čislo domu:</label>
-                    <input type="text" id="ncislo_domu" name="ncislo_domu" value="" readonly required>
+                    <input type="text" id="ncislo_domu" name="ncislo_domu" value="" required>
                 </div>
                 <div>
                     <label for="nmesto">Město:</label>
-                    <input type="text" id="nmesto" name="nmesto" value="" readonly required>
+                    <input type="text" id="nmesto" name="nmesto" value="" required>
                 </div>
                 <div>
                     <label for="gps_x">gps x</label>
-                    <input type="text" id="gps_x" name="gps_x" value="" readonly>
+                    <input type="text" id="gps_x" name="gps_x" value="">
                 </div>
                 <div>
                     <label for="gps_y">gps y</label>
-                    <input type="text" id="gps_y" name="gps_y" value="" readonly>
+                    <input type="text" id="gps_y" name="gps_y" value="">
+                </div>
+                <div>
+                    <label for="old_siclo">Staré čislo</label>
+                    <input type="text" id="old_siclo" name="old_siclo" value="">
+                </div>
+                <div>
+                    <label for="visibles">Viditelný</label>
+                    <input type="checkbox" id="visibles" name="viditelny" checked>
                 </div>
                 <div>
                     <input type="submit" value="Odeslat">
@@ -402,7 +539,7 @@ if (isset($_GET["response"])) {
             </script>
         </div>
         <div id="ndonator_form" class="divform">
-            <div class="nadpis">informace k donatoru</div>
+            <div class="nadpis">Informace k donatoru</div>
             <form action="_new_donator.php" method="POST" class="form" id="ndonator_f">
                 <div id="id_donator" style="display: none;">
                 </div>
@@ -425,7 +562,8 @@ if (isset($_GET["response"])) {
                 </div>
                 <div class="prispel" style="display:none;">
                     <label for="stara_castka">Přispěl</label>
-                    <input type="number" id="stara_castka" name="stara_castka" placeholder="zadaná částka se přičte k původní" value="0">
+                    <input type="number" id="stara_castka" name="stara_castka"
+                        placeholder="zadaná částka se přičte k původní" value="0">
                     <div id="prispel"></div>
                 </div>
                 <div>
@@ -433,13 +571,21 @@ if (isset($_GET["response"])) {
                 </div>
             </form>
             <div>
-                Načíst z darujme.cz 
+                Načíst z darujme.cz
                 <form action="_darujme_cz.php">
-                <div>
-                    <input type="submit" value="Načíst">
-                </div>
+                    <div>
+                        <input type="submit" value="Načíst">
+                    </div>
                 </form>
             </div>
+        </div>
+        <div id="o_projektu_form" class="divform" id="novyObsah_f">
+            <div class="nadpis">Editovat O projektu</div>
+
+            <form action="_o_projektu.php" method="post">
+                <textarea id="novyObsah" name="novyObsah"><?php include('o_projektu-text.txt'); ?></textarea>
+                <input type="submit" value="Aktualizovat Obsah">
+            </form>
         </div>
     </div>
 

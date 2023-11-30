@@ -1203,29 +1203,3 @@ Goldmanovi. Jako variantu navrhuji kamarády pana Jaroslava Koutného, autora bo
         )
 
 )
-<script>
-    // request();
-    function request() {
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                odpoved(xhr.responseText);
-            }
-        };
-        var data = new FormData();
-        data.append('apiId', "74234503");
-        data.append("apiSecret", "g9qesn0jllgllrlyzv3umwd1k4y4d8wiwstsrglq");
-        xhr.open("GET", "https://www.darujme.cz/api/v1/organization/1200707/pledges-by-filter?apiId=74234503&apiSecret=g9qesn0jllgllrlyzv3umwd1k4y4d8wiwstsrglq", true);
-        xhr.send();
-    }
-    function odpoved(data){
-        console.log(data)
-    }
-//     var script = document.createElement('script');
-// script.src = 'https://www.darujme.cz/api/v1/organization/1200707/pledges-by-filter?apiId=74234503&apiSecret=g9qesn0jllgllrlyzv3umwd1k4y4d8wiwstsrglq&callback=myCallback';
-// document.body.appendChild(script);
-
-// function myCallback(data) {
-//     console.log(data);
-// }
-</script>

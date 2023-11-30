@@ -35,6 +35,12 @@ if ($type == "people") {
     foreach ($donatori as $donator) {
         echo (json_encode($donator, JSON_UNESCAPED_UNICODE));
     }
+} elseif ($type == "dum") {
+    $houses = get_house($id, $conn);
+    // print_r($donatori);
+    foreach ($houses as $house) {
+        echo (json_encode($house, JSON_UNESCAPED_UNICODE));
+    }
 } else {
     disconenect_to_database($conn);
 }

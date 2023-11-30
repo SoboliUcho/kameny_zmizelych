@@ -161,6 +161,21 @@
     gap: 10px;
 }
 
+.n_ososba{
+    color: black;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.n_ososba:hover{
+    text-decoration: none;
+}
+#odkazy{
+    color: black;
+    display: flex;
+    flex-direction: column;
+}
+
 .ctverec {
     width: 6vw;
     height: 6vw;
@@ -172,10 +187,12 @@
 }
 
 #ix {
-    background: white url("../images/ix.svg") center/1em auto no-repeat;
-    width: 1em;
-    height: 1em;
-    transform: translate(0%, -100%);
+    background:url("../images/ix.svg") center/1em auto no-repeat;
+    width: 2em;
+    height: 2em;
+    transform: translate(0%, -80%);
+    position: absolute;
+    /* margin: 20px; */
 }
 
 #informace {

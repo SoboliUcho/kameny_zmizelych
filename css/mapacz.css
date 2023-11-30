@@ -1,11 +1,13 @@
-#mapa *{
+#mapa svg{
     /* display: none; */
     cursor: default;
 }
 #mapa{
     transition: filter 0.5s opacity 0.5s;
 }
-
+#mapa img{
+    cursor: pointer;
+}
 .gray {
     filter: grayscale(100%); 
     opacity: 0.7;
