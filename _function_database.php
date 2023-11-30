@@ -188,7 +188,7 @@ function get_nespravovane($conn){
     d.cislo_domu
     FROM lide l 
     JOIN domy d on d.id = l.dum_id
-    where l.spravce is NULL AND visible = 1
+    where l.spravce is NULL AND l.visible = 1
     ORDER BY l.prijmeni ASC, l.jmeno ASC";
     $result = $conn->query($sql);
     return $result;
