@@ -380,7 +380,7 @@ if (isset($_GET["response"])) {
                 }
             </script>
             <div class="nadpis">Kontrola dat</div>
-            <form action="_new_house.php" method="post" class="form">
+            <form action="_new_house.php" method="post" class="form" id="control_form">
                 <div style="display:none">
                     <label for="id_domu">ID:</label><input type="text" id="id_domu" name="id" value="" readonly>
                 </div>

@@ -1,6 +1,8 @@
 function geokoduj(e, elm) {  /* Voláno při odeslání */
     JAK.Events.cancelDef(e); /* Zamezit odeslání formuláře */
     var query = JAK.gel("adresa").value;
+    var form = document.getElementById("control_form")
+    form.reset();
     new SMap.Geocoder(query, odpoved);
 }
 
@@ -49,6 +51,10 @@ function odpoved(geocoder) { /* Odpověď */
 
 function editclovek(event) {
     event.preventDefault();
+    var formular = document.getElementById("nosoba_f")
+    formular.reset();
+    var image = document.getElementById("delete_image")
+    image.innerHTML = ""
     var select = document.getElementById("lide");
     var selectedValue = select.value;
     console.log(selectedValue)
@@ -56,7 +62,7 @@ function editclovek(event) {
     var id = '<label for= "id" >ID:</label ><input type="text" id="id" name="id" value="" readonly>';
 
     var form = document.getElementById("id_form");
-    form.innerHTML += id;
+    form.innerHTML = id;
 
     var type = "edit";
     tabulka_request(selectedValue, "edit");
@@ -82,11 +88,11 @@ function prepnout(event) {
             var image = document.getElementById("delete_image")
             image.innerHTML = ""
         }
-        if (type == "nspravce"){
+        if (type == "nspravce") {
             var formular = document.getElementById("nspravce_f")
             formular.reset();
         }
-        if (type == "npodporovatel"){
+        if (type == "npodporovatel") {
             var formular = document.getElementById("ndonator_f");
             formular.reset();
             var div = document.getElementById("prispel");
@@ -120,7 +126,7 @@ function editspravce(event) {
     var n_ososba = document.getElementById("nspravce_form");
     n_ososba.style.display = "";
 }
-function editdonator(event){
+function editdonator(event) {
     event.preventDefault();
     var select = document.getElementById("donatori");
     var selectedValue = select.value;

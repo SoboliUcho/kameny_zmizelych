@@ -476,8 +476,10 @@ function karta_img(data) {
     data = JSON.parse(data);
     console.log(data);
     var img = "<label class='obrazek_label'> vyberte obrázek na smazání: </label>";
-    for (let index = 0; index < data.length; index++) {
-        img += '<label class="obrazek_label"><input type="checkbox" name="del_images[]" value="' + data[index] + '"><div class="ctverec"><img src="' + data[index] + '" alt="obrazek" class="obrazek"></div></label>';
+    if (data != null) {
+        for (let index = 0; index < data.length; index++) {
+            img += '<label class="obrazek_label"><input type="checkbox" name="del_images[]" value="' + data[index] + '"><div class="ctverec"><img src="' + data[index] + '" alt="obrazek" class="obrazek"></div></label>';
+        }
     }
     deleteimage.innerHTML = img;
 }
@@ -615,6 +617,6 @@ function donator(data) {
     var text = "Přispěl " + data["castka"] + " Kć";
     cena.innerHTML = text;
 }
-function dum_edit(data){
-    
+function dum_edit(data) {
+
 }
