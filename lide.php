@@ -120,7 +120,6 @@ if (isset($_GET['dum'])) {
 
     <?php
     $people = get_all_persone_location($conn);
-    // $pocet = mysqli_num_rows($people);
     $counter_all_condition = 0;
     $counter = 0;
     foreach ($people as $person) {
