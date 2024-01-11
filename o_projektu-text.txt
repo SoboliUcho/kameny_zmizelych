@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <h1>Nadpis 1</h1>
 <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Mauris tincidunt sem sed arcu. Nullam rhoncus aliquam metus. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Pellentesque arcu. Nullam eget nisl. Phasellus rhoncus. Mauris dolor felis, sagittis at, luctus sed, aliquam non, tellus. Aliquam erat volutpat. Morbi imperdiet, mauris ac auctor dictum, nisl ligula egestas nulla, et sollicitudin sem purus in lacus. Integer imperdiet lectus quis justo. Morbi scelerisque luctus velit. Integer rutrum, orci vestibulum ullamcorper ultricies, lacus quam ultricies odio, vitae placerat pede sem sit amet enim. Quisque porta. Integer imperdiet lectus quis justo. Aenean placerat. Vivamus porttitor turpis ac leo. Suspendisse nisl. Sed ac dolor sit amet purus malesuada congue. Aliquam ornare wisi eu metus.</p>
 <h2>Nadpis 2</h2>
@@ -16,4 +17,24 @@
 </tbody>
 </table>
 <h1>odkazy</h1>
+=======
+<h1>Nadpis 1</h1>
+<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Mauris tincidunt sem sed arcu. Nullam rhoncus aliquam metus. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Pellentesque arcu. Nullam eget nisl. Phasellus rhoncus. Mauris dolor felis, sagittis at, luctus sed, aliquam non, tellus. Aliquam erat volutpat. Morbi imperdiet, mauris ac auctor dictum, nisl ligula egestas nulla, et sollicitudin sem purus in lacus. Integer imperdiet lectus quis justo. Morbi scelerisque luctus velit. Integer rutrum, orci vestibulum ullamcorper ultricies, lacus quam ultricies odio, vitae placerat pede sem sit amet enim. Quisque porta. Integer imperdiet lectus quis justo. Aenean placerat. Vivamus porttitor turpis ac leo. Suspendisse nisl. Sed ac dolor sit amet purus malesuada congue. Aliquam ornare wisi eu metus.</p>
+<h2>Nadpis 2</h2>
+<p>Phasellus rhoncus. In dapibus augue non sapien. Nullam lectus justo, vulputate eget mollis sed, tempor sed magna. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Maecenas aliquet accumsan leo. Fusce suscipit libero eget elit. Quisque tincidunt scelerisque libero. In dapibus augue non sapien. Nulla turpis magna, cursus sit amet, suscipit a, interdum id, felis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Etiam dictum tincidunt diam. Phasellus faucibus molestie nisl. Etiam quis quam.</p>
+<h1>tabulka</h1>
+<table style="border-collapse: collapse; width: 41.7785%; height: 55px;" border="1">
+<tbody>
+<tr>
+<td style="width: 50.0336%;">položka 1</td>
+<td style="width: 50.0336%;">item 2</td>
+</tr>
+<tr>
+<td style="width: 50.0336%;">položka 2</td>
+<td style="width: 50.0336%;">item 1</td>
+</tr>
+</tbody>
+</table>
+<h1>odkazy</h1>
+>>>>>>> 7414d3c5cb25979073ea471cd9ccf7779ad002b1
 <p><a href="https://www.muzeum-boskovicka.cz/vystavy-akce">Muzeum boskovicka - v&yacute;stavy akce</a></p>

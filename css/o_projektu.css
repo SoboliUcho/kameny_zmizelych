@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #nelista {
     box-sizing: border-box;
     display: flex;
@@ -24,4 +25,32 @@ a {
 
 a:hover {
     text-decoration: none;
+=======
+#nelista {
+    box-sizing: border-box;
+    display: flex;
+    /* width: 100%; */
+    flex-direction: column;
+    /* align-content: center; */
+    align-items: center;
+    margin: 20px;
+    margin-bottom: 30px;
+}
+
+#obsah {
+    width: 80%;
+}
+table, th, td {
+    border: 0px none;
+}
+tr {
+    border-bottom: 0.5px solid rgb(219 219 219);
+}
+a {
+    color: black;
+}
+
+a:hover {
+    text-decoration: none;
+>>>>>>> 7414d3c5cb25979073ea471cd9ccf7779ad002b1
 }

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 body {
     margin: 0px;
     display: flex;
@@ -98,4 +99,106 @@ input[type="checkbox"] {
 }
 .nadpis{
     font-size: 20px;
+=======
+body {
+    margin: 0px;
+    display: flex;
+    flex-direction: column;
+}
+
+.prepinace {
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+    flex-wrap: wrap;
+}
+
+.prepinac {
+    /* flex: 1; */
+    padding: 10px;
+    border: 1px solid black;
+    margin: 1px;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+    transition: 0.5s;
+}
+.prepinac:hover {
+    background-color: var(--bs-brown-pilot);
+    color: var(--bs-brown-light);
+    /* font-weight: bold; */
+}
+
+.obsah {
+    padding: 10px;
+    padding-top: 0px;
+}
+
+.ctverec {
+    width: 200px;
+    /* height: 6vw; */
+    /* overflow: hidden; */
+}
+
+.obrazek {
+    width: 100%;
+}
+
+#delete_image {
+    display: flex;
+    flex-direction: column;
+}
+
+.obrazek_label {
+    display: flex;
+    flex-direction: row;
+}
+
+form div{
+    display: flex;
+    max-width: 50%;
+    margin: 10px;
+}
+form div label{
+    flex: 1;
+}
+form div input{
+    flex: 2;
+}
+form div select{
+    flex: 2;
+}
+form div textarea{
+    flex: 2;
+}
+#deti_div{
+    display: flex;
+    flex-direction: column;
+}
+#okaz_div{
+    display: flex;
+    flex-direction: column;
+}
+input[type="checkbox"] {
+    flex: 0;
+}
+#spravovane_domy{
+    display: flex;
+    flex-direction: column;
+}
+#spravovani_lide {
+    display: flex;
+    flex-direction: column;
+}
+#o_projektu_form form div{
+    box-sizing: border-box;
+    max-width: 100%;
+}
+#o_projektu_form form {
+    box-sizing: border-box;
+    width: 90%;
+}
+.nadpis{
+    font-size: 20px;
+>>>>>>> 7414d3c5cb25979073ea471cd9ccf7779ad002b1
 }

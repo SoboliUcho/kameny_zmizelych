@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 :root {
     --bs-brown-pilot: #2F1107;
     --bs-brown-dark: #4F3732;
@@ -247,4 +248,255 @@
         width: 100%;
     }
 
+=======
+:root {
+    --bs-brown-pilot: #2F1107;
+    --bs-brown-dark: #4F3732;
+    --bs-brown-light: #EFE6E0;
+    --bs-brown-mid: #BDA394;
+    --bs-red: #FF0E1C;
+    --bs-primary: #2F1107;
+    --bs-secondary: #4F3732;
+    --bs-success: #2F1107;
+    --bs-info: #EFE6E0;
+    --bs-warning: #BDA394;
+    --bs-danger: #FF0E1C;
+    --bs-light: #EFE6E0;
+    --bs-dark: #4F3732;
+    --bs-white: #FFFFFF;
+    --bs-font-sans-serif: 'Raleway', sans-serif;
+    --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+}
+
+
+.form {
+    width: 80%;
+    align-self: center;
+}
+
+.form form {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.center {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 10px;
+    justify-content: space-between;
+    padding: 10px;
+    padding-bottom: 20px;
+}
+
+.jmeno {
+    flex: 1;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.data {
+    flex: 1;
+    align-self: center;
+}
+
+.vice {
+    background-color: var(--bs-brown-pilot);
+    color: var(--bs-brown-light);
+    font-weight: bold;
+    align-self: end;
+    border: none;
+    padding: 0.375rem 0.75rem;
+}
+
+.vice:hover {
+    background-color: var(--bs-red);
+    color: var(--bs-brown-light);
+    font-weight: bold;
+    align-self: end;
+}
+
+.clanek {
+    display: flex;
+    background-color: var(--bs-white);
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.clanek:nth-child(even) {
+    background-color: var(--bs-brown-light);
+
+    /* filter: brightness(0.5); */
+    .radek_tabulky {
+        border-bottom: 0.5px solid rgb(194 194 194);
+    }
+
+    .radek_tabulky:last-of-type {
+        border-bottom: 0.5px none rgb(219 219 219);
+    }
+}
+
+.vyber {
+    border: 2px solid #C4C4C4;
+    border-radius: 0;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-right: 15px;
+    padding-left: 10px;
+    margin: 10px;
+    margin-bottom: 20px;
+}
+
+.vyber:focus {
+    border-radius: 0;
+    border: 2px solid;
+}
+
+.vyber:focus-visible {
+    border-radius: 0;
+    border: 2px solid;
+}
+
+.filtrovat {
+    color: var(--bs-brown-light);
+    background-color: var(--bs-brown-pilot);
+    border: 2px solid var(--bs-brown-pilot);
+    font-weight: bold;
+    border-radius: 0;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-left: 0px;
+    margin: 10px;
+    margin-bottom: 20px;
+    transition: 0.5s;
+}
+
+#novy_clanek .filtrovat {
+    margin-bottom: 0px;
+}
+
+.filtrovat:hover {
+    color: var(--bs-brown-light);
+    background-color: var(--bs-red);
+    border: 2px solid var(--bs-red);
+
+}
+
+.datum {
+    /* flex: 1; */
+    margin-right: 20px;
+    color: #9c9c9c;
+}
+
+.odkaz {
+    flex: 2;
+}
+
+.nazev {
+    color: #2F1107;
+    text-decoration: underline;
+    font-size: 1.5624999944rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.nazev:hover {
+    text-decoration: none;
+}
+
+.tlacitko {
+    color: var(--bs-brown-light);
+    background-color: var(--bs-brown-pilot);
+    border: 2px solid var(--bs-brown-pilot);
+    font-weight: bold;
+    border-radius: 0;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-left: 0px;
+    margin: 10px;
+    margin-bottom: 20px;
+    transition: 0.5s;
+    text-decoration: none;
+}
+
+.tlacitko:hover {
+    color: var(--bs-brown-light);
+    background-color: var(--bs-red);
+    border: 2px solid var(--bs-red);
+}
+
+.napoveda {
+    display: none;
+    position: absolute;
+    width: 170px;
+    background: #efe6e0de;
+    padding: 10px;
+}
+
+#datum:hover+.napoveda {
+    display: block;
+}
+
+@media screen and (max-width: 800px) {
+    .form form {
+        box-sizing: border-box;
+
+        margin-top: 10px;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .form form label {
+        box-sizing: border-box;
+        display: flex;
+        width: 50%;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .form form .vyber {
+        width: 250px;
+        margin-top: 0;
+    }
+
+    .form form label .vyber {
+        box-sizing: border-box;
+        width: 250px;
+        max-width: 250px;
+        margin-top: 0;
+    }
+
+    .form form .filtrovat {
+        margin-top: 0;
+        width: 250px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .datum {
+        flex: 1;
+        margin-right: 0px;
+        margin-left: 10px;
+    }
+
+    .center {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+    .odkaz {
+        flex: 4;
+    }
+    .form form label {
+        width: 100%;
+    }
+
+>>>>>>> 7414d3c5cb25979073ea471cd9ccf7779ad002b1
 }
