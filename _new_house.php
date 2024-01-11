@@ -6,13 +6,34 @@ $cislo_domu = $_POST["ncislo_domu"];
 $mesto = $_POST["nmesto"];
 $gps_x = $_POST["gps_x"];
 $gps_y = $_POST["gps_y"];
+$old_siclo = $_POST["old_siclo"];
+$visible = $_POST["viditelny"];
+$id = $_POST["id"];
 
-$sql = "INSERT INTO domy (mesto, ulice, cislo_domu, gps_x, gps_y) VALUES ('$mesto', '$ulice', '$cislo_domu', '$gps_x','$gps_y')";
+if ($id == "") {
+    $sql = "INSERT INTO domy (mesto, ulice, cislo_domu, gps_x, gps_y,stare_cislo, visible) VALUES ('$mesto', '$ulice', '$cislo_domu', '$gps_x','$gps_y', $old_siclo, $visible)";
+} else {
+    
+    $sql = "UPDATE domy
+    SET mesto = '$mesto',
+        ulice = '$ulice',
+        cislo_domu = '$cislo_domu',
+        gps_x = '$gps_x',
+        gps_y = '$gps_y',
+        stare_cislo = '$old_siclo',
+        visible = $visible
+    WHERE id = $id";
+}
+
 if (mysqli_query($conn, $sql)) {
     $response = "Data byla úspěšně uložena.";
 } else {
     $response = "Chyba při ukládání dat: " . mysqli_error($conn);
 }
 disconenect_to_database($conn);
-header("Location: editor.php?response=$response");
+echo $response;
+echo "<br>";
+echo $sql;
+$location = "Location: editor.php?response=$response";
+header($location);
 ?>
