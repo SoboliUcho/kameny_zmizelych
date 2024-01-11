@@ -1,0 +1,157 @@
+.prpinace {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    font-size: 2em;
+    font-weight: bold;
+    text-transform: uppercase;
+    justify-content: space-between;
+    width: 80%;
+    align-self: center;
+}
+
+.prepinac {
+    color: var(--bs-brown-pilot);
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.prepinac:hover {
+    text-decoration: none;
+}
+
+.prepinac.active {
+    text-decoration: none;
+}
+
+.kamen {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    border-bottom: 0.5px solid rgb(219 219 219);
+}
+.kamen:last-child {
+    border-bottom: 0.5px none rgb(219 219 219);
+}
+
+.rozsireni {
+    flex-direction: column;
+}
+
+.rozsireni .data {
+    flex: 1;
+
+}
+
+.subjmeno {
+    padding: 10px;
+    flex: 1;
+    font-weight: bold;
+}
+
+#prispeli_tabulka {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.donatori {
+    flex: 1;
+    margin: 20px;
+}
+
+#darovat {
+    flex: 1;
+    margin: 20px;
+}
+
+iframe {
+    height: 495px !important;
+}
+
+
+/* css widgetu (je vložev do formuláře na sránce darujme.cz) */
+/* * {
+    font-family: "Raleway", sans-serif;
+}
+.widget {
+    font-size: 14px;
+    text-align: center;
+    color: #000000;
+    background: #fff;
+    overflow: hidden;
+}
+.widget-stats-item {
+    text-align: center;
+    float: left;
+    padding: 0.5em 1em;
+}
+.widget-head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.widget-description {
+    text-transform: uppercase;
+}
+.widget-periodic {
+    margin-bottom: 10px;
+    position: relative;
+    display: flex;
+}
+.widget-periodic-button {
+    box-sizing: border-box;
+    flex: 1;
+    margin: 3px;
+    border-radius: 0;   
+}
+.widget-entries-button{
+    border-radius: 0;   
+    
+}
+.widget-submit {
+    border-radius: 0;
+    background-color: #2F1107;
+    color: #EFE6E0;
+    border: 0px none #cacaca;
+}
+.widget-submit:hover {
+    border-radius: 0;
+    background-color:  #FF0E1C;;
+    color: #EFE6E0;
+    box-shadow: 0 0 0 0 #fff;
+    border: 0px none #cacaca;
+}
+.widget-periodic-input:checked + .widget-periodic-button, .widget-entries-input:checked + .widget-entries-button {
+    z-index: 2;
+    color: #2F1107;
+    border-color: #2F1107;
+}
+.widget-current {
+    font-size: 35px;
+} */
+@media screen and (max-width: 500px) {
+    .prpinace {
+        box-sizing: border-box;
+        flex-direction: column;
+        font-size: 7vw;
+        gap: 0px;
+        width: 100%;
+        padding:
+            0px 10px;
+    }
+
+    #prispeli_tabulka {
+        flex-direction: column;
+    }
+
+    #darovat {
+        order: 1;
+    }
+
+    .donatori {
+        order: 2;
+    }
+}
