@@ -4,7 +4,7 @@ $conn = conenect_to_database_kameny();
 
 $promnene = data_nick();
 // přečtení dat
-print_r($_POST);
+// print_r($_POST);
 for ($i = 0; $i < count($promnene); $i++) {
     if ($promnene[$i] == 'karta') {
         $karta = !empty($_FILES["karta"]) ? karta($jmeno, $prijmeni) : "NULL";
@@ -30,10 +30,13 @@ for ($i = 0; $i < count($promnene); $i++) {
         if ($promnene[$i] == "otec-j") {
             $otec = "'" . $_POST[$promnene[$i]] . "'";
         }
-        if ($promnene[$i] == "matka-j") {
+        else if ($promnene[$i] == "matka-j") {
             $matka = "'" . $_POST[$promnene[$i]] . "'";
         } else {
             ${$promnene[$i]} = "'" . $_POST[$promnene[$i]] . "'";
+        }
+        if (isset(${$promnene[$i]}) && ${$promnene[$i]} == "'NULL'" ){
+            ${$promnene[$i]}= "NULL";
         }
     } else {
         if ($promnene[$i] == "otec-j") {
@@ -166,7 +169,8 @@ if (($karta != "NULL" && isset($_POST["id"])) || isset($_POST["del_images"])) {
         }
     }
 }
-if ($old_karta != "NULL") {
+
+if (isset($old_karta) && $old_karta != "NULL" && $old_karta !="") {
     $old_karta = "'" . json_encode($old_karta, JSON_UNESCAPED_UNICODE) . "'";
     $karta = $old_karta;
 }
@@ -177,8 +181,8 @@ if (isset($_POST["id"])) {
     for ($i = 0; $i < count($promnene); $i++) {
         // echo $promnene[$i]." = ". ${$promnene[$i]} ."<br>";
         if ($promnene[$i] == "otec") {
-            $sql .= "`otec-j`" . " = " . ${$promnene[$i]}.", ";
-            echo `<br>kontrola otec-j` . " = " . ${$promnene[$i]}.", ";
+            $sql .= "`otec-j`" . " = " . $otec .", ";
+            // echo `<br>kontrola otec-j` . " = " . $otec .", ";
             continue;
         }
         if ($promnene[$i] == "matka") {
@@ -192,16 +196,16 @@ if (isset($_POST["id"])) {
         }
     }
     $sql .= " WHERE id = $id";
-    echo "<br>";
+    // echo "<br>";
 
 } else {
     $sql = "INSERT INTO lide(";
     for ($i = 0; $i < count($promnene); $i++) {
         if ($promnene[$i] == "otec") {
-            $sql .= `otec-j`;
+            $sql .= "`otec-j`";
         }
-        if ($promnene[$i] == "matka") {
-            $sql .= `matka-j`;
+        elseif ($promnene[$i] == "matka") {
+            $sql .= "`matka-j`";
         } else {
             $sql .= $promnene[$i];
         }
@@ -225,6 +229,7 @@ if (isset($_POST["id"])) {
     }
     $sql .= ")";
 }
+// echo $sql;
 if (mysqli_query($conn, $sql)) {
     $response = "Data byla úspěšně uložena.";
 } else {
@@ -232,9 +237,10 @@ if (mysqli_query($conn, $sql)) {
 }
 
 disconenect_to_database($conn);
-echo $response;
-echo "<br>";
-echo $sql;
+// echo $response;
+// echo "<br>";
+// echo $sql;
+// echo $old_karta;
 $location = "Location: editor.php?response=$response";
 header($location);
 

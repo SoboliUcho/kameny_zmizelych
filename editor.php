@@ -57,7 +57,7 @@ if (isset($_GET["response"])) {
                 ['id' => 'nosoba', 'text' => 'Nová osoba'],
                 ['id' => 'edit', 'text' => 'Editace osoby'],
                 ['id' => 'ndum', 'text' => 'Nový dům'],
-                ['id' => 'edum', 'text' => 'Editovat dům'],
+                // ['id' => 'edum', 'text' => 'Editovat dům'],
                 ['id' => 'nclanek', 'text' => 'Nový článek'],
                 ['id' => 'eclanek', 'text' => 'Editovat článek'],
                 ['id' => 'npodporovatel', 'text' => 'Nový podporovatel'],

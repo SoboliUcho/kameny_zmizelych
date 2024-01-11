@@ -7,18 +7,21 @@ $mesto = $_POST["nmesto"];
 $gps_x = $_POST["gps_x"];
 $gps_y = $_POST["gps_y"];
 $old_siclo = $_POST["old_siclo"];
+$visible = $_POST["viditelny"];
 $id = $_POST["id"];
 
 if ($id == "") {
-    $sql = "INSERT INTO domy (mesto, ulice, cislo_domu, gps_x, gps_y,stare_cislo) VALUES ('$mesto', '$ulice', '$cislo_domu', '$gps_x','$gps_y' $old_siclo)";
+    $sql = "INSERT INTO domy (mesto, ulice, cislo_domu, gps_x, gps_y,stare_cislo, visible) VALUES ('$mesto', '$ulice', '$cislo_domu', '$gps_x','$gps_y', $old_siclo, $visible)";
 } else {
+    
     $sql = "UPDATE domy
     SET mesto = '$mesto',
         ulice = '$ulice',
         cislo_domu = '$cislo_domu',
         gps_x = '$gps_x',
         gps_y = '$gps_y',
-        stare_cislo = '$old_siclo'
+        stare_cislo = '$old_siclo',
+        visible = $visible
     WHERE id = $id";
 }
 
