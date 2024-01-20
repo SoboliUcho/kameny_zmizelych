@@ -24,8 +24,8 @@ function conenect_to_database_kameny()
     }
     return $conn;
     // echo "Spojení k databázi bylo úspěšně navázáno.";
-
 }
+
 function conenect_to_database($dbname)
 {
     require "log_tokens.php";

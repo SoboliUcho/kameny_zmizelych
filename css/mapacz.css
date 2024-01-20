@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #mapa svg{
     /* display: none; */
     cursor: default;
@@ -30,37 +29,4 @@
 #mapa .compass {
     background-color: var(--bs-brown-pilot);
     color: var(--bs-brown-light);
-=======
-#mapa svg{
-    /* display: none; */
-    cursor: default;
-}
-#mapa{
-    transition: filter 0.5s opacity 0.5s;
-}
-#mapa img{
-    cursor: pointer;
-}
-.gray {
-    filter: grayscale(100%); 
-    opacity: 0.7;
-}
-.copyright.print{
-    font-size: 10px;
-}
-.copyright.print a{
-    font-size: 10px;
-}
-#mapa .button-group button{
-    background-color: var(--bs-brown-pilot);
-    color: var(--bs-brown-light);
-}
-#mapa .zoom *{
-    background-color: var(--bs-brown-pilot);
-    color: var(--bs-brown-light);
-}
-#mapa .compass {
-    background-color: var(--bs-brown-pilot);
-    color: var(--bs-brown-light);
->>>>>>> 7414d3c5cb25979073ea471cd9ccf7779ad002b1
 }
