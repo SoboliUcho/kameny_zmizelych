@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form id="geocode-form">
+        <input type="text" id="geocode-input" />
+        <button type="submit">
+            Geocode
+        </button>
+    </form>
+    <script>
+
+        async function geocode(query) {
+            const API_KEY = '-YU-3m6kTF_X0RFCcyIDyMT5EbJixEkzsmz8JlWMoWY';
+            try {
+                const url = new URL(`https://api.mapy.cz/v1/geocode`);
+
+                url.searchParams.set('lang', 'cs');
+                url.searchParams.set('apikey', API_KEY);
+                url.searchParams.set('query', query);
+                url.searchParams.set('limit', '15');
+                [
+                    'regional.municipality',
+                    'regional.municipality_part',
+                    'regional.street',
+                    'regional.address'
+                ].forEach(type => url.searchParams.append('type', type));
+
+                const response = await fetch(url.toString(), {
+                    mode: 'cors',
+                });
+                const json = await response.json();
+
+                console.log('geocode', json);
+                console.log(json.items.length)
+
+                if (!json.items.length) {
+                    alert("Tohle místo neznáme.");
+                    return;
+                }
+
+                var vysledky = json.items[0];
+                var cislo = vysledky.regionalStructure.find(item => item.type === "regional.address").name;
+                var lomítka = cislo.split('/');
+                // console.log(items);
+
+                var addressInfo = {
+                    ulice: vysledky.regionalStructure.find(item => item.type === "regional.street").name,
+                    pscislo: lomítka[0],
+                    ocislo: lomítka[1],
+                    mesto: vysledky.regionalStructure.find(item => item.type === "regional.municipality_part").name,
+                    stat: vysledky.regionalStructure.find(item => item.type === "regional.country").name,
+                    gps_x: vysledky.position.lon,
+                    gps_y: vysledky.position.lat
+                };
+                console.log(addressInfo)
+            } catch (ex) {
+                console.log(ex);
+            }
+        }
+
+        const form = document.querySelector('#geocode-form');
+        const input = document.querySelector('#geocode-input');
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            geocode(input.value);
+        }, false);
+
+    </script>
+</body>
+
+</html>
+<!-- 
+{
+    "items": [
+        {
+            "name": "Na Dolech 1313/26",
+            "label": "Adresa",
+            "position": {
+                "lon": 16.65678,
+                "lat": 49.49381
+            },
+            "type": "regional.address",
+            "location": "Boskovice, Česko",
+            "regionalStructure": [
+                {
+                    "name": "1313/26",
+                    "type": "regional.address"
+                },
+                {
+                    "name": "Na Dolech",
+                    "type": "regional.street"
+                },
+                {
+                    "name": "Boskovice",
+                    "type": "regional.municipality_part"
+                },
+                {
+                    "name": "Boskovice",
+                    "type": "regional.municipality"
+                },
+                {
+                    "name": "okres Blansko",
+                    "type": "regional.region"
+                },
+                {
+                    "name": "Jihomoravský kraj",
+                    "type": "regional.region"
+                },
+                {
+                    "name": "Česko",
+                    "type": "regional.country",
+                    "isoCode": "CZ"
+                }
+            ],
+            "zip": "680 01"
+        }
+    ],
+    "locality": []
+} -->

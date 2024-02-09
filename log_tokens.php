@@ -14,4 +14,16 @@ $darujme_api = array(
     "apiSecret" => "g9qesn0jllgllrlyzv3umwd1k4y4d8wiwstsrglq",
     "organizationId" => 1200707
 );
+$mapy_api = array(
+    "api_key" => "-YU-3m6kTF_X0RFCcyIDyMT5EbJixEkzsmz8JlWMoWY"
+);
+$pozice = array(
+    array(
+        "nazev" => "Boskovice",
+        "gps_x" => 16.6597287,
+        "gps_y" => 49.4868687,
+        "zoom" => 18
+    )
+)
+
 ?>

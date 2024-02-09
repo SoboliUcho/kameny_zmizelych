@@ -1,73 +1,117 @@
-var x = 16.6597287;
-var y = 49.4868687;
-var zoom = 18;
+function set_height() {
+  const win_height = window.innerHeight;
+  var nelista = document.getElementById("nelista");
+  var lista = document.getElementsByClassName("lista")[0];
+  const size_lista = lista.clientHeight;
+  var size = (win_height - size_lista) - 2;
+  // console.log(size);
+  nelista.style.height = `${size}px`
+}
+
 function make_map(x, y, zoom) {
-    var stred = SMap.Coords.fromWGS84(x, y);
-    var mapa = new SMap(JAK.gel("mapa"), stred, zoom); // mapa = id div 
-    mapa.addDefaultLayer(SMap.DEF_TURIST).enable();
-    // mapa.addDefaultLayer(SMap.DEF_BASE)
-    // mapa.addDefaultLayer(SMap.DEF_OPHOTO);
-    // mapa.addDefaultLayer(SMap.DEF_TURIST_WINTER);
-    
-    var mouse = new SMap.Control.Mouse(SMap.MOUSE_PAN | SMap.MOUSE_WHEEL | SMap.MOUSE_ZOOM); /* Ovládání myší */
-    mapa.addControl(mouse); 
-    mapa.addDefaultControls();
-    return mapa;
+  const API_KEY = '-YU-3m6kTF_X0RFCcyIDyMT5EbJixEkzsmz8JlWMoWY';
+  var map = L.map('mapa', { zoomControl: false }).setView([y, x], zoom);
+  L.tileLayer(`https://api.mapy.cz/v1/maptiles/outdoor/256/{z}/{x}/{y}?apikey=${API_KEY}`, {
+    minZoom: 0,
+    maxZoom: 19,
+    attribution: '<a href="https://api.mapy.cz/copyright" target="_blank">&copy; Seznam.cz a.s. a další</a>',
+  }).addTo(map);
+  const LogoControl = L.Control.extend({
+    options: {
+      position: 'bottomleft',
+    },
+
+    onAdd: function (map) {
+      const container = L.DomUtil.create('div');
+      const link = L.DomUtil.create('a', '', container);
+
+      link.setAttribute('href', 'http://mapy.cz/');
+      link.setAttribute('target', '_blank');
+      link.innerHTML = '<img src="https://api.mapy.cz/img/api/logo.svg" />';
+      L.DomEvent.disableClickPropagation(link);
+
+      return container;
+    },
+  });
+  new LogoControl().addTo(map);
+  // L.control.scale({
+  //   position: 'bottomright', 
+  //   imperial: false, 
+  //   maxWidth: 200,
+  //   updateWhenIdle:true}).addTo(map);
+  return map
 }
 
-function mapa_botom_space(pixels, mapa) {
-    var sync = new SMap.Control.Sync({ bottomSpace: pixels });
-    mapa.addControl(sync);
+function make_marker(dum) {
+  var icon = L.icon({
+    iconUrl: 'images/jude3.png',
+    iconSize: [30, 59], // size of the icon
+    iconAnchor: [15, 59], // point of the icon which will correspond to marker's location
+  });
+  var adresa = dum.ulice + " " + dum.cislo_domu;
+  var marker = L.marker([dum.gps_y, dum.gps_x], { icon: icon, markerId: dum.id }).bindTooltip(adresa);
+  marker.on('click', function (event) {
+    L.DomEvent.stopPropagation(event);
+    // var markerId = this.options.markerId;
+    console.log(dum.id);
+    // console.log(markerId);
+    tabulka_request(dum.id, "people")
+  });
+  return marker
 }
 
-function make_marker_layer(mapa) {
-    var layer = new SMap.Layer.Marker();
-    mapa.addLayer(layer);
-    return layer;
+function make_markers(domy, mapa) {
+  // var markers = L.markerClusterGroup({
+  //   keepSpiderfy: true
+  // });
+  if (domy == false) {
+    return false;
+  }
+  for (var dum of domy) {
+    // markers.addLayer(make_marker(dum))
+    make_marker(dum).addTo(mapa)
+    console.log(dum);
+  }
+  // mapa.addLayer(markers);
 }
 
-function make_marker(marker_data){
-    var coords = SMap.Coords.fromWGS84(marker_data.gps_x, marker_data.gps_y);
-    
-    // var obrazek = "images/drop-red.png";
-    var obrazek = "images/jude3.png";
+function handleTouchStart(event) {
+  event.preventDefault();
+  centerX = compass.offsetWidth / 2;
+  centerY = compass.offsetHeight / 2;
+  isMousePressed = true;
+  const touchX = event.clientX - compass.getBoundingClientRect().left - centerX;
+  const touchY = event.clientY - compass.getBoundingClientRect().top - centerY;
 
-    var adresa = marker_data.ulice + " " + marker_data.cislo_domu;
-    // console.log (adresa);
-    var options = {
-        url: obrazek,
-        title: adresa,
-        anchor: {left:10, bottom: 1},
-    };
+  const distance = Math.sqrt(touchX * touchX + touchY * touchY);
+  const maxDistance = compass.offsetWidth / 2;
+  const ratio = Math.min(maxDistance / distance, 1);
 
-    var marker = new SMap.Marker(coords, marker_data.id, options);
-    var card = new SMap.Card();
-// card.getHeader().innerHTML = "<strong>Nadpis</strong>";
-// card.getBody().innerHTML = "Ahoj, já jsem <em>obsah vizitky</em>!";
-// marker.decorate(SMap.Marker.Feature.Card, card);
-
-    return marker;
+  executeFunction(touchX * ratio, touchY * ratio);
 }
 
-function make_markers(domy, mapa){
-    // console.log("dum");
-    var pole_markery = new Array()
-    if (domy == false){
-        return false;
-    }
-    for (var dum of domy){
-        pole_markery.push(make_marker(dum));
-        console.log(dum);
-    }
-    var layer = make_marker_layer(mapa)
-    // var clusterer = new SMap.Marker.Clusterer(mapa, 20);
-    // layer.setClusterer(clusterer);
-    layer.addMarker(pole_markery);
-    layer.enable();
+function handleMouseMove(event) {
+  if (event.buttons !== 1) return;
+  event.preventDefault();
+  const touchX = event.clientX - compass.getBoundingClientRect().left - centerX;
+  const touchY = event.clientY - compass.getBoundingClientRect().top - centerY;
+
+  const distance = Math.sqrt(touchX * touchX + touchY * touchY);
+  const maxDistance = compass.offsetWidth / 2;
+  const ratio = Math.min(maxDistance / distance, 1);
+
+  executeFunction(touchX * ratio, touchY * ratio);
 }
 
-function marker_clik(e){
-    var marker = e.target;
-    var id = marker.getId();
-    console.log(id);
+function handleMouseUp(event) {
+  event.preventDefault();
+  isMousePressed = false;
+  clearTimeout(timeoutId);
+}
+
+function executeFunction(x, y) {
+  if (!isMousePressed) return;
+  console.log('Function executed with coordinates:', x, y);
+  mapa.panBy([x * 5, y * 5], { animate: true });
+  timeoutId = setTimeout(executeFunction, 100, x, y);
 }

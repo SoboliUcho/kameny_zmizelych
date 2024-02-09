@@ -21,11 +21,14 @@ if (isset($_GET["response"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="icon" href="images/icona.jpg">
-    <link rel="icon" href="https://www.muzeum-boskovicka.cz/sites/default/files/favicons/favicon-16x16.png">
 
     <link rel="stylesheet" href="css/lista.css">
     <link rel="stylesheet" href="css/editor.css">
 
+    <script type="text/javascript" src="https://api.mapy.cz/loader.js"></script>
+    <script type="text/javascript">Loader.load()</script>
+
+    <script src="js/mapa.js"></script>
     <script src="js/tabulka.js"></script>
     <script src="js/editor.js"></script>
     <script src="tinymce/tinymce.min.js" referrerpolicy="origin"></script>
@@ -42,7 +45,7 @@ if (isset($_GET["response"])) {
             content_css: 'css/main.css',
         });
     </script>
-    <title>Editor | Kameny zmizelých</title>
+    <title>editor</title>
 </head>
 
 <body>
@@ -273,12 +276,8 @@ if (isset($_GET["response"])) {
                 </div>
             </form>
             <script type="text/javascript">
-                var nform = document.getElementById("nform")
-                nform.addEventListener('submit', function (event) {
-                    event.preventDefault();
-                    var adresa =document.getElementById("adresa")
-                    geokoduj(adresa.value);
-                });
+                var form = JAK.gel("nform");
+                JAK.Events.addListener(form, "submit", geokoduj);
             </script>
         </div>
         <div id="edum_form" class="divform">
@@ -331,9 +330,9 @@ if (isset($_GET["response"])) {
                         var old_siclo = document.getElementById("old_siclo");
                         var checkbox = document.getElementById("visibles");
                         if (dum["gps_x"] == null || dum["gps_y"] == null || dum["gps_x"] == 0 || dum["gps_y"] == 0) {
-                            var adresa = dum["ulice"] + " " + dum["cislo_domu"] + " " + dum["mesto"]
-                            console.log(adresa)
-                            odpovedform(adresa);
+                            var query = dum["ulice"] + " " + dum["cislo_domu"] + " " + dum["mesto"]
+                            console.log(query)
+                            new SMap.Geocoder(query, odpovedform);
 
                         } else {
                             var gpsXInput = document.getElementById("gps_x");
@@ -354,11 +353,29 @@ if (isset($_GET["response"])) {
                         }
                     }
                 }
-                function odpovedform(adresa) {
-                    var addressInfo=geokoduj(adresa)
-                    if (addressInfo.gps_x ==undefined){
-                        return
+                function odpovedform(geocoder) {
+                    if (!geocoder.getResults()[0].results.length) {
+                        alert("Tohle místo neznáme.");
+                        return;
                     }
+                    var vysledky = geocoder.getResults()[0].results;
+                    var item = vysledky.shift()
+                    // console.log(item.label)
+                    var regex = /(.+?)\s(\d+\/\d+),\s(.+?),\s(.+)$/;
+                    var matches = item.label.match(regex);
+                    var lomítka = matches[2].split('/');
+                    // console.log(item);
+
+                    var addressInfo = {
+                        ulice: matches[1],
+                        pscislo: lomítka[0],
+                        ocislo: lomítka[1],
+                        mesto: matches[3],
+                        stat: matches[4],
+                        gps_x: item.coords.x,
+                        gps_y: item.coords.y
+                    };
+                    console.log(addressInfo)
                     var gpsXInput = document.getElementById("gps_x");
                     var gpsYInput = document.getElementById("gps_y");
                     gpsXInput.value = addressInfo.gps_x;

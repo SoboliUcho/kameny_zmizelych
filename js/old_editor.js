@@ -1,57 +1,40 @@
-async function geokoduj(adresa) {  /* Voláno při odeslání */
-    const API_KEY = '-YU-3m6kTF_X0RFCcyIDyMT5EbJixEkzsmz8JlWMoWY';
-    try {
-        const url = new URL(`https://api.mapy.cz/v1/geocode`);
-
-        url.searchParams.set('lang', 'cs');
-        url.searchParams.set('apikey', API_KEY);
-        url.searchParams.set('query', adresa);
-        url.searchParams.set('limit', '1');
-        [
-            'regional.municipality',
-            'regional.municipality_part',
-            'regional.street',
-            'regional.address'
-        ].forEach(type => url.searchParams.append('type', type));
-
-        const response = await fetch(url.toString(), {
-            mode: 'cors',
-        });
-        const json = await response.json();
-
-        // console.log('geocode', json);
-        godpoved = odpoved(json)
-        return godpoved;
-    } catch (ex) {
-        console.log(ex);
-    }
+function geokoduj(e, elm) {  /* Voláno při odeslání */
+    JAK.Events.cancelDef(e); /* Zamezit odeslání formuláře */
+    var query = JAK.gel("adresa").value;
+    var form = document.getElementById("control_form")
+    form.reset();
+    new SMap.Geocoder(query, odpoved);
 }
 
 function odpoved(geocoder) { /* Odpověď */
-    if (!geocoder.items.length) {
+    if (!geocoder.getResults()[0].results.length) {
         alert("Tohle místo neznáme.");
         return;
     }
 
-    var vysledky = geocoder.items[0];
-    var cislo = vysledky.regionalStructure.find(item => item.type === "regional.address").name;
-        var lomítka = cislo.split('/');
-        // console.log(items);
-        var ctvrt = vysledky.regionalStructure.find(item => item.type === "regional.municipality_part").name;
-        var mesto = vysledky.regionalStructure.find(item => item.type === "regional.municipality").name;
-        if (ctvrt != mesto){
-            mesto = mesto +" - "+ctvrt;
-        }
+    var vysledky = geocoder.getResults()[0].results;
+    var data = [];
+    while (vysledky.length) { /* Zobrazit všechny výsledky hledání */
+        var item = vysledky.shift()
+        console.log(item.label)
+        var regex = /(.+?)\s(\d+\/\d+),\s(.+?),\s(.+)$/;
+        var matches = item.label.match(regex);
+        var lomítka = matches[2].split('/');
+        console.log(item);
+
         var addressInfo = {
-            ulice: vysledky.regionalStructure.find(item => item.type === "regional.street").name,
+            ulice: matches[1],
             pscislo: lomítka[0],
             ocislo: lomítka[1],
-            mesto: mesto,
-            stat: vysledky.regionalStructure.find(item => item.type === "regional.country").name,
-            gps_x: vysledky.position.lon,
-            gps_y: vysledky.position.lat
+            mesto: matches[3],
+            stat: matches[4],
+            gps_x: item.coords.x,
+            gps_y: item.coords.y
         };
         console.log(addressInfo)
+
+
+    }
     // var value = document.getElementById("")
     var mestoInput = document.getElementById("nmesto");
     var uliceInput = document.getElementById("nulice");
@@ -64,7 +47,6 @@ function odpoved(geocoder) { /* Odpověď */
     cisloDomuInput.value = addressInfo.ocislo;
     gpsXInput.value = addressInfo.gps_x;
     gpsYInput.value = addressInfo.gps_y;
-    return {gps_x:addressInfo.gps_x, gps_y:addressInfo.gps_y}
 }
 
 function editclovek(event) {
@@ -89,8 +71,8 @@ function editclovek(event) {
 }
 
 function prepnout(event) {
-    var tlacitka = ["nosoba", "edit", "ndum", "edum", "nclanek", "npodporovatel", "epodporovatel", "nspravce", "espravce", "o_projektu"]
-    var form = ["nosoba_form", "eosoba_form", "ndum_form", "edum_form", "novy_clanek_form", "ndonator_form", "edonator_form", "nspravce_form", "espravce_form", "o_projektu_form","dum_form"]
+    var tlacitka = ["nosoba", "edit", "ndum","edum", "nclanek", "npodporovatel", "epodporovatel", "nspravce", "espravce", "o_projektu"]
+    var form = ["nosoba_form", "eosoba_form", "ndum_form", "edum_form", "novy_clanek_form", "ndonator_form", "edonator_form", "nspravce_form", "espravce_form", "o_projektu_form"]
     hideall(form);
     var type = event.target.id;
     for (let i = 0; i < tlacitka.length; i++) {
@@ -116,7 +98,7 @@ function prepnout(event) {
             var div = document.getElementById("prispel");
             div.innerHTML = "";
         }
-        if (type == "ndum" || type == "edum") {
+        if (type == "ndum"|| type == "edum"){
             var formular = document.getElementById("control_form");
             formular.reset();
             var visible = document.getElementById("dum_form");

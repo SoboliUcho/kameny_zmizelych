@@ -1,83 +1,66 @@
-@font-face {
-    font-family: 'mapy';
-    src: url('mapy.woff') format('woff');
+#mapa svg{
+    /* display: none; */
+    cursor: default;
 }
-
-#mapa {
+#mapa{
     transition: filter 0.5s opacity 0.5s;
     height: 100%;
-    cursor: default;
-    z-index: 2;
+    position: relative;
 }
-
+#mapa img{
+    cursor: pointer;
+}
 .gray {
-    filter: grayscale(100%);
+    filter: grayscale(100%); 
     opacity: 0.7;
 }
-
-#mapa .button-group button {
+.copyright.print{
+    font-size: 10px;
+}
+.copyright.print a{
+    font-size: 10px;
+}
+#mapa .button-group button{
     background-color: var(--bs-brown-pilot);
     color: var(--bs-brown-light);
 }
-
-#mapa .zoom * {
+#mapa .zoom *{
     background-color: var(--bs-brown-pilot);
     color: var(--bs-brown-light);
 }
-
 #mapa .compass {
     background-color: var(--bs-brown-pilot);
     color: var(--bs-brown-light);
 }
-
-.leaflet-container a {
+.leaflet-container a{
     color: #6b7580;
 }
 
 .leaflet-left .leaflet-control {
     margin-left: 0;
 }
-
-.leaflet-bottom .leaflet-control {
+.leaflet-bottom .leaflet-control{
     margin-bottom: 0px;
 }
-
-.leaflet-top {
-    z-index: 5;
-}
-
-.leaflet-control {
-    z-index: 5;
-}
-
-.leaflet-bottom {
-    z-index: 5;
-}
-
-.leaflet-pane {
-    z-index: 2;
-}
-
 #control {
     position: absolute;
     top: 15px;
     right: 15px;
-    z-index: 3;
-}
+  }
 
-.zoom {
+  .zoom {
     background-color: var(--bs-brown-pilot);
     color: var(--bs-brown-light);
     width: 64px;
-}
+  }
 
-.buttons {
+  .buttons {
     display: flex;
     flex-direction: row;
     width: fit-content;
-}
+  }
 
-.button {
+  .button {
     display: inline-block;
     vertical-align: top;
     cursor: pointer;
@@ -91,21 +74,21 @@
     font-style: normal;
     font-weight: 400;
     outline: 0;
-}
+  }
 
-#white_line {
+  #white_line {
     width: 1px;
     background-color: var(--bs-brown-light);
     border-top: 3px solid var(--bs-brown-pilot);
     border-bottom: 3px solid var(--bs-brown-pilot);
-}
+  }
 
-.priblizeni {
+  .priblizeni {
     display: none;
     position: absolute;
-}
+  }
 
-.zoom_level {
+  .zoom_level {
     display: block;
     background-color: var(--bs-brown-pilot);
     width: 64px;
@@ -115,52 +98,26 @@
     padding-bottom: 7px;
     cursor: pointer;
 
-}
+  }
 
-.zoom_level:hover {
+  .zoom_level:hover {
     background-color: var(--bs-secondary);
-    color: var(--bs-brown-light);
-    background-color: var(--bs-red);
-}
+  }
 
-.zoom:hover .priblizeni {
+  .zoom:hover .priblizeni {
     display: block;
-}
+  }
 
-.compass {
+  .compass {
     margin-top: 15px;
     width: 63px;
     height: 63px;
-    background: url(../images/compass-n.png) center center no-repeat #fff;
+    background: url(images/compass-n.png) center center no-repeat #fff;
     border-radius: 100%;
     -webkit-box-shadow: 0 0 2px 0 rgba(0, 0, 0, .3);
     -moz-box-shadow: 0 0 2px 0 rgba(0, 0, 0, .3);
     box-shadow: 0 0 2px 0 rgba(0, 0, 0, .3);
     background-color: var(--bs-brown-pilot);
     color: var(--bs-brown-light);
-}
-
-.pozice {
-    background-color: var(--bs-brown-pilot);
-    color: var(--bs-brown-light);
-    font-weight: bold;
-    align-self: end;
-    border: none;
-    padding: 0.375rem 0.75rem;
-    cursor: pointer;
-}
-.pozice:hover {
-    color: var(--bs-brown-light);
-    background-color: var(--bs-red);
-}
-.button:hover{
-    color: var(--bs-brown-light);
-    background-color: var(--bs-red);
-}
-#tlacitka_pozice {
-    display: flex;
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    z-index: 3;
-}
+  }
+  

@@ -24,7 +24,7 @@ $conn = conenect_to_database_kameny();
   <script type="text/javascript">Loader.load()</script>
   <script src="js\mapa.js"></script>
   <script src="js\tabulka.js"></script>
-  <title>Kameny zmizelých - lidé</title>
+  <title>O projektu | Kameny zmizelých</title>
 </head>
 
 <body>
@@ -32,6 +32,9 @@ $conn = conenect_to_database_kameny();
   <div id="nelista">
     <div id="obsah">
       <?php include('o_projektu-text.txt'); ?>
+      <p>
+        Děkujeme Marii Wetterové za nápad na vytvoření těchto stránek a naplnění ji informacemi.
+      </p>
     </div>
   </div>
 </body>

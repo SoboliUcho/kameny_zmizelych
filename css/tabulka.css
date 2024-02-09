@@ -35,7 +35,7 @@
 .tabulka {
     /* flex: 1; */
     display: flex;
-    z-index: 3;
+    z-index: 4;
     position: absolute;
     height: 100%;
     width: 100%;
@@ -278,11 +278,13 @@ div {
     }
 
     #lide {
-        padding-right: 2vw;
+        /* padding-right: 2vw; */
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-between;
         width: 100%;
+        height: auto;
+        overflow: visible;
     }
 
     .clovek {
@@ -318,11 +320,12 @@ div {
     }
 
     #lide {
-        padding-right: 2vw;
+        /* padding-right: 2vw; */
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-between;
         width: 100%;
+        overflow: visible;
     }
 
     .clovek {

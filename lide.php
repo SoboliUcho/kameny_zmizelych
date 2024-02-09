@@ -49,7 +49,7 @@ if (isset($_GET['dum'])) {
   <!-- <script src="js/logintable.js"></script> -->
   
   <script src="js\tabulka.js"></script>
-  <title>Kameny zmizelých - lidé</title>
+  <title>Lidé | Kameny zmizelých</title>
 </head>
 
 <body>

@@ -53,7 +53,7 @@ if (isset($_GET['stranka'])) {
   <script src="js\tabulka.js"></script>
   <script src="js\podporovatele.js"></script>
 
-  <title>Kameny zmizelých - Podporovatelé</title>
+  <title>Podporovatelé | Kameny zmizelých</title>
 </head>
 
 <body>
