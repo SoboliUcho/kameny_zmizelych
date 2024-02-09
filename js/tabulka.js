@@ -5,7 +5,12 @@ function tabulka_request(id, type) {
     }
     else if (type == "persone") {
         var mapa = document.getElementById("mapa");
+        var tlacitka_pozice = document.getElementById("tlacitka_pozice");
+        var control = document.getElementById("control");
         mapa.classList.add("gray");
+        tlacitka_pozice.style.display = 'none';
+        // tlacitka_pozice.classList.add("gray");
+        control.classList.add("gray");
         var loading = document.getElementById('data');
         loadinig(loading);
         var curent_active = document.getElementsByClassName("active")
@@ -117,7 +122,12 @@ function people_in_house(data) {
         var obr = document.getElementById("obrazkyshow")
         if (lide_clik(event) && !data_tabulka.contains(event.target) && informace_clik(event) && obr.classList.contains("hidden")) {
             var mapa = document.getElementById("mapa");
+            var tlacitka_pozice = document.getElementById("tlacitka_pozice");
+            var control = document.getElementById("control");
             mapa.classList.remove("gray");
+            tlacitka_pozice.style.display = 'flex';
+            tlacitka_pozice.classList.remove("gray");
+            control.classList.remove("gray");
             tabulka_hide()
             document.removeEventListener('click', handleClickOutsideBox)
             close();

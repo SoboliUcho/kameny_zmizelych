@@ -163,4 +163,7 @@
     top: 15px;
     left: 15px;
     z-index: 3;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 15px;
 }
