@@ -68,6 +68,7 @@ form div select{
 }
 form div textarea{
     flex: 2;
+    height: 150px;
 }
 #deti_div{
     display: flex;

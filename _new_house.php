@@ -1,5 +1,6 @@
 <?php
 require('_function_database.php');
+// print_r($_POST);
 $conn = conenect_to_database_kameny();
 $ulice = $_POST['nulice'];
 $cislo_domu = $_POST["ncislo_domu"];
@@ -7,7 +8,7 @@ $mesto = $_POST["nmesto"];
 $gps_x = $_POST["gps_x"];
 $gps_y = $_POST["gps_y"];
 $old_siclo = $_POST["old_siclo"];
-$visible = $_POST["viditelny"];
+$visible = isset($_POST["viditelny"]) ? 1 : 0;
 $id = $_POST["id"];
 
 if ($id == "") {
@@ -31,9 +32,9 @@ if (mysqli_query($conn, $sql)) {
     $response = "Chyba při ukládání dat: " . mysqli_error($conn);
 }
 disconenect_to_database($conn);
-echo $response;
-echo "<br>";
-echo $sql;
-$location = "Location: editor.php?response=$response";
+// echo $response;
+// echo "<br>";
+// echo $sql;
+$location = "Location: editor.php?response='$response'";
 header($location);
 ?>

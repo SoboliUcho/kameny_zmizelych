@@ -214,7 +214,7 @@ CREATE TABLE `lide` (
   `jmeno` varchar(255) COLLATE utf8mb4_czech_ci DEFAULT NULL,
   `prijmeni` varchar(255) COLLATE utf8mb4_czech_ci DEFAULT NULL,
   `rozena` varchar(255) COLLATE utf8mb4_czech_ci DEFAULT NULL,
-  `pohlavi` tinyint(1) DEFAULT '0',
+  `pohlavi` tinyint(1) DEFAULT '0' NOT NULL,
   `datum_narozeni` date DEFAULT NULL,
   `misto_narozeni` varchar(255) COLLATE utf8mb4_czech_ci DEFAULT NULL,
   `statni_prislusnost` varchar(255) COLLATE utf8mb4_czech_ci DEFAULT NULL,

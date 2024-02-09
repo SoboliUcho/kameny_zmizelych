@@ -70,6 +70,8 @@
     width: 30%;
     padding-left: 11vw;
     box-sizing: border-box;
+    height: 100%;
+    overflow: auto;
     /* flex-wrap: nowrap; */
 
 }

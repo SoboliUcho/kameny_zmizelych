@@ -3,7 +3,7 @@
 require('_function_database.php');
 $conn = conenect_to_database_kameny();
 
-print_r($_POST);
+// print_r($_POST);
 $jmeno = !empty($_POST["jmeno"]) ? "'" . $_POST["jmeno"] . "'" : "NULL";
 $email = !empty($_POST["email"]) ? "'" . $_POST["email"] . "'" : "NULL";
 $castka = !empty($_POST["castka"]) ?  $_POST["castka"] : "NULL";
@@ -26,9 +26,9 @@ if (mysqli_query($conn, $sql)) {
     $response .= "Chyba při ukládání dat: " . mysqli_error($conn);
 }
 disconenect_to_database($conn);
-echo $response;
-echo "<br>";
-echo $sql;
+// echo $response;
+// echo "<br>";
+// echo $sql;
 $location = "Location: editor.php?response=$response";
 header($location);
 ?>

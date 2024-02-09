@@ -177,7 +177,7 @@ if (isset($_GET["response"])) {
                     echo "<div>
                     <label for='$id_label'>$nazvy_label:</label>";
 
-                    if ($id_nick[$i] == "datum_narozeni" || $id_nick[$i] == "den_prichodu" || $id_nick[$i] == "mrtvy" || $id_nick[$i] == "realmrtvy" || $id_nick[$i] == "presidlil" || $id_nick[$i] == "datum_odhaseni") {
+                    if ($id_nick[$i] == "datum_narozeni" || $id_nick[$i] == "mrtvy" || $id_nick[$i] == "realmrtvy" || $id_nick[$i] == "presidlil" || $id_nick[$i] == "datum_odhaseni" || $id_nick[$i] == "datum_trans_tere" || $id_nick[$i] == "datum_presidleni") {
                         echo "<input type='date' id='$id_label' name='$id_label'> 
                         </div>";
                         continue;
@@ -326,7 +326,7 @@ if (isset($_GET["response"])) {
                         var nmesto = document.getElementById("nmesto");
                         var old_siclo = document.getElementById("old_siclo");
                         var checkbox = document.getElementById("visibles");
-                        if (dum["gps_x"] == null || dum["gps_y"] == null) {
+                        if (dum["gps_x"] == null || dum["gps_y"] == null || dum["gps_x"] == 0 || dum["gps_y"] == 0) {
                             var query = dum["ulice"] + " " + dum["cislo_domu"] + " " + dum["mesto"]
                             console.log(query)
                             new SMap.Geocoder(query, odpovedform);

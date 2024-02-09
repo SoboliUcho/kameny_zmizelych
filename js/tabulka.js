@@ -70,7 +70,7 @@ function tabulka_request(id, type) {
     var data = new FormData();
     data.append('id', id);
     data.append("type", type);
-    xhr.open("POST", "_tabulka.php", true);
+    xhr.open("POST", "_tabulka.php", true,);
     xhr.send(data);
 }
 
@@ -229,7 +229,10 @@ function innerHTMLtext(data, keys, nazvy) {
             const day = date.getDate();
             const month = date.getMonth() + 1;
             const year = date.getFullYear();
-            data[keys[i]] = `${day}. ${month}. ${year}`;
+            // console.log(day);
+            if (!isNaN(day)){
+                data[keys[i]] = `${day}. ${month}. ${year}`;
+            }
         }
         if (keys[i] == "otec-j") {
             if (data["otec_id"] != null) {
@@ -263,7 +266,8 @@ function innerHTMLtext(data, keys, nazvy) {
         var insrted_text = "";
         if (keys[i] == "majitel_mot_vozidla" || keys[i] == "cinny_v_protiletadlove_obrane") {
             if (data[keys[i]] == 1) {
-                insrted_text += "Ano"
+                nazev = nazvy[i][data["pohlavi"]];
+                insrted_text += "Ano";
             }
             else {
                 continue;
@@ -299,6 +303,7 @@ function innerHTMLtext(data, keys, nazvy) {
         else {
             insrted_text += data[keys[i]]
         }
+        // console.log(nazev, nazvy[i]);
         var subtext = '<div class="radek_tabulky">\n<div class="popisek">' + nazev + ': </div>\n <div class="data_r' + popisek + '" id="' + id + '">' + insrted_text + '</div>\n</div>\n'
         text += subtext;
         last_key.push(keys[i])
@@ -355,6 +360,7 @@ function language_set(langue) {
         ["Zemřel", "Zemřela"],
         ["Prohlášen za mrtvého", "Prohlášena za mrtvou"],
         "Státní příslušnost",
+        "Národnost",
         "Náboženské vyznání",
         "Zaměstnání",
         "",
@@ -366,9 +372,9 @@ function language_set(langue) {
         ["Majitel motorového vozidla", "Majitelka motorového vozidla"],
         "",
         "Den příchodu",
-        "Číslo transportu do Terezína",
+        "Transport do Terezína",
         "Datum trasportu do Terezína",
-        "Číslo transportu z Terezína",
+        "Transport z Terezína",
         "Datum trasportu z Terezína",
         // "Dům Id",
         "Datum přesídlení",
@@ -393,6 +399,7 @@ function keysword() {
         "mrtvy",
         "realmrtvy",
         "statni_prislusnost",
+        "narodnost",
         "nabozenske_vyznani",
         "zamnestnani",
         "_",
@@ -404,8 +411,8 @@ function keysword() {
         "majitel_mot_vozidla",
         "_",
         "den_prichodu",
-        "presidlil",
         "transport",
+        "presidlil",
         "transport_tere",
         "datum_trans_tere",
         // "dum_id", 
