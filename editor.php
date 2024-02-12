@@ -61,7 +61,8 @@ if (isset($_GET["response"])) {
                 ['id' => 'epodporovatel', 'text' => 'Upravit podporovatele'],
                 ['id' => 'nspravce', 'text' => 'Nový správce'],
                 ['id' => 'espravce', 'text' => 'Editovat správce'],
-                ['id' => 'o_projektu', 'text' => 'Editovat O projektu']
+                ['id' => 'o_projektu', 'text' => 'Editovat O projektu'],
+                ['id' => 'controler', 'text' => 'Kontrola']
 
             ];
 
@@ -574,6 +575,9 @@ if (isset($_GET["response"])) {
                 <textarea id="novyObsah" name="novyObsah"><?php include('o_projektu-text.txt'); ?></textarea>
                 <input type="submit" value="Aktualizovat Obsah">
             </form>
+        </div>
+        <div id="controler_form" class="divform">
+            <?php include "controler.php" ?>
         </div>
     </div>
 

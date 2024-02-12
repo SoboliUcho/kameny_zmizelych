@@ -116,35 +116,38 @@ function tabulka_hide() {
 }
 
 function people_in_house(data) {
-    document.addEventListener('click', function handleClickOutsideBox(event) {
-        var lide_tabulka = document.getElementById("lide");
-        var data_tabulka = document.getElementById("data");
-        var obr = document.getElementById("obrazkyshow")
-        if (lide_clik(event) && !data_tabulka.contains(event.target) && informace_clik(event) && obr.classList.contains("hidden")) {
-            var mapa = document.getElementById("mapa");
-            var tlacitka_pozice = document.getElementById("tlacitka_pozice");
-            var control = document.getElementById("control");
-            mapa.classList.remove("gray");
-            tlacitka_pozice.style.display = 'flex';
-            tlacitka_pozice.classList.remove("gray");
-            control.classList.remove("gray");
-            tabulka_hide()
-            document.removeEventListener('click', handleClickOutsideBox)
-            close();
-        }
-    });
+    // console.log(data)
     data = JSON.parse(data);
-    if (data["error"] !== undefined) {
-        return;
+
+    if (typeof data["error"] === "undefined") {
+        var lide = document.getElementById('lide');
+        var lidetext = "";
+        for (var i = 0; i < data.length; i++) {
+            var clovek = div_lide(data[i]);
+            lidetext += clovek;
+        }
+        lide.innerHTML = lidetext;
+        tabulka_request(data[0].id, "persone");
+        document.addEventListener('click', function handleClickOutsideBox(event) {
+            var lide_tabulka = document.getElementById("lide");
+            var data_tabulka = document.getElementById("data");
+            var obr = document.getElementById("obrazkyshow")
+            if (lide_clik(event) && !data_tabulka.contains(event.target) && informace_clik(event) && obr.classList.contains("hidden")) {
+                var mapa = document.getElementById("mapa");
+                var tlacitka_pozice = document.getElementById("tlacitka_pozice");
+                var control = document.getElementById("control");
+                mapa.classList.remove("gray");
+                tlacitka_pozice.style.display = 'flex';
+                tlacitka_pozice.classList.remove("gray");
+                control.classList.remove("gray");
+                tabulka_hide()
+                document.removeEventListener('click', handleClickOutsideBox)
+                close();
+            }
+        });
     }
-    var lide = document.getElementById('lide');
-    var lidetext = "";
-    for (var i = 0; i < data.length; i++) {
-        var clovek = div_lide(data[i]);
-        lidetext += clovek;
-    }
-    lide.innerHTML = lidetext;
-    tabulka_request(data[0].id, "persone");
+
+
 }
 
 function div_lide(data) {
@@ -240,7 +243,7 @@ function innerHTMLtext(data, keys, nazvy) {
             const month = date.getMonth() + 1;
             const year = date.getFullYear();
             // console.log(day);
-            if (!isNaN(day)){
+            if (!isNaN(day)) {
                 data[keys[i]] = `${day}. ${month}. ${year}`;
             }
         }

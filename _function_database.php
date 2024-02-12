@@ -281,5 +281,38 @@ function get_all_clanky($conn){
     $result = $conn->query($sql);
     return $result;
 }
+function get_all_homeles($conn){
+    $sql = "SELECT id, jmeno, prijmeni, datum_narozeni 
+    FROM lide 
+    WHERE dum_id is NULL
+    ORDER BY prijmeni ASC, jmeno ASC";
+    $result = $conn->query($sql);
+    return $result;
+}
+function people_invisible_house($conn){
+    $sql = "SELECT lide.id, lide.jmeno, lide.prijmeni, lide.datum_narozeni, domy.ulice, domy.cislo_domu, domy.stare_cislo, domy.mesto
+    FROM lide 
+    JOIN domy ON lide.dum_id = domy.id
+    WHERE domy.visible = 0
+    ORDER BY prijmeni ASC, jmeno ASC";
+    $result = $conn->query($sql);
+    return $result;
+}
+function invisible_house_with_people($conn){
+    $sql = "SELECT * FROM domy
+    WHERE id IN (
+        SELECT dum_id FROM lide
+    ) AND visible = 0";
+    $result = $conn->query($sql);
+    return $result;
+}
 
+function free_house($conn){
+    $sql = "SELECT * FROM domy
+    WHERE id NOT IN (
+        SELECT dum_id FROM lide
+    ) AND visible = 1";
+    $result = $conn->query($sql);
+    return $result;
+}
 ?>

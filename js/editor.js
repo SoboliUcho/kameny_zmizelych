@@ -89,16 +89,22 @@ function editclovek(event) {
 }
 
 function prepnout(event) {
-    var tlacitka = ["nosoba", "edit", "ndum", "edum", "nclanek", "npodporovatel", "epodporovatel", "nspravce", "espravce", "o_projektu"]
-    var form = ["nosoba_form", "eosoba_form", "ndum_form", "edum_form", "novy_clanek_form", "ndonator_form", "edonator_form", "nspravce_form", "espravce_form", "o_projektu_form","dum_form"]
+    var tlacitka = ["nosoba", "edit", "ndum", "edum", "nclanek", "npodporovatel", "epodporovatel", "nspravce", "espravce", "o_projektu", "controler"]
+    var form = ["nosoba_form", "eosoba_form", "ndum_form", "edum_form", "novy_clanek_form", "ndonator_form", "edonator_form", "nspravce_form", "espravce_form", "o_projektu_form","controler_form","dum_form"]
     hideall(form);
+    for (let i = 0; i < tlacitka.length; i++) {
+        var talcitko = document.getElementById(tlacitka[i])
+        talcitko.style.backgroundColor = ""
+    }
     var type = event.target.id;
+    event.target.style.backgroundColor = "var(--bs-brown-mid)";
     for (let i = 0; i < tlacitka.length; i++) {
         // console.log(tlacitka[i]);
         // console.log(form[i]);
         if (type == tlacitka[i]) {
             var visible = document.getElementById(form[i]);
             visible.style.display = "";
+            
         }
         if (type == "nosoba") {
             var formular = document.getElementById("nosoba_f")

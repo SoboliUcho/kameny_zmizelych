@@ -33,7 +33,7 @@ $conn = conenect_to_database_kameny();
     <div id="obsah">
       <?php include('o_projektu-text.txt'); ?>
       <p>
-        Děkujeme Marii Wetterové za nápad na vytvoření těchto stránek a naplnění ji informacemi.
+        Děkujeme Marii Wetterové za nápad na vytvoření těchto stránek a která do databáze vložila potřebné informace o boskovických židech, jejichž osudu se dlouhodobě věnuje.
       </p>
     </div>
   </div>
