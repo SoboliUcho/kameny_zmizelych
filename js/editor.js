@@ -89,8 +89,12 @@ function editclovek(event) {
 }
 
 function prepnout(event) {
-    var tlacitka = ["nosoba", "edit", "ndum", "edum", "nclanek", "npodporovatel", "epodporovatel", "nspravce", "espravce", "o_projektu", "controler"]
-    var form = ["nosoba_form", "eosoba_form", "ndum_form", "edum_form", "novy_clanek_form", "ndonator_form", "edonator_form", "nspravce_form", "espravce_form", "o_projektu_form","controler_form","dum_form"]
+    var tlacitka = ["nosoba", "edit", "ndum", "edum", "nclanek", "npodporovatel", "epodporovatel", "nspravce", "espravce", "o_projektu", "controler", "deleter"]
+    var form = ["nosoba_form", "eosoba_form", "ndum_form", "edum_form", "novy_clanek_form", "ndonator_form", "edonator_form", "nspravce_form", "espravce_form", "o_projektu_form","controler_form","odstraneni","odstraneni","dum_form"]
+    var  deleter = document.getElementById("deleter");
+    if (deleter == null){
+        tlacitka.splice(11, 1);
+    }
     hideall(form);
     for (let i = 0; i < tlacitka.length; i++) {
         var talcitko = document.getElementById(tlacitka[i])
@@ -171,4 +175,16 @@ function editdonator(event) {
     tabulka_request(selectedValue, "editdonator");
     var n_ososba = document.getElementById("ndonator_form");
     n_ososba.style.display = "";
+}
+function stopform(id){
+    var form = document.getElementById(id);
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+        const isConfirmed = confirm('Chcete pokračovat s odstraněním? Akce je nevratná!');
+        if (isConfirmed) {
+            form.submit();
+          } else {
+            console.log('Form submission canceled');
+          }
+    });
 }

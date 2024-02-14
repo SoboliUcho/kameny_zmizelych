@@ -65,6 +65,9 @@ if (isset($_GET["response"])) {
                 ['id' => 'controler', 'text' => 'Kontrola']
 
             ];
+            if (isset($_GET["delete"])){
+                $prepinace[]=['id' => 'deleter', 'text' => 'Odstranění'];
+            }
 
             foreach ($prepinace as $prepinac) {
                 if ($prepinac['id'] == "eclanek") {
@@ -277,7 +280,7 @@ if (isset($_GET["response"])) {
                 var nform = document.getElementById("nform")
                 nform.addEventListener('submit', function (event) {
                     event.preventDefault();
-                    var adresa =document.getElementById("adresa")
+                    var adresa = document.getElementById("adresa")
                     geokoduj(adresa.value);
                 });
             </script>
@@ -356,8 +359,8 @@ if (isset($_GET["response"])) {
                     }
                 }
                 function odpovedform(adresa) {
-                    var addressInfo=geokoduj(adresa)
-                    if (addressInfo.gps_x ==undefined){
+                    var addressInfo = geokoduj(adresa)
+                    if (addressInfo.gps_x == undefined) {
                         return
                     }
                     var gpsXInput = document.getElementById("gps_x");
@@ -578,6 +581,12 @@ if (isset($_GET["response"])) {
         </div>
         <div id="controler_form" class="divform">
             <?php include "controler.php" ?>
+        </div>
+
+        <div id="odstraneni" class="divform">
+            <?php
+            include "odstraneni.php";
+            ?>
         </div>
     </div>
 

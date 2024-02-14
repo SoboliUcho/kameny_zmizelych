@@ -1,13 +1,12 @@
-<?php require_once "_function_database.php";
-$conn = conenect_to_database_kameny();
+<?php 
+// require_once "_function_database.php";
+// $conn = conenect_to_database_kameny();
 ?>
 
 <div id="bezdomova" class="category">
     <div class="nadpis">Lidé bez domova</div>
     <?php
     $domy_form = "<select name='dum_id' id='dum_id'><option value=''>Vyber adresu</option>";
-    $domy = get_all_house_editor($conn);
-    $domy = json_decode($domy, true);
     foreach ($domy as $dum) {
         $id = $dum["id"];
         $ulice = $dum["ulice"];
@@ -85,7 +84,7 @@ $conn = conenect_to_database_kameny();
     ?>
     <script>
         var nv_domy =document.getElementById("nv_domy");
-        nv_domy.style.display = "<?php $visibele ?>";
+        nv_domy.style.display = "<?php echo $visibele ?>";
     </script>
 </div>
 <div id="nv_lide" class="category">
@@ -93,6 +92,7 @@ $conn = conenect_to_database_kameny();
     <?php
     $invisible = people_invisible_house($conn);
     foreach ($invisible as $clovek) {
+        print($clovek);
         $ulice = $house["ulice"];
         $cislo_domu = $house["cislo_domu"];
         $mesto = $house["mesto"];
