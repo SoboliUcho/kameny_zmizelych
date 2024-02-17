@@ -12,7 +12,7 @@ $darujme_api = array(
     "organizationId" => 11111
 );
 $mapy_api = array(
-    "api_key" => "-YU-api_key"
+    "api_key" => "api_key"
 );
 $pozice = array(
     array(
