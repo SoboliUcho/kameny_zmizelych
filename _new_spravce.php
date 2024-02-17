@@ -38,6 +38,11 @@ function spravce_lidi($id_spravce, $conn)
     $domy = !empty($_POST["dum_id"]) ? $_POST["dum_id"] : "NULL";
     $lide = !empty($_POST["clovek_id"]) ? $_POST["clovek_id"] : "NULL";
     $response = "";
+    $sql = "UPDATE lide SET spravce = NULL WHERE spravce = $id_spravce";
+    if (mysqli_query($conn, $sql)) {
+    } else {
+        $response += "Chyba při ukládání dat: " . mysqli_error($conn);
+    }
     for ($i = 0; $i < count($domy); $i++) {
         if ($domy[$i] == NULL) {
             continue;
@@ -53,6 +58,7 @@ function spravce_lidi($id_spravce, $conn)
             }
         }
     }
+
     for ($j = 0; $j < count($lide); $j++) {
         if ($lide[$j] == NULL) {
             continue;

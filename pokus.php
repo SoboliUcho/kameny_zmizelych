@@ -149,11 +149,13 @@
             background-color: var(--bs-red);
             /* border: 2px solid var(--bs-red); */
         }
-        .button:hover{
+
+        .button:hover {
             color: var(--bs-brown-light);
             background-color: var(--bs-red);
             /* border: 2px solid var(--bs-red); */
         }
+
         #tlacitka_pozice {
             display: flex;
             position: absolute;
@@ -275,6 +277,26 @@
                 }
             </script>
         </div>
+        <?php
+        // require_once "_function_database.php";
+        // $conn = conenect_to_database_kameny();
+        // $domy = get_all_house_editor($conn);
+        // echo $domy;
+        // $domy = json_decode($domy, true);
+        // foreach ($domy as $dum) {
+        //     print_r($dum);
+        //     $id = $dum["id"];
+        //     $ulice = $dum["ulice"];
+        //     $stare = $dum["stare_cislo"];
+        //     $cislo_domu = $dum["cislo_domu"];
+        //     $mesto = $dum["mesto"];
+        //     $text = "<div>$id - $stare - Nová adresa: $ulice $cislo_domu</div>";
+        //     echo $text;
+        // }
+        // print_r($domy);
+        // disconenect_to_database($conn);
+        ?>
+        <div>$id - $stare - Nová adresa: $ulice $cislo_domu</div>
     </div>
 
 

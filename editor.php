@@ -12,7 +12,13 @@ $conn = conenect_to_database_kameny();
 if (isset($_GET["response"])) {
     $response = $_GET["response"];
     echo ('
-    <script>alert("' . $response . '");</script>');
+    <script>alert("' . $response . '");
+    var currentUrl = new URL(window.location.href);
+        currentUrl.searchParams.delete("response");
+        newUrl = currentUrl.toString();
+    window.history.replaceState({}, "", newUrl);
+    </script>');
+
 }
 ?>
 
@@ -42,6 +48,10 @@ if (isset($_GET["response"])) {
             content_css: 'css/main.css',
         });
     </script>
+    <!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
+
     <title>Editor | Kameny zmizelých</title>
 </head>
 
@@ -65,8 +75,8 @@ if (isset($_GET["response"])) {
                 ['id' => 'controler', 'text' => 'Kontrola']
 
             ];
-            if (isset($_GET["delete"])){
-                $prepinace[]=['id' => 'deleter', 'text' => 'Odstranění'];
+            if (isset($_GET["delete"])) {
+                $prepinace[] = ['id' => 'deleter', 'text' => 'Odstranění'];
             }
 
             foreach ($prepinace as $prepinac) {
@@ -113,6 +123,9 @@ if (isset($_GET["response"])) {
             <script type="text/javascript">
                 var form = document.getElementById("eosoba");
                 form.addEventListener("submit", editclovek);
+                // $(document).ready(function () {
+                //     $('#lide').select2();
+                // });
             </script>
         </div>
 
